@@ -26,18 +26,18 @@ public class Hero {
     }
 
     public void goUp(){
-        this.setY(y--);
+        this.setY(--y);
     }
 
     public void goDown(){
-        this.setY(y++);
+        this.setY(++y);
     }
 
     public void goLeft(){
-        this.setX(x--);
+        this.setX(--x);
     }
 
     public void goRight(){
-        this.setX(x++);
+        this.setX(++x);
     }
 }
