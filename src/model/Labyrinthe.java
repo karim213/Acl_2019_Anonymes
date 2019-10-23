@@ -55,4 +55,16 @@ public class Labyrinthe implements Game {
          */
         return true;
     }
+
+    public int getHEIGHT() {
+        return HEIGHT;
+    }
+
+    public int getWIDTH() {
+        return WIDTH;
+    }
+
+    public Hero getHero() {
+        return hero;
+    }
 }

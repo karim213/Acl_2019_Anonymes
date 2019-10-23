@@ -4,6 +4,7 @@ import java.awt.Color;
 import java.awt.Graphics2D;
 import java.awt.image.BufferedImage;
 
+import engine.Game;
 import engine.GamePainter;
 
 /**
@@ -17,8 +18,9 @@ public class PacmanPainter implements GamePainter {
 	/**
 	 * la taille des cases
 	 */
-	protected static final int WIDTH = 100;
-	protected static final int HEIGHT = 100;
+	protected static int WIDTH ;
+	protected static int HEIGHT;
+	private Labyrinthe labyrinthe;
 
 	/**
 	 * appelle constructeur parent
@@ -26,7 +28,10 @@ public class PacmanPainter implements GamePainter {
 	 * @param game
 	 *            le jeutest a afficher
 	 */
-	public PacmanPainter() {
+	public PacmanPainter(Labyrinthe labyrinthe) {
+		this.WIDTH = labyrinthe.getWIDTH()*10;
+		this.HEIGHT = labyrinthe.getHEIGHT()*10;
+		this.labyrinthe = labyrinthe;
 	}
 
 	/**
@@ -36,7 +41,7 @@ public class PacmanPainter implements GamePainter {
 	public void draw(BufferedImage im) {
 		Graphics2D crayon = (Graphics2D) im.getGraphics();
 		crayon.setColor(Color.blue);
-		crayon.fillOval(0,0,10,10);
+		crayon.fillOval(this.labyrinthe.getHero().getX()*10,this.labyrinthe.getHero().getY()*10,10,10);
 	}
 
 	@Override
