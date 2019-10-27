@@ -18,7 +18,7 @@ import javax.swing.border.EmptyBorder;
  * @author Horatiu Cirstea, Vincent Thomas
  *
  * afficheur graphique pour le game
- * 
+ *
  */
 public class PacmanPainter implements GamePainter {
 
@@ -31,7 +31,7 @@ public class PacmanPainter implements GamePainter {
 
 	/**
 	 * appelle constructeur parent
-	 * 
+	 *
 	 * @param labyrinthe
 	 *            le jeutest a afficher
 	 */
@@ -50,7 +50,7 @@ public class PacmanPainter implements GamePainter {
 		//crayon.setColor(Color.blue);
 		BufferedImage img = null;
 		try {
-			img = ImageIO.read(new File("heroSprite.png"));
+			img = ImageIO.read(new File("heroSpriteMovements.png"));
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
@@ -63,7 +63,7 @@ public class PacmanPainter implements GamePainter {
 		//BufferedImage buffered = new BufferedImage(scaleX, scaleY, TYPE);
 
 
-        if(this.labyrinthe.getHero().getCurrentCmd() == Cmd.RIGHT){
+		if(this.labyrinthe.getHero().getCurrentCmd() == Cmd.RIGHT){
 			img = img.getSubimage(
 					180 + 75 * (this.labyrinthe.getHero().getX()%4),
 					110,
@@ -126,7 +126,7 @@ public class PacmanPainter implements GamePainter {
 		}
 
 		try {
-			im.getGraphics().drawImage(ImageIO.read(new File("background.png")), 0, 0, WIDTH, HEIGHT, null);
+			im.getGraphics().drawImage(ImageIO.read(new File("background1.png")), 0, 0, WIDTH, HEIGHT, null);
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
@@ -134,7 +134,7 @@ public class PacmanPainter implements GamePainter {
 		im.getGraphics().drawImage(img, this.labyrinthe.getHero().getX()*10, this.labyrinthe.getHero().getY()*5, 20 , 40   , null);
 
 		//crayon.fillOval(this.labyrinthe.getHero().getX()*10,this.labyrinthe.getHero().getY()*10,10,10);
-}
+	}
 
 	@Override
 	public int getWidth() {
