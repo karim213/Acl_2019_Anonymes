@@ -9,6 +9,7 @@ import java.awt.Graphics;
 import java.awt.image.BufferedImage;
 
 import javax.swing.JPanel;
+import javax.swing.border.EmptyBorder;
 
 public class DrawingPanel extends JPanel {
 
