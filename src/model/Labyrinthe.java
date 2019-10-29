@@ -39,6 +39,7 @@ public class Labyrinthe implements Game {
                    }
                    break;
                case IDLE: break;
+               case ATTACK:  this.hero.attaque(); break;
            }
 
         System.out.println("("+this.hero.getX()+" , "+this.hero.getY()+" )");

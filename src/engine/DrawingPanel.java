@@ -9,11 +9,12 @@ import java.awt.Graphics;
 import java.awt.image.BufferedImage;
 
 import javax.swing.JPanel;
+import javax.swing.border.EmptyBorder;
 
 public class DrawingPanel extends JPanel {
 
 	/**
-	 * 
+	 *
 	 */
 	private static final long serialVersionUID = 1L;
 
@@ -41,7 +42,7 @@ public class DrawingPanel extends JPanel {
 	 * constructeur Il construit les images pour doublebuffering ainsi que le
 	 * Panel associe. Les images stockent le painter et on demande au panel la
 	 * mise a jour quand le painter est fini
-	 * 
+	 *
 	 * @param width
 	 *            largeur de l'image
 	 * @param height
@@ -66,6 +67,7 @@ public class DrawingPanel extends JPanel {
 	 * nouvelle image vide sur laquelle dessiner
 	 */
 	public void drawGame() {
+
 		// generer la nouvelle image
 		this.painter.draw(this.nextImage);
 
@@ -83,7 +85,7 @@ public class DrawingPanel extends JPanel {
 
 	/**
 	 * redefinit la methode paint consiste a dessiner l'image en cours
-	 * 
+	 *
 	 * @param g
 	 *            graphics pour dessiner
 	 */

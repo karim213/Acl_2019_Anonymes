@@ -1,5 +1,7 @@
 package engine;
 
+import model.Labyrinthe;
+
 import java.awt.image.BufferedImage;
 
 /**
@@ -9,6 +11,7 @@ import java.awt.image.BufferedImage;
  * 
  */
 public interface GamePainter {
+
 
 	/**
 	 * methode dessiner a completer. Elle construit une image correspondant au
@@ -22,5 +25,6 @@ public interface GamePainter {
 	public abstract int getWidth();
 
 	public abstract int getHeight();
-	
+
+	public abstract Labyrinthe getLabyrinthe();
 }

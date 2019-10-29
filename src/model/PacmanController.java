@@ -11,7 +11,7 @@ import engine.GameController;
  * @author Horatiu Cirstea, Vincent Thomas
  *
  * controleur de type KeyListener
- * 
+ *
  */
 public class PacmanController implements GameController {
 
@@ -32,7 +32,7 @@ public class PacmanController implements GameController {
 	/**
 	 * quand on demande les commandes, le controleur retourne la commande en
 	 * cours
-	 * 
+	 *
 	 * @return commande faite par le joueur
 	 */
 	public Cmd getCommand() {
@@ -45,28 +45,33 @@ public class PacmanController implements GameController {
 	 */
 	public void keyPressed(KeyEvent e) {
 
+		System.out.println(e.getKeyChar());
 		switch (e.getKeyChar()) {
 		// si on appuie sur 'q',commande joueur est gauche
-			case 'l':
-			case 'L':
+			case 'q':
+			case 'Q':
 				this.commandeEnCours = Cmd.LEFT;
-				break;
-
-			case 'r':
-			case 'R':
-				this.commandeEnCours = Cmd.RIGHT;
-				break;
-
-			case 'u':
-			case 'U':
-				this.commandeEnCours = Cmd.UP;
 				break;
 
 			case 'd':
 			case 'D':
+				this.commandeEnCours = Cmd.RIGHT;
+				break;
+
+			case 'z':
+			case 'Z':
+				this.commandeEnCours = Cmd.UP;
+				break;
+
+			case 's':
+			case 'S':
 				this.commandeEnCours = Cmd.DOWN;
 				break;
 
+			case 't' :
+			case 'T':
+                 this.commandeEnCours = Cmd.ATTACK;
+                 break;
 			default:
 				this.commandeEnCours = Cmd.IDLE;
 				break;
