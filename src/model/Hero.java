@@ -1,24 +1,12 @@
 package model;
 
-import engine.Cmd;
-
-import javax.imageio.ImageIO;
-import java.awt.image.BufferedImage;
-import java.io.File;
-import java.io.IOException;
-
 public class Hero {
     private int x;
     private int y;
-    private Cmd currentCmd;
-    private BufferedImage[] sprites;
-
 
     public Hero(int x, int y) {
         this.x = x;
         this.y = y;
-        this.currentCmd = Cmd.IDLEDOWN;
-
     }
 
     public int getX() {
@@ -38,54 +26,18 @@ public class Hero {
     }
 
     public void goUp(){
-        if(this.currentCmd == Cmd.UP || this.currentCmd == Cmd.IDLEUP) {
-            this.setY(--y);
-            this.currentCmd = Cmd.UP;
-        }else{
-            this.currentCmd = Cmd.IDLEUP;
-        }
+        this.setY(--y);
     }
 
     public void goDown(){
-        if(this.currentCmd == Cmd.DOWN || this.currentCmd == Cmd.IDLEDOWN) {
-            this.setY(++y);
-            this.currentCmd = Cmd.DOWN;
-        }else{
-            this.currentCmd = Cmd.IDLEDOWN;
-        }
-
+        this.setY(++y);
     }
 
     public void goLeft(){
-        if(this.currentCmd == Cmd.LEFT || this.currentCmd == Cmd.IDLELEFT) {
-            this.setX(--x);
-            this.currentCmd = Cmd.LEFT;
-        }else{
-            this.currentCmd = Cmd.IDLELEFT;
-        }
+        this.setX(--x);
     }
 
     public void goRight(){
-        if(this.currentCmd == Cmd.RIGHT || this.currentCmd == Cmd.IDLERIGHT) {
-            this.setX(++x);
-            this.currentCmd = Cmd.RIGHT;
-        }else{
-            this.currentCmd = Cmd.IDLERIGHT;
-        }
-    }
-
-    public Cmd getCurrentCmd() {
-        return currentCmd;
-    }
-    public void stop(){
-        if (this.currentCmd == Cmd.LEFT || this.currentCmd == Cmd.IDLELEFT ){
-            this.currentCmd = Cmd.IDLELEFT;
-        }else if (this.currentCmd == Cmd.RIGHT || this.currentCmd == Cmd.IDLERIGHT){
-            this.currentCmd = Cmd.IDLERIGHT;
-        }else if (this.currentCmd == Cmd.UP || this.currentCmd == Cmd.IDLEUP){
-            this.currentCmd = Cmd.UP;
-        }else {
-            this.currentCmd = Cmd.DOWN;
-        }
+        this.setX(++x);
     }
 }
