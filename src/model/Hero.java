@@ -11,6 +11,7 @@ public class Hero {
     private int x;
     private int y;
     private Cmd currentCmd;
+    private  boolean isAttaque;
     private BufferedImage[] sprites;
 
 
@@ -18,6 +19,7 @@ public class Hero {
         this.x = x;
         this.y = y;
         this.currentCmd = Cmd.IDLEDOWN;
+        isAttaque = false;
 
     }
 
@@ -57,6 +59,7 @@ public class Hero {
     }
 
     public void goLeft(){
+        System.out.println("elf");
         if(this.currentCmd == Cmd.LEFT || this.currentCmd == Cmd.IDLELEFT) {
             this.setX(--x);
             this.currentCmd = Cmd.LEFT;
@@ -83,9 +86,20 @@ public class Hero {
         }else if (this.currentCmd == Cmd.RIGHT || this.currentCmd == Cmd.IDLERIGHT){
             this.currentCmd = Cmd.IDLERIGHT;
         }else if (this.currentCmd == Cmd.UP || this.currentCmd == Cmd.IDLEUP){
-            this.currentCmd = Cmd.UP;
+            this.currentCmd = Cmd.IDLEUP;
         }else {
-            this.currentCmd = Cmd.DOWN;
+            this.currentCmd = Cmd.IDLEDOWN;
         }
     }
+
+    public void attaque(){
+        isAttaque = true;
+    }
+    public  Boolean isAttaque(){
+        return isAttaque;
+    }
+    public void setAttaque(Boolean isAttaque){
+        this.isAttaque = isAttaque;
+    }
+
 }

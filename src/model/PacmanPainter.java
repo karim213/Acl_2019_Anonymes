@@ -10,6 +10,9 @@ import java.io.IOException;
 import engine.Cmd;
 import engine.Game;
 import engine.GamePainter;
+import model.painters.ChestPainter;
+import model.painters.EnemiesPainter;
+import model.painters.WallPainter;
 
 import javax.imageio.ImageIO;
 import javax.swing.border.EmptyBorder;
@@ -28,6 +31,9 @@ public class PacmanPainter implements GamePainter {
 	protected static int WIDTH ;
 	protected static int HEIGHT;
 	private Labyrinthe labyrinthe;
+	private ChestPainter chest = new ChestPainter();
+	private WallPainter walls = new WallPainter();
+	private EnemiesPainter enemies = new EnemiesPainter();
 
 	/**
 	 * appelle constructeur parent
@@ -46,6 +52,7 @@ public class PacmanPainter implements GamePainter {
 	 */
 	@Override
 	public void draw(BufferedImage im) {
+
 		//Graphics2D crayon = (Graphics2D) im.getGraphics();
 		//crayon.setColor(Color.blue);
 		BufferedImage img = null;
@@ -131,9 +138,12 @@ public class PacmanPainter implements GamePainter {
 			e.printStackTrace();
 		}
 
+		chest.draw(im, labyrinthe);
+		walls.draw(im, labyrinthe);
+		enemies.draw(im, labyrinthe);
 		im.getGraphics().drawImage(img, this.labyrinthe.getHero().getX()*10, this.labyrinthe.getHero().getY()*5, 20 , 40   , null);
 
-		//crayon.fillOval(this.labyrinthe.getHero().getX()*10,this.labyrinthe.getHero().getY()*10,10,10);
+		//crayon.fillOval(this.lalbyrinthe.getHero().getX()*10,this.labyrinthe.getHero().getY()*10,10,10);
 	}
 
 	@Override
