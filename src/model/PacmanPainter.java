@@ -48,23 +48,12 @@ public class PacmanPainter implements GamePainter {
 	@Override
 	public void draw(BufferedImage im) {
          this.drawHero(im);
-         this.drawWalls(im);
-         this.drawChest(im);
-
-	}
-
-	public void drawWalls(BufferedImage im){
-
-	}
-
-	public void drawChest(BufferedImage im){
-
 	}
 
 	public void drawHero(BufferedImage im){
 		BufferedImage img = null;
 		try {
-			img = ImageIO.read(new File("heroSprite.png"));
+			img = ImageIO.read(new File("heroSpriteMovements.png"));
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
@@ -172,7 +161,7 @@ public class PacmanPainter implements GamePainter {
 
 
 		try {
-			im.getGraphics().drawImage(ImageIO.read(new File("background.png")), 0, 0, WIDTH, HEIGHT, null);
+			im.getGraphics().drawImage(ImageIO.read(new File("background1.png")), 0, 0, WIDTH, HEIGHT, null);
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
