@@ -3,6 +3,7 @@ package model.painters;
 import model.Labyrinthe;
 import model.Position;
 
+
 import java.awt.*;
 import java.awt.image.BufferedImage;
 

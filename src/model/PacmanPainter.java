@@ -11,6 +11,9 @@ import java.nio.Buffer;
 import engine.Cmd;
 import engine.Game;
 import engine.GamePainter;
+import model.painters.ChestPainter;
+import model.painters.EnemiesPainter;
+import model.painters.WallPainter;
 
 import javax.imageio.ImageIO;
 import javax.swing.border.EmptyBorder;
@@ -30,6 +33,14 @@ public class PacmanPainter implements GamePainter {
 	protected static int HEIGHT;
 	protected Labyrinthe labyrinthe;
 
+	private BufferedImage heroSprite;
+	private BufferedImage subHeroSprite;
+	private BufferedImage backgroundSprite;
+
+	private WallPainter wallPainter;
+	private ChestPainter chestPainter;
+	private EnemiesPainter enemiesPainter;
+
 	/**
 	 * appelle constructeur parent
 	 *
@@ -40,6 +51,24 @@ public class PacmanPainter implements GamePainter {
 		this.WIDTH = labyrinthe.getWIDTH()*10+20;
 		this.HEIGHT = labyrinthe.getHEIGHT()*5+40;
 		this.labyrinthe = labyrinthe;
+
+		try {
+			this.heroSprite = ImageIO.read(new File("Ressources/heroSpriteMovements.png"));
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+		this.subHeroSprite = null;
+
+		try {
+			this.backgroundSprite = ImageIO.read(new File("Ressources/background1.png"));
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+
+		wallPainter = new WallPainter();
+		chestPainter = new ChestPainter();
+		enemiesPainter = new EnemiesPainter();
+
 	}
 
 	/**
@@ -48,15 +77,11 @@ public class PacmanPainter implements GamePainter {
 	@Override
 	public void draw(BufferedImage im) {
          this.drawHero(im);
+         this.wallPainter.draw(im,labyrinthe);
+         this.chestPainter.draw(im,labyrinthe);
 	}
 
 	public void drawHero(BufferedImage im){
-		BufferedImage img = null;
-		try {
-			img = ImageIO.read(new File("heroSpriteMovements.png"));
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
 
 		int scaleX;
 		int scaleY;
@@ -86,7 +111,7 @@ public class PacmanPainter implements GamePainter {
 			Decal = 0;
 			nbrEtape = 1;
 
-			img = img.getSubimage(
+			subHeroSprite = heroSprite.getSubimage(
 					scaleX + Decal * (fact % nbrEtape),
 					scaleY,
 					heroWidth,
@@ -95,7 +120,7 @@ public class PacmanPainter implements GamePainter {
 
 			//vue qu'on a pas un prite pour la direction gauche on inverse celui de la direction gache :)
 			if (this.labyrinthe.getHero().getCurrentCmd() == Cmd.IDLERIGHT || this.labyrinthe.getHero().getCurrentCmd() == Cmd.RIGHT)
-				img = mirror(img);
+				subHeroSprite = mirror(subHeroSprite);
 
 			this.labyrinthe.getHero().setAttaque(false);
 
@@ -146,7 +171,7 @@ public class PacmanPainter implements GamePainter {
 
 			}
 
-			img = img.getSubimage(
+			subHeroSprite = heroSprite.getSubimage(
 					scaleX + Decal * (fact % nbrEtape),
 					scaleY,
 					heroWidth,
@@ -155,18 +180,13 @@ public class PacmanPainter implements GamePainter {
 
 			//vue qu'on a pas un prite pour la direction gauche on inverse celui de la direction gache :)
 			if (this.labyrinthe.getHero().getCurrentCmd() == Cmd.IDLELEFT || this.labyrinthe.getHero().getCurrentCmd() == Cmd.LEFT)
-				img = mirror(img);
+				subHeroSprite = mirror(subHeroSprite);
 
 		}
 
+		im.getGraphics().drawImage(this.backgroundSprite, 0, 0, WIDTH, HEIGHT, null);
 
-		try {
-			im.getGraphics().drawImage(ImageIO.read(new File("background1.png")), 0, 0, WIDTH, HEIGHT, null);
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
-
-		im.getGraphics().drawImage(img, this.labyrinthe.getHero().getX()*10, this.labyrinthe.getHero().getY()*5, 20 , 40   , null);
+		im.getGraphics().drawImage(subHeroSprite, this.labyrinthe.getHero().getX()*10, this.labyrinthe.getHero().getY()*5, 20 , 40   , null);
 
 	}
 
