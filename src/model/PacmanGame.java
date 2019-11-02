@@ -44,6 +44,11 @@ public class PacmanGame implements Game {
 		System.out.println("Execute "+commande);
 	}
 
+	@Override
+	public void moveEnemies() {
+
+	}
+
 	/**
 	 * verifier si le jeu est fini
 	 */

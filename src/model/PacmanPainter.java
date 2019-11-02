@@ -6,12 +6,15 @@ import java.awt.image.AffineTransformOp;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
+import java.util.ArrayList;
 
 import engine.Cmd;
 import engine.Game;
 import engine.GamePainter;
+import model.enemies.Enemy;
 
 import javax.imageio.ImageIO;
+import javax.swing.*;
 import javax.swing.border.EmptyBorder;
 
 /**
@@ -50,7 +53,7 @@ public class PacmanPainter implements GamePainter {
 		//crayon.setColor(Color.blue);
 		BufferedImage img = null;
 		try {
-			img = ImageIO.read(new File("heroSpriteMovements.png"));
+			img = ImageIO.read(new File("Ressources/heroSpriteMovements.png"));
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
@@ -126,14 +129,56 @@ public class PacmanPainter implements GamePainter {
 		}
 
 		try {
-			im.getGraphics().drawImage(ImageIO.read(new File("background1.png")), 0, 0, WIDTH, HEIGHT, null);
+			im.getGraphics().drawImage(ImageIO.read(new File("Ressources/background1.png")), 0, 0, WIDTH, HEIGHT, null);
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
 
 		im.getGraphics().drawImage(img, this.labyrinthe.getHero().getX()*10, this.labyrinthe.getHero().getY()*5, 20 , 40   , null);
 
-		//crayon.fillOval(this.labyrinthe.getHero().getX()*10,this.labyrinthe.getHero().getY()*10,10,10);
+		BufferedImage imgEnemies = null;
+		try {
+			imgEnemies = ImageIO.read(new File("Ressources/snakesheet.png"));
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+		ArrayList<BufferedImage> spritesUp = new ArrayList<>();
+		for(int i = 0; i<4;i++){
+			spritesUp.add(imgEnemies.getSubimage(56*i,0,56,64));
+		}
+		ArrayList<BufferedImage> spritesDown = new ArrayList<>();
+		spritesDown.add(imgEnemies.getSubimage(224,0,68,64));
+		spritesDown.add(imgEnemies.getSubimage(292,0,60,64));
+		spritesDown.add(imgEnemies.getSubimage(352,0,64,64));
+		spritesDown.add(imgEnemies.getSubimage(416,0,58,64));
+
+		ArrayList<BufferedImage> spritesRight = new ArrayList<>();
+		spritesRight.add(imgEnemies.getSubimage(474,0,94,64));
+		spritesRight.add(imgEnemies.getSubimage(568,0,84,64));
+		spritesRight.add(imgEnemies.getSubimage(652,0,88,64));
+		spritesRight.add(imgEnemies.getSubimage(740,0,60,64));
+
+		ArrayList<BufferedImage> spritesLeft = new ArrayList<>();
+		for(BufferedImage image1 :spritesRight){
+			spritesLeft.add(mirror(image1));
+		}
+
+
+		for(Enemy enemy : this.labyrinthe.getEnemies()){
+			if(enemy.getCurrentCmd() == Cmd.IDLEUP){
+				im.getGraphics().drawImage(spritesUp.get(enemy.getNoSprite()), enemy.getX()*10, enemy.getY()*5, 20 , 40   , null);
+			}
+			else if(enemy.getCurrentCmd() == Cmd.IDLEDOWN){
+				im.getGraphics().drawImage(spritesDown.get(enemy.getNoSprite()), enemy.getX()*10, enemy.getY()*5, 20 , 40   , null);
+			}
+			else if(enemy.getCurrentCmd() == Cmd.IDLERIGHT){
+				im.getGraphics().drawImage(spritesRight.get(enemy.getNoSprite()), enemy.getX()*10, enemy.getY()*5, 20 , 40   , null);
+			}
+			else if(enemy.getCurrentCmd() == Cmd.IDLELEFT){
+				im.getGraphics().drawImage(spritesLeft.get(enemy.getNoSprite()), enemy.getX()*10, enemy.getY()*5, 20 , 40   , null);
+
+			}
+		}
 	}
 
 	@Override

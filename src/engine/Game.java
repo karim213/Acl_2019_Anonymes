@@ -16,6 +16,11 @@ public interface Game {
 	 */
 	public void evolve(Cmd userCmd);
 
+	/*
+	 * methode gerant les deplacements automatiques des ennemis
+	 */
+	public void moveEnemies();
+
 	/**
 	 * @return true si et seulement si le jeu est fini
 	 */

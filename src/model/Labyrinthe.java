@@ -2,17 +2,24 @@ package model;
 
 import engine.Cmd;
 import engine.Game;
+import model.enemies.Enemy;
+import model.enemies.EnemyMovementStrategy;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class Labyrinthe implements Game {
 
-    private  final int HEIGHT ;
-    private  final int WIDTH ;
+    public static  int HEIGHT ;
+    public static  int WIDTH ;
     private Hero hero;
+    private List<Enemy> enemies;
 
     public Labyrinthe(int height, int width) {
         HEIGHT = height;
         WIDTH = width;
         hero = new Hero(0 , 0);
+        enemies = new ArrayList<>();
     }
 
     @Override
@@ -66,5 +73,25 @@ public class Labyrinthe implements Game {
 
     public Hero getHero() {
         return hero;
+    }
+
+    public List<Enemy> getEnemies() {
+        return enemies;
+    }
+
+    public void addEnemy(Enemy enemy){
+        enemies.add(enemy);
+    }
+
+    public void moveEnemies(){
+        for(Enemy enemy : enemies){
+                enemy.move();
+        }
+    }
+
+    public void setStrategy(EnemyMovementStrategy strategy){
+        for(Enemy enemy : enemies){
+            enemy.setMovementStrategy(strategy);
+        }
     }
 }
