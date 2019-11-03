@@ -12,7 +12,6 @@ public class Hero {
     private int y;
     private Cmd currentCmd;
     private  boolean isAttaque;
-    private BufferedImage[] sprites;
 
 
     public Hero(int x, int y) {
