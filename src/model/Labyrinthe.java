@@ -30,6 +30,7 @@ public class Labyrinthe implements Game {
     public void evolve(Cmd userCmd) {
         int x = hero.getX();
         int y = hero.getY();
+
            switch (userCmd){
                case UP:
                    if (hero.getY()>0 && !enemies.isEnemy(x, y-1) && isFree(x, y-1)){
@@ -58,6 +59,7 @@ public class Labyrinthe implements Game {
                case RIGHT:
                    if (hero.getX()<WIDTH && !enemies.isEnemy(x+1, y) && isFree(x+1, y)){
                        if (chest.isOnChest(x+1, y)){
+                           System.out.println("yes");
                            isFinished = true;
                        }
                        hero.goRight();

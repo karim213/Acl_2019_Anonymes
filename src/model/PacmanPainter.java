@@ -76,9 +76,10 @@ public class PacmanPainter implements GamePainter {
 	 */
 	@Override
 	public void draw(BufferedImage im) {
-         this.drawHero(im);
-         this.wallPainter.draw(im,labyrinthe);
-         this.chestPainter.draw(im,labyrinthe);
+		im.getGraphics().drawImage(this.backgroundSprite, 0, 0, WIDTH, HEIGHT, null);
+		this.wallPainter.draw(im,labyrinthe);
+		this.chestPainter.draw(im,labyrinthe);
+		this.drawHero(im);
 	}
 
 	public void drawHero(BufferedImage im){
@@ -184,7 +185,6 @@ public class PacmanPainter implements GamePainter {
 
 		}
 
-		im.getGraphics().drawImage(this.backgroundSprite, 0, 0, WIDTH, HEIGHT, null);
 
 		im.getGraphics().drawImage(subHeroSprite, this.labyrinthe.getHero().getX()*10, this.labyrinthe.getHero().getY()*5, 20 , 40   , null);
 

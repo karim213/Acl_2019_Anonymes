@@ -18,7 +18,7 @@ public class Walls {
 
     public boolean isPosFree(int x, int y) {
         for (Wall w : walls) {
-            if (!w.isPosFree(x, y)){
+            if (w.getPosition().getX() == x && w.getPosition().getY() == y){
                 return false;
             }
         }

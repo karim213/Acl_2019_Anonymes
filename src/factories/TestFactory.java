@@ -28,7 +28,7 @@ public class TestFactory {
             walls.addWall(40, 40);
             walls.addWall(55, 55);
 
-            Labyrinthe labyrinthe = new Labyrinthe(80 , 80, new Hero(40, 40), enemies, walls, new Chest(new Position(20, 35)));
+            Labyrinthe labyrinthe = new Labyrinthe(80 , 80, new Hero(0, 0), enemies, walls, new Chest(new Position(20, 35)));
 
             startegie.setGame(labyrinthe);
 
