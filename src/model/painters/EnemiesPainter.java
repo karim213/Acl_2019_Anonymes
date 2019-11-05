@@ -1,20 +1,84 @@
 package model.painters;
 
+import engine.Cmd;
 import model.Labyrinthe;
 import model.Position;
+import model.enemies.Enemy;
 
 
+import javax.imageio.ImageIO;
 import java.awt.*;
+import java.awt.geom.AffineTransform;
+import java.awt.image.AffineTransformOp;
 import java.awt.image.BufferedImage;
+import java.io.File;
+import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
 
 public class EnemiesPainter implements Painter {
+    private BufferedImage imgEnemies;
+    private List<BufferedImage> spritesUp ;
+    private List<BufferedImage> spritesDown ;
+    private List<BufferedImage> spritesRight ;
+    private List<BufferedImage> spritesLeft ;
+
+    public EnemiesPainter(){
+        try {
+            imgEnemies = ImageIO.read(this.getClass().getResourceAsStream("/Ressources/snakesheet.png"));
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+        spritesUp = new ArrayList<>();
+        for(int i = 0; i<4;i++){
+            spritesUp.add(imgEnemies.getSubimage(56*i,0,56,64));
+        }
+        spritesDown = new ArrayList<>();
+        spritesDown.add(imgEnemies.getSubimage(224,0,68,64));
+        spritesDown.add(imgEnemies.getSubimage(292,0,60,64));
+        spritesDown.add(imgEnemies.getSubimage(352,0,64,64));
+        spritesDown.add(imgEnemies.getSubimage(416,0,58,64));
+
+        spritesRight = new ArrayList<>();
+        spritesRight.add(imgEnemies.getSubimage(474,0,94,64));
+        spritesRight.add(imgEnemies.getSubimage(568,0,84,64));
+        spritesRight.add(imgEnemies.getSubimage(652,0,88,64));
+        spritesRight.add(imgEnemies.getSubimage(740,0,60,64));
+
+        spritesLeft = new ArrayList<>();
+        for(BufferedImage image1 :spritesRight){
+            spritesLeft.add(mirror(image1));
+        }
+    }
+
+
+    public BufferedImage mirror(BufferedImage image){
+        AffineTransform tx = AffineTransform.getScaleInstance(-1, 1);
+        tx.translate(-image.getWidth(null), 0);
+        AffineTransformOp op = new AffineTransformOp(tx,
+                AffineTransformOp.TYPE_NEAREST_NEIGHBOR);
+        image = op.filter(image, null);
+        return image;
+    }
+
+
+
     @Override
     public void draw(BufferedImage im, Labyrinthe game) {
-        Graphics2D crayon = (Graphics2D) im.getGraphics();
-        crayon.setColor(Color.red);
-
-        for (Position p : game.getEnemies().getEnemiesPosition()){
-            crayon.fillRect(p.getX()*10,p.getY()*5,10,10);
+        for(Enemy enemy : game.getEnemies().getEnemies()){
+            if(enemy.getCurrentCmd() == Cmd.IDLEUP){
+                im.getGraphics().drawImage(spritesUp.get(enemy.getNoSprite()), enemy.getX()*10, enemy.getY()*5, 20 , 20   , null);
+            }
+            else if(enemy.getCurrentCmd() == Cmd.IDLEDOWN){
+                im.getGraphics().drawImage(spritesDown.get(enemy.getNoSprite()), enemy.getX()*10, enemy.getY()*5, 20 , 20   , null);
+            }
+            else if(enemy.getCurrentCmd() == Cmd.IDLERIGHT){
+                im.getGraphics().drawImage(spritesRight.get(enemy.getNoSprite()), enemy.getX()*10, enemy.getY()*5, 20 , 20   , null);
+            }
+            else if(enemy.getCurrentCmd() == Cmd.IDLELEFT){
+                im.getGraphics().drawImage(spritesLeft.get(enemy.getNoSprite()), enemy.getX()*10, enemy.getY()*5, 20 , 20   , null);
+            }
         }
     }
 }

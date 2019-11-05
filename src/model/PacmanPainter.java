@@ -53,14 +53,14 @@ public class PacmanPainter implements GamePainter {
 		this.labyrinthe = labyrinthe;
 
 		try {
-			this.heroSprite = ImageIO.read(new File("Ressources/heroSpriteMovements.png"));
+			this.heroSprite = ImageIO.read(this.getClass().getResourceAsStream("/Ressources/heroSpriteMovements.png"));
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
 		this.subHeroSprite = null;
 
 		try {
-			this.backgroundSprite = ImageIO.read(new File("Ressources/background1.png"));
+			this.backgroundSprite = ImageIO.read(this.getClass().getResourceAsStream("/Ressources/background1.png"));
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
@@ -79,6 +79,7 @@ public class PacmanPainter implements GamePainter {
 		im.getGraphics().drawImage(this.backgroundSprite, 0, 0, WIDTH, HEIGHT, null);
 		this.wallPainter.draw(im,labyrinthe);
 		this.chestPainter.draw(im,labyrinthe);
+		this.enemiesPainter.draw(im,labyrinthe);
 		this.drawHero(im);
 	}
 
@@ -209,6 +210,13 @@ public class PacmanPainter implements GamePainter {
 		return image;
 	}
 
+	public void drawOver(BufferedImage im) {
+		try {
+			im.getGraphics().drawImage(ImageIO.read(this.getClass().getResourceAsStream("/Ressources/over.png")), 0, 0, WIDTH, HEIGHT, null);
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+	}
 
 	@Override
 	public Labyrinthe getLabyrinthe(){

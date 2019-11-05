@@ -43,8 +43,8 @@ public class GraphicalInterface  {
 	/**
 	 * mise a jour du dessin
 	 */
-	public void paint() {
-		this.panel.drawGame();	
+	public void paint(boolean over) {
+		this.panel.drawGame(over);
 	}
 	
 }

@@ -8,24 +8,27 @@ import model.walls.Walls;
 
 public class Labyrinthe implements Game {
 
-    private  final int HEIGHT ;
-    private  final int WIDTH ;
+    public static  int HEIGHT ;
+    public static  int WIDTH ;
     private Hero hero;
     private Enemies enemies;
     private Walls walls;
     private Chest chest;
     private boolean isFinished;
 
-    public Labyrinthe(int HEIGHT, int WIDTH, Hero hero, Enemies enemies, Walls walls, Chest chest) {
+
+
+    public Labyrinthe(int HEIGHT, int WIDTH, Hero hero, Walls walls, Chest chest) {
         this.HEIGHT = HEIGHT;
         this.WIDTH = WIDTH;
         this.hero = hero;
-        this.enemies = enemies;
         this.walls = walls;
         this.chest = chest;
         this.isFinished = false;
     }
-
+    public void setEnemies(Enemies enemies) {
+        this.enemies = enemies;
+    }
     @Override
     public void evolve(Cmd userCmd) {
         int x = hero.getX();
@@ -59,7 +62,6 @@ public class Labyrinthe implements Game {
                case RIGHT:
                    if (hero.getX()<WIDTH && !enemies.isEnemy(x+1, y) && isFree(x+1, y)){
                        if (chest.isOnChest(x+1, y)){
-                           System.out.println("yes");
                            isFinished = true;
                        }
                        hero.goRight();
@@ -68,18 +70,18 @@ public class Labyrinthe implements Game {
                case IDLE: break;
                case ATTACK:  this.hero.attaque(); break;
            }
+            if(enemies.isEnemy(getHero().getX(),getHero().getY()))
+            this.getHero().setOver(true);
            enemiesProcess();
-
-        System.out.println("("+this.hero.getX()+" , "+this.hero.getY()+" )");
     }
 
     private void enemiesProcess(){
-        enemies.processMonsters(hero.getX(), hero.getY());
+        enemies.processMonsters();
     }
 
     @Override
     public boolean isFinished() {
-        return isFinished;
+        return isFinished||hero.isOver();
     }
 
     public boolean isFree(int x , int y){

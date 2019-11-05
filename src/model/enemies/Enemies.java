@@ -6,28 +6,28 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class Enemies {
-    private List<IEnemy> enemies;
+    private List<Enemy> enemies;
 
     public Enemies() {
         this.enemies = new ArrayList<>();
     }
 
-    public void addEnemie(IEnemy enemy){
+    public void addEnemie(Enemy enemy){
         enemies.add(enemy);
     }
 
-    public boolean isEnemy(int x, int y){
-        for (IEnemy e : enemies){
-            if (e.getPosition().equals(new Position(x, y))){
-                return true;
-            }
+    public boolean isEnemy(int x , int y){
+        boolean isEnem=false;
+        for (Enemy enemy : enemies){
+            if(enemy.getY()==y &&  enemy.getX()==x)
+                isEnem= true;
         }
-        return false;
+        return isEnem;
     }
 
-    public void processMonsters(int x, int y){
-        for (IEnemy e : enemies){
-            e.goTo(x, y);
+    public void processMonsters(){
+        for (Enemy e : enemies){
+            e.move();
         }
     }
 
@@ -35,9 +35,19 @@ public class Enemies {
         List<Position> res = new ArrayList<>();
 
         for (int i = 0; i < enemies.size(); i++){
-                    res.add(enemies.get(i).getPosition());
+            Position position = new Position(enemies.get(i).getX(),enemies.get(i).getY());
+            res.add(position);
         }
         return res;
     }
 
+    public List<Enemy> getEnemies() {
+        return enemies;
+    }
+
+    public void setStrategy(EnemyMovementStrategy strategy){
+        for(Enemy enemy : enemies){
+            enemy.setMovementStrategy(strategy);
+        }
+    }
 }

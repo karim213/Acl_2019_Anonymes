@@ -45,7 +45,6 @@ public class PacmanController implements GameController {
 	 */
 	public void keyPressed(KeyEvent e) {
 
-		System.out.println(e.getKeyChar());
 		switch (e.getKeyChar()) {
 		// si on appuie sur 'q',commande joueur est gauche
 			case 'q':
@@ -76,7 +75,6 @@ public class PacmanController implements GameController {
 				this.commandeEnCours = Cmd.IDLE;
 				break;
 		}
-		this.labyrinthe.evolve(commandeEnCours);
 
 	}
 

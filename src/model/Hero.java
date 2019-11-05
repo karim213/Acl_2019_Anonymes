@@ -12,6 +12,7 @@ public class Hero {
     private int y;
     private Cmd currentCmd;
     private  boolean isAttaque;
+    private boolean over;
 
 
     public Hero(int x, int y) {
@@ -99,5 +100,11 @@ public class Hero {
     public void setAttaque(Boolean isAttaque){
         this.isAttaque = isAttaque;
     }
+    public void setOver(boolean over) {
+        this.over = over;
+    }
 
+    public boolean isOver() {
+        return over;
+    }
 }

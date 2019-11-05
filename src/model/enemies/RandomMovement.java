@@ -1,56 +1,39 @@
 package model.enemies;
 
-import model.Labyrinthe;
-import model.Position;
+import engine.Cmd;
 
-import java.util.Random;
-
-public class RandomMovement implements EnemyMovementStrategy{
-
-    Labyrinthe game;
-
-    public RandomMovement() {
-    }
-
-    public void setGame(Labyrinthe game) {
-        this.game = game;
-    }
+public class RandomMovement implements EnemyMovementStrategy {
 
     @Override
-    public Position move(Position position) {
-        Random random = new Random();
-        boolean invalide = true;
-        Position res = new Position(0, 0);
-
-        while (invalide){
-            int direction = random.nextInt(4);
-
-            if (direction == 0){
-                if (game.isFree(position.getX()+1, position.getY())){
-                    invalide = false;
-                    res = new Position(position.getX()+1, position.getY());
-                }
-            }
-            else if (direction == 1){
-                if (game.isFree(position.getX()-1, position.getY())){
-                    invalide = false;
-                    res = new Position(position.getX()-1, position.getY());
-                }
-            }
-            else if (direction == 2) {
-                if (game.isFree(position.getX(), position.getY()+1)){
-                    invalide = false;
-                    res = new Position(position.getX(), position.getY()+1);
-                }
-            }
-            else if (direction == 3) {
-                if (game.isFree(position.getX(), position.getY()-1)){
-                    invalide = false;
-                    res = new Position(position.getX(), position.getY()-1);
-                }
+    public void move(Enemy enemy) {
+        if(enemy.getCurrentCmd()==null) {
+            int n = (int) (Math.random() * 4) + 1;
+            switch (n) {
+                case 1:
+                    enemy.goUp();
+                    break;
+                case 2:
+                    enemy.goDown();
+                    break;
+                case 3:
+                    enemy.goLeft();
+                    break;
+                case 4:
+                    enemy.goRight();
+                    break;
             }
         }
-
-        return res;
+        else if(enemy.getCurrentCmd()== Cmd.IDLEUP) {
+            enemy.goUp();
+        }
+        else if(enemy.getCurrentCmd()== Cmd.IDLEDOWN) {
+            enemy.goDown();
+        }
+        else if(enemy.getCurrentCmd()== Cmd.IDLELEFT) {
+            enemy.goLeft();
+        }
+        else if(enemy.getCurrentCmd()== Cmd.IDLERIGHT) {
+            enemy.goRight();
+        }
     }
 }

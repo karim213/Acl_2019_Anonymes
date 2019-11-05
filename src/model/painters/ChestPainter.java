@@ -14,7 +14,7 @@ public class ChestPainter implements Painter {
 
     public ChestPainter(){
         try {
-            chestSprite = ImageIO.read(new File("Ressources/chest.png"));
+            chestSprite = ImageIO.read(this.getClass().getResourceAsStream("/Ressources/chest.png"));
         } catch (IOException e) {
             e.printStackTrace();
         }
