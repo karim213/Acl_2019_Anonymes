@@ -36,7 +36,7 @@ public class Labyrinthe implements Game {
 
            switch (userCmd){
                case UP:
-                   if (hero.getY()>0 && !enemies.isEnemy(x, y-1) && isFree(x, y-1)){
+                   if (hero.getY()>0 &&  isFree(x, y-1)){
                        if (chest.isOnChest(x, y-1)){
                            isFinished = true;
                        }
@@ -44,7 +44,7 @@ public class Labyrinthe implements Game {
                    }
                    break;
                case DOWN:
-                   if (hero.getY()<HEIGHT && !enemies.isEnemy(x, y+1) && isFree(x, y+1)){
+                   if (hero.getY()<HEIGHT && isFree(x, y+1)){
                        if (chest.isOnChest(x, y+1)){
                            isFinished = true;
                        }
@@ -52,7 +52,7 @@ public class Labyrinthe implements Game {
                    }
                    break;
                case LEFT:
-                   if (hero.getX()>0 && !enemies.isEnemy(x-1, y) && isFree(x-1, y)){
+                   if (hero.getX()>0 && isFree(x-1, y)){
                        if (chest.isOnChest(x-1, y)){
                            isFinished = true;
                        }
@@ -60,7 +60,7 @@ public class Labyrinthe implements Game {
                    }
                    break;
                case RIGHT:
-                   if (hero.getX()<WIDTH && !enemies.isEnemy(x+1, y) && isFree(x+1, y)){
+                   if (hero.getX()<WIDTH &&  isFree(x+1, y)){
                        if (chest.isOnChest(x+1, y)){
                            isFinished = true;
                        }
@@ -68,7 +68,10 @@ public class Labyrinthe implements Game {
                    }
                    break;
                case IDLE: break;
-               case ATTACK:  this.hero.attaque(); break;
+               case ATTACK:
+                   this.hero.attaque();
+                   this.attack();
+                   break;
            }
             if(enemies.isEnemy(getHero().getX(),getHero().getY()))
             this.getHero().setOver(true);
@@ -115,6 +118,33 @@ public class Labyrinthe implements Game {
 
     public Walls getWalls() {
         return walls;
+    }
+
+    public void attack(){
+        switch (this.hero.getCurrentCmd()){
+            case IDLELEFT:
+            case LEFT:
+                this.enemies.attack(this.hero.getX() -1 , this.hero.getY());
+                break;
+
+            case IDLERIGHT:
+            case RIGHT:
+                this.enemies.attack(this.hero.getX() +1 , this.hero.getY());
+                break;
+
+
+            case IDLEUP:
+            case UP:
+                this.enemies.attack(this.hero.getX()  , this.hero.getY() - 1);
+                break;
+
+
+            case IDLEDOWN:
+            case DOWN:
+                this.enemies.attack(this.hero.getX()  , this.hero.getY() + 1);
+                break;
+
+        }
     }
 }
 

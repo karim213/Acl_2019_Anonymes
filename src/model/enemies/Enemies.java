@@ -2,6 +2,7 @@ package model.enemies;
 
 import model.Position;
 
+import java.awt.*;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -17,10 +18,16 @@ public class Enemies {
     }
 
     public boolean isEnemy(int x , int y){
+        Rectangle rect1 = new Rectangle(x*10, y*5, 20, 40);
+
         boolean isEnem=false;
         for (Enemy enemy : enemies){
-            if(enemy.getY()==y &&  enemy.getX()==x)
+            Rectangle rect2 = new Rectangle(enemy.getX() *10 , enemy.getY()*5, 20, 10);
+            Rectangle intersection = rect1.intersection(rect2);
+
+            if(intersection.getHeight() > 0 && intersection.getWidth() > 0) {
                 isEnem= true;
+                }
         }
         return isEnem;
     }
@@ -28,6 +35,21 @@ public class Enemies {
     public void processMonsters(){
         for (Enemy e : enemies){
             e.move();
+        }
+    }
+
+    public void attack(int x , int y){
+
+        Rectangle rect1 = new Rectangle(x*10, y*5, 20, 40);
+
+        for (Enemy enemy : enemies){
+            Rectangle rect2 = new Rectangle(enemy.getX() *10 , enemy.getY()*5, 20, 10);
+            Rectangle intersection = rect1.intersection(rect2);
+
+            if(intersection.getHeight() > 0 && intersection.getWidth() > 0) {
+                this.enemies.remove(enemy);
+                return;
+            }
         }
     }
 

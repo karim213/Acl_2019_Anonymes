@@ -2,6 +2,7 @@ package model.walls;
 
 import model.Position;
 
+import java.awt.*;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -17,8 +18,16 @@ public class Walls {
     }
 
     public boolean isPosFree(int x, int y) {
+
+        Rectangle rect1 = new Rectangle(x*10, y*5, 20, 40);
+
         for (Wall w : walls) {
-            if (w.getPosition().getX() == x && w.getPosition().getY() == y){
+            Rectangle rect2 = new Rectangle(w.getPosition().getX() *10 , (w.getPosition().getY())*5, 20, 20);
+            Rectangle intersection = rect1.intersection(rect2);
+
+            System.out.println(intersection.toString());
+
+            if (intersection.getWidth() > 0 && intersection.getHeight() > 0){
                 return false;
             }
         }

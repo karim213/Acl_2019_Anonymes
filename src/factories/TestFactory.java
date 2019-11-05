@@ -19,12 +19,17 @@ public class TestFactory {
 
 
             Walls walls = new Walls();
-            walls.addWall(0, 40);
             walls.addWall(22, 20);
+            walls.addWall(22, 24);
+            walls.addWall(26, 20);
+            walls.addWall(30, 20);
+
+            walls.addWall(22, 28);
+
             walls.addWall(30, 30);
             walls.addWall(40, 40);
 
-            Labyrinthe labyrinthe = new Labyrinthe(40 , 40, new Hero(20, 10), walls, new Chest(new Position(20, 35)));
+            Labyrinthe labyrinthe = new Labyrinthe(80 , 80, new Hero(20, 10), walls, new Chest(new Position(20, 35)));
 
             Enemies enemies = new Enemies();
             EnemyMovementStrategy strategy = new RandomMovement();
