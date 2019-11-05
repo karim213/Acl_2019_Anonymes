@@ -8,6 +8,10 @@ package engine;
  */
 public class GameEngineGraphical {
 
+	double interpolation = 0;
+	final int TICKS_PER_SECOND = 25;
+	final int SKIP_TICKS = 1000 / TICKS_PER_SECOND;
+	final int MAX_FRAMESKIP = 5;
 	/**
 	 * le game a executer
 	 */
@@ -55,16 +59,28 @@ public class GameEngineGraphical {
 		this.gui = new GraphicalInterface(this.gamePainter,this.gameController);
 
 		// boucle de game
-		while (!this.game.isFinished()) {
-			// demande controle utilisateur
+		double next_game_tick = System.currentTimeMillis();
+    int loops;
+
+    while (!this.game.isFinished()) {
+        loops = 0;
+        while (System.currentTimeMillis() > next_game_tick
+                && loops < MAX_FRAMESKIP) {
+
+            // demande controle utilisateur
 			Cmd c = this.gameController.getCommand();
 			// fait evoluer le game
 			this.game.evolve(c);
-			// affiche le game
-			this.gui.paint();
 			// met en attente
-			Thread.sleep(100);
-		}
-		System.exit(0);
-	}
+
+            next_game_tick += SKIP_TICKS;
+            loops++;
+        }
+
+        interpolation = (System.currentTimeMillis() + SKIP_TICKS - next_game_tick
+                / (double) SKIP_TICKS);
+		// affiche le game
+		this.gui.paint(false,null);
+    }
+		this.gui.paint(true,game.isOver()?"lose":"win");	}
 }
