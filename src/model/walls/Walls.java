@@ -25,7 +25,6 @@ public class Walls {
             Rectangle rect2 = new Rectangle(w.getPosition().getX() *10 , (w.getPosition().getY())*5, 20, 20);
             Rectangle intersection = rect1.intersection(rect2);
 
-            System.out.println(intersection.toString());
 
             if (intersection.getWidth() > 0 && intersection.getHeight() > 0){
                 return false;
