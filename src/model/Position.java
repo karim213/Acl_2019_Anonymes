@@ -26,17 +26,4 @@ public class Position {
         this.y = y;
     }
 
-    public boolean equals(Position p) {
-        return p.x == this.x && p.y == this.y;
-    }
-
-    public boolean on(Position p){
-        if (p.x >= this.x && p.x <= this.x + 1) {
-            if (p.y <= this.y && p.y >= this.y - 5){
-                return true;
-            }
-        }
-        return false;
-    }
-
 }

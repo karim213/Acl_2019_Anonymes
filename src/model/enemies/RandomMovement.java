@@ -1,56 +1,46 @@
 package model.enemies;
 
-import model.Labyrinthe;
-import model.Position;
 
-import java.util.Random;
+public class RandomMovement implements EnemyMovementStrategy {
 
-public class RandomMovement implements EnemyMovementStrategy{
-
-    Labyrinthe game;
-
-    public RandomMovement() {
-    }
-
-    public void setGame(Labyrinthe game) {
-        this.game = game;
-    }
+    private int nbMvts = 0;
 
     @Override
-    public Position move(Position position) {
-        Random random = new Random();
-        boolean invalide = true;
-        Position res = new Position(0, 0);
-
-        while (invalide){
-            int direction = random.nextInt(4);
-
-            if (direction == 0){
-                if (game.isFree(position.getX()+1, position.getY())){
-                    invalide = false;
-                    res = new Position(position.getX()+1, position.getY());
+    public void move(Enemy enemy) {
+        if (nbMvts == 0){
+                int n = (int) (Math.random() * 4);
+                switch (n) {
+                    case 0:
+                        enemy.goUp();
+                        break;
+                    case 1:
+                        enemy.goDown();
+                        break;
+                    case 2:
+                        enemy.goLeft();
+                        break;
+                    case 3:
+                        enemy.goRight();
+                        break;
                 }
-            }
-            else if (direction == 1){
-                if (game.isFree(position.getX()-1, position.getY())){
-                    invalide = false;
-                    res = new Position(position.getX()-1, position.getY());
-                }
-            }
-            else if (direction == 2) {
-                if (game.isFree(position.getX(), position.getY()+1)){
-                    invalide = false;
-                    res = new Position(position.getX(), position.getY()+1);
-                }
-            }
-            else if (direction == 3) {
-                if (game.isFree(position.getX(), position.getY()-1)){
-                    invalide = false;
-                    res = new Position(position.getX(), position.getY()-1);
-                }
+            nbMvts = 10;
+        }
+        else {
+            switch (enemy.getCurrentCmd()) {
+                case UP:
+                    enemy.goUp();
+                    break;
+                case DOWN:
+                    enemy.goDown();
+                    break;
+                case LEFT:
+                    enemy.goLeft();
+                    break;
+                case RIGHT:
+                    enemy.goRight();
+                    break;
             }
         }
-
-        return res;
+        nbMvts--;
     }
 }

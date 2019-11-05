@@ -1,7 +1,5 @@
 package model.enemies;
 
-import model.Position;
-
 public interface EnemyMovementStrategy {
-    Position move(Position position);
+    void move(Enemy enemy);
 }

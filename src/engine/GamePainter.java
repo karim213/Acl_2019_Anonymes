@@ -1,5 +1,7 @@
 package engine;
 
+import model.Labyrinthe;
+
 import java.awt.image.BufferedImage;
 
 /**
@@ -10,6 +12,7 @@ import java.awt.image.BufferedImage;
  */
 public interface GamePainter {
 
+
 	/**
 	 * methode dessiner a completer. Elle construit une image correspondant au
 	 * jeu. Game est un attribut de l'afficheur
@@ -19,8 +22,13 @@ public interface GamePainter {
 	 */
 	public abstract void draw(BufferedImage image);
 
+	public abstract void drawOver(BufferedImage image);
+
+	public abstract void drawWin(BufferedImage image);
+
 	public abstract int getWidth();
 
 	public abstract int getHeight();
-	
+
+	public abstract Labyrinthe getLabyrinthe();
 }

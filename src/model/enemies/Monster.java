@@ -1,23 +1,14 @@
 package model.enemies;
 
-import model.Position;
+import model.Labyrinthe;
 
-public class Monster extends IEnemy{
+public class Monster extends Enemy {
 
-    private Position position;
 
-    public Monster(int x, int y, Enemies enemies, EnemyMovementStrategy strategy) {
-       super(enemies, strategy);
-       this.position = new Position(x, y);
+    public Monster(int x, int y , Labyrinthe labyrinthe) {
+        super(x, y, labyrinthe);
     }
 
-    @Override
-    void goTo(int x, int y) {
-        this.position = strategy.move(this.position);
-    }
 
-    @Override
-    Position getPosition() {
-        return position;
-    }
+
 }

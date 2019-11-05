@@ -39,12 +39,12 @@ public class GraphicalInterface  {
 		f.getContentPane().setFocusable(true);
 		f.getContentPane().requestFocus();
 	}
-	
+
 	/**
 	 * mise a jour du dessin
 	 */
-	public void paint() {
-		this.panel.drawGame();	
+	public void paint(boolean over,String s) {
+		this.panel.drawGame(over,s);
 	}
 	
 }
