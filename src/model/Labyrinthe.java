@@ -84,6 +84,11 @@ public class Labyrinthe implements Game {
         return isFinished||hero.isOver();
     }
 
+    @Override
+    public boolean isOver() {
+        return hero.isOver();
+    }
+
     public boolean isFree(int x , int y){
         return walls.isPosFree(x, y);
     }

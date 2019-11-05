@@ -24,6 +24,8 @@ public interface GamePainter {
 
 	public abstract void drawOver(BufferedImage image);
 
+	public abstract void drawWin(BufferedImage image);
+
 	public abstract int getWidth();
 
 	public abstract int getHeight();

@@ -14,7 +14,6 @@ import model.walls.Walls;
 public class Main {
 
 	public static void main(String[] args) throws InterruptedException {
-
 		GameEngineGraphical engine = TestFactory.getInstance();
 		engine.run();
 	}

@@ -1,22 +1,18 @@
 package model;
 
-import java.awt.*;
 import java.awt.geom.AffineTransform;
 import java.awt.image.AffineTransformOp;
 import java.awt.image.BufferedImage;
-import java.io.File;
+import java.io.FileInputStream;
 import java.io.IOException;
-import java.nio.Buffer;
 
 import engine.Cmd;
-import engine.Game;
 import engine.GamePainter;
 import model.painters.ChestPainter;
 import model.painters.EnemiesPainter;
 import model.painters.WallPainter;
 
 import javax.imageio.ImageIO;
-import javax.swing.border.EmptyBorder;
 
 /**
  * @author Horatiu Cirstea, Vincent Thomas
@@ -213,6 +209,14 @@ public class PacmanPainter implements GamePainter {
 	public void drawOver(BufferedImage im) {
 		try {
 			im.getGraphics().drawImage(ImageIO.read(this.getClass().getResourceAsStream("/Ressources/over.png")), 0, 0, WIDTH, HEIGHT, null);
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+	}
+
+	public void drawWin(BufferedImage im) {
+		try {
+			im.getGraphics().drawImage(ImageIO.read(this.getClass().getResourceAsStream("/Ressources/w.png")), 0, 0, WIDTH, HEIGHT, null);
 		} catch (IOException e) {
 			e.printStackTrace();
 		}

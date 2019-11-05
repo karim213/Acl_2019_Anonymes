@@ -61,9 +61,9 @@ public class GameEngineGraphical {
 			// fait evoluer le game
 			this.game.evolve(c);
 			// affiche le game
-			this.gui.paint(false);
+			this.gui.paint(false,null);
 			// met en attente
 			Thread.sleep(100);
 		}
-		this.gui.paint(true);	}
+		this.gui.paint(true,game.isOver()?"lose":"win");	}
 }

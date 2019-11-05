@@ -21,4 +21,9 @@ public interface Game {
 	 */
 	public boolean isFinished();
 
+	/**
+	 * @return true si et seulement si le joueur gagne
+	 */
+	public boolean isOver();
+
 }
