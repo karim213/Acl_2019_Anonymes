@@ -10,6 +10,8 @@ import java.awt.image.AffineTransformOp;
 import java.awt.image.BufferedImage;
 import java.io.IOException;
 
+import static util.Constants.HERO_SPRITE;
+
 public class HeroPainter implements Painter {
     private BufferedImage heroSprite;
     private BufferedImage reverseHeroSprite;
@@ -24,7 +26,7 @@ public class HeroPainter implements Painter {
 
     public HeroPainter(){
         try {
-            this.heroSprite = ImageIO.read(this.getClass().getResourceAsStream("/Ressources/hero1.png"));
+            this.heroSprite = ImageIO.read(this.getClass().getResourceAsStream(HERO_SPRITE));
         } catch (IOException e) {
             e.printStackTrace();
         }

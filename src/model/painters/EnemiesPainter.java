@@ -13,6 +13,8 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
+import static util.Constants.SNAKE_SPRITE;
+
 public class EnemiesPainter implements Painter {
     private BufferedImage imgEnemies;
     private List<BufferedImage> spritesUp ;
@@ -24,7 +26,7 @@ public class EnemiesPainter implements Painter {
     public EnemiesPainter(){
         numberSprite = 0;
         try {
-            imgEnemies = ImageIO.read(this.getClass().getResourceAsStream("/Ressources/snakesheet.png"));
+            imgEnemies = ImageIO.read(this.getClass().getResourceAsStream(SNAKE_SPRITE));
         } catch (IOException e) {
             e.printStackTrace();
         }

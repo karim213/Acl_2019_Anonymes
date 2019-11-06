@@ -7,6 +7,7 @@ import model.enemies.EnemyMovementStrategy;
 import model.enemies.Monster;
 import model.enemies.RandomMovement;
 import model.objects.Chest;
+import model.objects.Objects;
 import model.walls.Walls;
 
 public class TestFactory {
@@ -70,8 +71,12 @@ public class TestFactory {
             walls.addWall(40, 52);
             walls.addWall(44, 52);
 
+            Objects objects= new Objects();
+            objects.addChest(new Position(20,5));
+            objects.addTrap(new Position(30 , 5));
+            objects.addTrap(new Position(60 , 5));
 
-            Labyrinthe labyrinthe = new Labyrinthe(80 , 160, new Hero(70, 50), walls, new Chest(new Position(0, 2)));
+            Labyrinthe labyrinthe = new Labyrinthe(new Hero(70, 50), walls,objects);
 
             Enemies enemies = new Enemies();
             EnemyMovementStrategy strategy = new RandomMovement();

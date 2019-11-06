@@ -3,27 +3,26 @@ package model;
 import engine.Cmd;
 import engine.Game;
 import model.enemies.Enemies;
-import model.objects.Chest;
+import model.objects.Objects;
 import model.walls.Walls;
+
+import static util.Constants.*;
+
 
 public class Labyrinthe implements Game {
 
-    public static  int HEIGHT ;
-    public static  int WIDTH ;
     private Hero hero;
     private Enemies enemies;
     private Walls walls;
-    private Chest chest;
+    private Objects objects;
     private boolean isFinished;
 
 
 
-    public Labyrinthe(int HEIGHT, int WIDTH, Hero hero, Walls walls, Chest chest) {
-        this.HEIGHT = HEIGHT;
-        this.WIDTH = WIDTH;
+    public Labyrinthe(Hero hero, Walls walls,Objects objects) {
         this.hero = hero;
         this.walls = walls;
-        this.chest = chest;
+        this.objects = objects;
         this.isFinished = false;
     }
     public void setEnemies(Enemies enemies) {
@@ -37,7 +36,7 @@ public class Labyrinthe implements Game {
            switch (userCmd){
                case UP:
                    if (hero.getY()>0 &&  isFree(x, y-1)){
-                       if (chest.isOnChest(x, y-1)){
+                       if (objects.isOnChest(new Position( x, y-1))){
                            isFinished = true;
                        }
                        hero.goUp();
@@ -45,7 +44,7 @@ public class Labyrinthe implements Game {
                    break;
                case DOWN:
                    if (hero.getY()<HEIGHT-10 && isFree(x, y+1)){
-                       if (chest.isOnChest(x, y+1)){
+                       if (objects.isOnChest(new Position(x, y+1))){
                            isFinished = true;
                        }
                        hero.goDown();
@@ -53,7 +52,7 @@ public class Labyrinthe implements Game {
                    break;
                case LEFT:
                    if (hero.getX()>0 && isFree(x-1, y)){
-                       if (chest.isOnChest(x-1, y)){
+                       if (objects.isOnChest(new Position(x-1, y))){
                            isFinished = true;
                        }
                        hero.goLeft();
@@ -61,7 +60,7 @@ public class Labyrinthe implements Game {
                    break;
                case RIGHT:
                    if (hero.getX()<WIDTH-10 &&  isFree(x+1, y)){
-                       if (chest.isOnChest(x+1, y)){
+                       if (objects.isOnChest(new Position(x+1, y))){
                            isFinished = true;
                        }
                        hero.goRight();
@@ -75,7 +74,8 @@ public class Labyrinthe implements Game {
                    this.attack();
                    break;
            }
-             if(enemies.isEnemy(getHero().getX(),getHero().getY()))
+           this.objects.performObjectActions(hero);
+           if(enemies.isEnemy(getHero().getX(),getHero().getY()))
                 this.getHero().setOver(true);
            enemiesProcess();
     }
@@ -98,20 +98,12 @@ public class Labyrinthe implements Game {
         return walls.isPosFree(x, y);
     }
 
-    public int getHEIGHT() {
-        return HEIGHT;
-    }
-
-    public int getWIDTH() {
-        return WIDTH;
-    }
-
     public Hero getHero() {
         return hero;
     }
 
-    public Chest getChest() {
-        return chest;
+    public Objects getObjects(){
+        return objects;
     }
 
     public Enemies getEnemies() {

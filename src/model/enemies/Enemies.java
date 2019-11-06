@@ -39,7 +39,7 @@ public class Enemies {
 
     public void attack(int x , int y){
 
-        Rectangle rect1 = new Rectangle(x*5, y*5, 40, 40);
+        Rectangle rect1 = new Rectangle(x*5 - 60, y*5 - 60, 160, 160);
 
         for (Enemy enemy : enemies){
             Rectangle rect2 = new Rectangle(enemy.getX() *5 , enemy.getY()*5, 20, 20);

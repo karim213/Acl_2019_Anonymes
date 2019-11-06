@@ -3,6 +3,9 @@ package model.enemies;
 import engine.Cmd;
 import model.Labyrinthe;
 
+import static util.Constants.*;
+
+
 public abstract class Enemy {
     private int x;
     private int y;
@@ -10,7 +13,7 @@ public abstract class Enemy {
     private Cmd currentCmd;
     private Labyrinthe labyrinthe;
 
-    public Enemy(int x, int y, Labyrinthe labyrinthe) {
+    protected Enemy(int x, int y, Labyrinthe labyrinthe) {
         this.x = x;
         this.y = y;
         this.labyrinthe = labyrinthe;
@@ -41,7 +44,7 @@ public abstract class Enemy {
     }
 
     public void goDown(){
-        if(y < Labyrinthe.HEIGHT && labyrinthe.isFree( x, y+1)) {
+        if(y < HEIGHT && labyrinthe.isFree( x, y+1)) {
             this.setY(++y);
         }
         this.currentCmd = Cmd.DOWN;
@@ -55,7 +58,7 @@ public abstract class Enemy {
     }
 
     public void goRight(){
-        if(x< Labyrinthe.WIDTH && labyrinthe.isFree( x+1, y)){
+        if(x< WIDTH && labyrinthe.isFree( x+1, y)){
             this.setX(++x);
         }
         this.currentCmd = Cmd.RIGHT;
