@@ -10,6 +10,7 @@ import engine.Cmd;
 import engine.GamePainter;
 import model.painters.ChestPainter;
 import model.painters.EnemiesPainter;
+import model.painters.ScorePainter;
 import model.painters.WallPainter;
 
 import javax.imageio.ImageIO;
@@ -36,6 +37,7 @@ public class PacmanPainter implements GamePainter {
 	private WallPainter wallPainter;
 	private ChestPainter chestPainter;
 	private EnemiesPainter enemiesPainter;
+	private ScorePainter scorePainter;
 
 	/**
 	 * appelle constructeur parent
@@ -64,6 +66,7 @@ public class PacmanPainter implements GamePainter {
 		wallPainter = new WallPainter();
 		chestPainter = new ChestPainter();
 		enemiesPainter = new EnemiesPainter();
+		scorePainter = new ScorePainter();
 
 	}
 
@@ -77,6 +80,11 @@ public class PacmanPainter implements GamePainter {
 		this.chestPainter.draw(im,labyrinthe);
 		this.enemiesPainter.draw(im,labyrinthe);
 		this.drawHero(im);
+	}
+
+	@Override
+	public void drawScore(BufferedImage im) {
+		this.scorePainter.draw(im,labyrinthe);
 	}
 
 	public void drawHero(BufferedImage im){

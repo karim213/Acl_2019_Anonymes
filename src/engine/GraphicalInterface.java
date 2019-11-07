@@ -1,6 +1,7 @@
 package engine;
 
-import javax.swing.JFrame;
+import javax.swing.*;
+import java.awt.*;
 
 
 /**
@@ -15,7 +16,8 @@ public class GraphicalInterface  {
 	 * le Panel pour l'afficheur
 	 */
 	private DrawingPanel panel;
-	
+	private DrawingScorePanel scorePanel;
+
 	/**
 	 * la construction de l'interface graphique: JFrame avec panel pour le game
 	 * 
@@ -29,10 +31,17 @@ public class GraphicalInterface  {
 		
 		// attacher le panel contenant l'afficheur du game
 		this.panel=new DrawingPanel(gamePainter);
-		f.setContentPane(this.panel);
+		this.scorePanel = new DrawingScorePanel(gamePainter);
+
+		JPanel panel = new JPanel();
+		panel.setLayout(new GridBagLayout());
+		panel.setLayout(new BoxLayout(panel, BoxLayout.Y_AXIS));
+		panel.add(this.scorePanel );
+		panel.add(this.panel );
+		f.setContentPane(panel);
 		
 		// attacher controller au panel du game
-		this.panel.addKeyListener(gameController);	
+		panel.addKeyListener(gameController);
 		
 		f.pack();
 		f.setVisible(true);
@@ -45,6 +54,7 @@ public class GraphicalInterface  {
 	 */
 	public void paint(boolean over,String s) {
 		this.panel.drawGame(over,s);
+		this.scorePanel.drawGame(over, s);
 	}
 	
 }

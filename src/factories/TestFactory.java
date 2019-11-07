@@ -9,14 +9,16 @@ import model.enemies.RandomMovement;
 import model.objects.Chest;
 import model.walls.Walls;
 
+import java.io.*;
+import java.util.InputMismatchException;
+import java.util.Scanner;
+
 public class TestFactory {
     private static GameEngineGraphical engine = null;
 
-    public static GameEngineGraphical getInstance() {
+    public static GameEngineGraphical getInstance() throws IOException  {
 
         if (engine == null) {
-
-
 
             Walls walls = new Walls();
             walls.addWall(22, 20);
@@ -71,6 +73,7 @@ public class TestFactory {
             walls.addWall(36, 52);
 
 
+
             Labyrinthe labyrinthe = new Labyrinthe(80 , 80, new Hero(10, 10), walls, new Chest(new Position(25, 25)));
 
             Enemies enemies = new Enemies();
@@ -105,4 +108,7 @@ public class TestFactory {
 
         return engine;
     }
-}
+
+
+
+    }

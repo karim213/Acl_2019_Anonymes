@@ -13,6 +13,7 @@ public class Hero {
     private Cmd currentCmd;
     private  boolean isAttaque;
     private boolean over;
+    private int pv;
 
 
     public Hero(int x, int y) {
@@ -20,6 +21,7 @@ public class Hero {
         this.y = y;
         this.currentCmd = Cmd.IDLEDOWN;
         isAttaque = false;
+        this.pv = 3;
 
     }
 
@@ -107,4 +109,16 @@ public class Hero {
     public boolean isOver() {
         return over;
     }
+
+    public void addPv(){
+        this.pv++;
+    }
+    public void subPv(){
+        this.pv--;
+    }
+
+    public int getPv(){
+        return this.pv;
+    }
+
 }

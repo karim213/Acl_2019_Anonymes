@@ -26,7 +26,9 @@ public interface GamePainter {
 
 	public abstract void drawWin(BufferedImage image);
 
-	public abstract int getWidth();
+    void drawScore(BufferedImage im);
+
+    public abstract int getWidth();
 
 	public abstract int getHeight();
 

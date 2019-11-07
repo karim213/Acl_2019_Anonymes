@@ -74,7 +74,17 @@ public class Labyrinthe implements Game {
                    break;
            }
             if(enemies.isEnemy(getHero().getX(),getHero().getY()))
-            this.getHero().setOver(true);
+            {
+                this.getHero().subPv();
+                if (getHero().getPv() == 0)
+                    this.getHero().setOver(true);
+                try {
+                    Thread.sleep(200);
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
+            }
+
            enemiesProcess();
     }
 
