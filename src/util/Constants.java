@@ -11,5 +11,6 @@ public final class Constants {
     public static final String WIN_SPRITE = "/Ressources/w.png";
     public static final String SNAKE_SPRITE = "/Ressources/snakesheet.png";
     public static final String TRAP_SPRITE = "/Ressources/trap.png";
+    public static final String GHOST_SPRITE = "/Ressources/ghost.png";
 
 }

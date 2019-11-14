@@ -1,12 +1,14 @@
 package model.enemies;
 
 
+import model.Labyrinthe;
+
 public class RandomMovement implements EnemyMovementStrategy {
 
     private int nbMvts = 0;
 
     @Override
-    public void move(Enemy enemy) {
+    public void move(Enemy enemy, Labyrinthe game) {
         if (nbMvts == 0){
                 int n = (int) (Math.random() * 4);
                 switch (n) {

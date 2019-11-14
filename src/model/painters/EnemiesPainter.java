@@ -6,6 +6,7 @@ import model.enemies.Enemy;
 
 
 import javax.imageio.ImageIO;
+import java.awt.*;
 import java.awt.geom.AffineTransform;
 import java.awt.image.AffineTransformOp;
 import java.awt.image.BufferedImage;
@@ -13,9 +14,13 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
+import static util.Constants.GHOST_SPRITE;
 import static util.Constants.SNAKE_SPRITE;
 
 public class EnemiesPainter implements Painter {
+
+    private BufferedImage imgGhost;
+    private BufferedImage mirrorImgGhost;
     private BufferedImage imgEnemies;
     private List<BufferedImage> spritesUp ;
     private List<BufferedImage> spritesDown ;
@@ -24,6 +29,14 @@ public class EnemiesPainter implements Painter {
     private int numberSprite;
 
     public EnemiesPainter(){
+        try {
+            imgGhost = ImageIO.read(this.getClass().getResourceAsStream(GHOST_SPRITE));
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+        mirrorImgGhost = mirror(imgGhost);
+
         numberSprite = 0;
         try {
             imgEnemies = ImageIO.read(this.getClass().getResourceAsStream(SNAKE_SPRITE));
@@ -68,17 +81,34 @@ public class EnemiesPainter implements Painter {
     @Override
     public void draw(BufferedImage im, Labyrinthe game) {
         for(Enemy enemy : game.getEnemies().getEnemies()){
-            if(enemy.getCurrentCmd() == Cmd.UP){
-                im.getGraphics().drawImage(spritesUp.get(numberSprite), enemy.getX()*5, enemy.getY()*5, 20 , 20   , null);
+
+            if (enemy.getType().equals("Monster")) {
+                // HitBox
+                im.getGraphics().drawRect(enemy.getX() *5 , enemy.getY()*5, 20, 20);
+
+                if(enemy.getCurrentCmd() == Cmd.UP){
+                    im.getGraphics().drawImage(spritesUp.get(numberSprite), enemy.getX()*5, enemy.getY()*5, 20 , 20   , null);
+                }
+                else if(enemy.getCurrentCmd() == Cmd.DOWN){
+                    im.getGraphics().drawImage(spritesDown.get(numberSprite), enemy.getX()*5, enemy.getY()*5, 20 , 20   , null);
+                }
+                else if(enemy.getCurrentCmd() == Cmd.LEFT){
+                    im.getGraphics().drawImage(spritesRight.get(numberSprite), enemy.getX()*5, enemy.getY()*5, 20 , 20   , null);
+                }
+                else if(enemy.getCurrentCmd() == Cmd.RIGHT){
+                    im.getGraphics().drawImage(spritesLeft.get(numberSprite), enemy.getX()*5, enemy.getY()*5, 20 , 20   , null);
+                }
             }
-            else if(enemy.getCurrentCmd() == Cmd.DOWN){
-                im.getGraphics().drawImage(spritesDown.get(numberSprite), enemy.getX()*5, enemy.getY()*5, 20 , 20   , null);
-            }
-            else if(enemy.getCurrentCmd() == Cmd.LEFT){
-                im.getGraphics().drawImage(spritesRight.get(numberSprite), enemy.getX()*5, enemy.getY()*5, 20 , 20   , null);
-            }
-            else if(enemy.getCurrentCmd() == Cmd.RIGHT){
-                im.getGraphics().drawImage(spritesLeft.get(numberSprite), enemy.getX()*5, enemy.getY()*5, 20 , 20   , null);
+            else {
+                // HitBox
+                im.getGraphics().drawRect(enemy.getX() *5 , enemy.getY()*5, 40, 40);
+
+                if(enemy.getCurrentCmd() == Cmd.LEFT || enemy.getCurrentCmd() == Cmd.DOWN){
+                    im.getGraphics().drawImage(mirrorImgGhost, enemy.getX()*5, enemy.getY()*5, 40 , 40   , null);
+                }
+                else {
+                    im.getGraphics().drawImage(imgGhost, enemy.getX()*5, enemy.getY()*5, 40 , 40   , null);
+                }
             }
         }
         numberSprite++;

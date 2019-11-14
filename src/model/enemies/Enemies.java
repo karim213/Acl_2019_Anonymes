@@ -39,10 +39,16 @@ public class Enemies {
 
     public void attack(int x , int y){
 
-        Rectangle rect1 = new Rectangle(x*5 - 60, y*5 - 60, 160, 160);
+        Rectangle rect1 = new Rectangle(x*5 - 20, y*5 - 20, 80, 80);
+        Rectangle rect2;
 
         for (Enemy enemy : enemies){
-            Rectangle rect2 = new Rectangle(enemy.getX() *5 , enemy.getY()*5, 20, 20);
+            if (enemy.getType().equals("Monster")) {
+                rect2 = new Rectangle(enemy.getX() *5 , enemy.getY()*5, 20, 20);
+            }
+            else {
+                rect2 = new Rectangle(enemy.getX() *5 , enemy.getY()*5, 40, 40);
+            }
             Rectangle intersection = rect1.intersection(rect2);
 
             if(intersection.getHeight() > 0 && intersection.getWidth() > 0) {
@@ -54,11 +60,5 @@ public class Enemies {
 
     public List<Enemy> getEnemies() {
         return enemies;
-    }
-
-    public void setStrategy(EnemyMovementStrategy strategy){
-        for(Enemy enemy : enemies){
-            enemy.setMovementStrategy(strategy);
-        }
     }
 }

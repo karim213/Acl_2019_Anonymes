@@ -7,10 +7,10 @@ import static util.Constants.*;
 
 
 public abstract class Enemy {
-    private int x;
-    private int y;
+    protected int x;
+    protected int y;
     private EnemyMovementStrategy movementStrategy;
-    private Cmd currentCmd;
+    protected Cmd currentCmd;
     private Labyrinthe labyrinthe;
 
     protected Enemy(int x, int y, Labyrinthe labyrinthe) {
@@ -19,6 +19,8 @@ public abstract class Enemy {
         this.labyrinthe = labyrinthe;
         currentCmd = Cmd.DOWN;
     }
+
+    public abstract String getType();
 
     public int getX() {
         return x;
@@ -44,7 +46,7 @@ public abstract class Enemy {
     }
 
     public void goDown(){
-        if(y < HEIGHT && labyrinthe.isFree( x, y+1)) {
+        if(y < HEIGHT-10 && labyrinthe.isFree( x, y+1)) {
             this.setY(++y);
         }
         this.currentCmd = Cmd.DOWN;
@@ -58,14 +60,14 @@ public abstract class Enemy {
     }
 
     public void goRight(){
-        if(x< WIDTH && labyrinthe.isFree( x+1, y)){
+        if(x< WIDTH-10 && labyrinthe.isFree( x+1, y)){
             this.setX(++x);
         }
         this.currentCmd = Cmd.RIGHT;
     }
 
     public void move(){
-        movementStrategy.move(this);
+        movementStrategy.move(this, labyrinthe);
     }
 
     public void setMovementStrategy(EnemyMovementStrategy movementStrategy) {

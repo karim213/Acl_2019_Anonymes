@@ -40,8 +40,10 @@ public class HeroPainter implements Painter {
 
     @Override
     public void draw(BufferedImage im, Labyrinthe game) {
-
         this.hero = game.getHero();
+
+        // HitBox
+        im.getGraphics().drawRect(hero.getX()*5 - 20, hero.getY()*5 - 20, 80, 80);
 
         if (hero.isAttaque()){
             if (yoffset + 3 < 6){

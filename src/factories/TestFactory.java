@@ -2,11 +2,7 @@ package factories;
 
 import engine.GameEngineGraphical;
 import model.*;
-import model.enemies.Enemies;
-import model.enemies.EnemyMovementStrategy;
-import model.enemies.Monster;
-import model.enemies.RandomMovement;
-import model.objects.Chest;
+import model.enemies.*;
 import model.objects.Objects;
 import model.walls.Walls;
 
@@ -79,27 +75,53 @@ public class TestFactory {
             Labyrinthe labyrinthe = new Labyrinthe(new Hero(70, 50), walls,objects);
 
             Enemies enemies = new Enemies();
-            EnemyMovementStrategy strategy = new RandomMovement();
-            enemies.addEnemie(new Monster(28, 44,labyrinthe));
-            enemies.addEnemie(new Monster(31, 42,labyrinthe));
-            enemies.addEnemie(new Monster(26, 29,labyrinthe));
-            enemies.addEnemie(new Monster(30, 30,labyrinthe));
 
+            Monster m1 = new Monster(28, 44,labyrinthe);
+            m1.setMovementStrategy(new AStarStrategy());
+            enemies.addEnemie(m1);
 
-            enemies.addEnemie(new Monster(28, 60,labyrinthe));
-            enemies.addEnemie(new Monster(38, 36,labyrinthe));
-            enemies.addEnemie(new Monster(42, 41,labyrinthe));
-            enemies.addEnemie(new Monster(60, 60,labyrinthe));
+            Monster m2 = new Monster(3, 40,labyrinthe);
+            m2.setMovementStrategy(new AStarStrategy());
+            enemies.addEnemie(m2);
 
+            Monster m3 = new Monster(26, 29,labyrinthe);
+            m3.setMovementStrategy(new AStarStrategy());
+            enemies.addEnemie(m3);
 
-            enemies.addEnemie(new Monster(10, 60,labyrinthe));
-            enemies.addEnemie(new Monster(63, 10,labyrinthe));
-            enemies.addEnemie(new Monster(26, 12,labyrinthe));
-            enemies.addEnemie(new Monster(39, 38,labyrinthe));
+            Monster m4 = new Monster(30, 30,labyrinthe);
+            m4.setMovementStrategy(new AStarStrategy());
+            enemies.addEnemie(m4);
 
+            Monster m5 = new Monster(10, 60,labyrinthe);
+            m5.setMovementStrategy(new AStarStrategy());
+            enemies.addEnemie(m5);
 
+            Monster m6 = new Monster(63, 10,labyrinthe);
+            m6.setMovementStrategy(new AStarStrategy());
+            enemies.addEnemie(m6);
 
-            enemies.setStrategy(strategy);
+            Monster m7 = new Monster(26, 12,labyrinthe);
+            m7.setMovementStrategy(new AStarStrategy());
+            enemies.addEnemie(m7);
+
+            Monster m8 = new Monster(39, 38,labyrinthe);
+            m8.setMovementStrategy(new AStarStrategy());
+            enemies.addEnemie(m8);
+
+            Ghost g1 = new Ghost(28, 60,labyrinthe);
+            g1.setMovementStrategy(new GhostStrategy());
+            Ghost g2 = new Ghost(3, 43,labyrinthe);
+            g2.setMovementStrategy(new GhostStrategy());
+            Ghost g3 = new Ghost(42, 41,labyrinthe);
+            g3.setMovementStrategy(new GhostStrategy());
+            Ghost g4 = new Ghost(60, 60,labyrinthe);
+            g4.setMovementStrategy(new GhostStrategy());
+
+            enemies.addEnemie(g1);
+            enemies.addEnemie(g2);
+            enemies.addEnemie(g3);
+            enemies.addEnemie(g4);
+
             labyrinthe.setEnemies(enemies);
 
             PacmanPainter painter = new PacmanPainter(labyrinthe);

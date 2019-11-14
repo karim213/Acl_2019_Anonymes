@@ -115,23 +115,7 @@ public class Labyrinthe implements Game {
     }
 
     public void attack(){
-        switch (this.hero.getCurrentCmd()){
-            case LEFT:
-                this.enemies.attack(this.hero.getX() -1 , this.hero.getY());
-                break;
-
-            case RIGHT:
-                this.enemies.attack(this.hero.getX() +1 , this.hero.getY());
-                break;
-
-            case UP:
-                this.enemies.attack(this.hero.getX()  , this.hero.getY() - 1);
-                break;
-
-            case DOWN:
-                this.enemies.attack(this.hero.getX()  , this.hero.getY() + 1);
-                break;
-        }
+        this.enemies.attack(this.hero.getX(), this.hero.getY());
     }
 }
 

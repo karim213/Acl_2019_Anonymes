@@ -9,6 +9,9 @@ public class Monster extends Enemy {
         super(x, y, labyrinthe);
     }
 
-
+    @Override
+    public String getType() {
+        return "Monster";
+    }
 
 }
