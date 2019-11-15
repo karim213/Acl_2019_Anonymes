@@ -58,6 +58,12 @@ public class Enemies {
         }
     }
 
+    public void setStrategy(EnemyMovementStrategy strategy) {
+        for (Enemy e : enemies) {
+            e.setMovementStrategy(strategy);
+        }
+    }
+
     public List<Enemy> getEnemies() {
         return enemies;
     }
