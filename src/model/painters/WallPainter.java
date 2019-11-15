@@ -4,10 +4,10 @@ import model.Labyrinthe;
 import model.Position;
 
 import javax.imageio.ImageIO;
-import java.awt.*;
 import java.awt.image.BufferedImage;
-import java.io.File;
 import java.io.IOException;
+
+import static util.Constants.WALL_SPRITE;
 
 public class WallPainter implements Painter {
 
@@ -15,7 +15,7 @@ public class WallPainter implements Painter {
 
     public WallPainter(){
         try {
-            wallSprite = ImageIO.read(this.getClass().getResourceAsStream("/Ressources/wall.png"));
+            wallSprite = ImageIO.read(this.getClass().getResourceAsStream(WALL_SPRITE));
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -24,7 +24,7 @@ public class WallPainter implements Painter {
     @Override
     public void draw(BufferedImage im, Labyrinthe game) {
         for (Position p : game.getWalls().getWallsPosition()){
-            im.getGraphics().drawImage(this.wallSprite,p.getX()*10 ,  (p.getY()+2)*5+5, 20,20, null);
+            im.getGraphics().drawImage(this.wallSprite,p.getX()*5 ,  p.getY()*5, 20,20, null);
         }
     }
 }

@@ -1,29 +1,26 @@
 package model.enemies;
 
-
 import engine.Cmd;
 import model.Labyrinthe;
+
+import static util.Constants.*;
+
 
 public abstract class Enemy {
     protected int x;
     protected int y;
     private EnemyMovementStrategy movementStrategy;
-    private Cmd currentCmd;
-    private int noSprite = -1;
-    protected int nbMvts;
-    protected Labyrinthe labyrinthe;
+    protected Cmd currentCmd;
+    private Labyrinthe labyrinthe;
 
-    public int getNoSprite() {
-        noSprite = noSprite +1;
-        if(noSprite==4){
-            noSprite=0;
-        }
-        return noSprite;
+    protected Enemy(int x, int y, Labyrinthe labyrinthe) {
+        this.x = x;
+        this.y = y;
+        this.labyrinthe = labyrinthe;
+        currentCmd = Cmd.DOWN;
     }
 
-    public void setNoSprite(int noSprite) {
-        this.noSprite = noSprite;
-    }
+    public abstract String getType();
 
     public int getX() {
         return x;
@@ -44,62 +41,33 @@ public abstract class Enemy {
     public void goUp(){
         if(y>0 && labyrinthe.isFree( x, y-1)) {
             this.setY(--y);
-            this.setCurrentCmd(Cmd.IDLEUP);
         }
-        nbMvts++;
-        if (nbMvts ==10) {
-            setCurrentCmd(randomCmd());
-            nbMvts=0;
-        }
+        this.currentCmd = Cmd.UP;
     }
 
     public void goDown(){
-        if(y< Labyrinthe.HEIGHT && labyrinthe.isFree( x, y+1)) {
+        if(y < HEIGHT-10 && labyrinthe.isFree( x, y+1)) {
             this.setY(++y);
-            this.setCurrentCmd(Cmd.IDLEDOWN);
         }
-        nbMvts++;
-        if (nbMvts ==10) {
-            setCurrentCmd(randomCmd());
-            nbMvts=0;
-        }
-
+        this.currentCmd = Cmd.DOWN;
     }
 
     public void goLeft(){
         if(x>0 && labyrinthe.isFree( x-1, y)) {
             this.setX(--x);
-            this.setCurrentCmd(Cmd.IDLELEFT);
         }
-        nbMvts++;
-        if (nbMvts ==10) {
-            setCurrentCmd(randomCmd());
-            nbMvts=0;
-        }
-
+        this.currentCmd = Cmd.LEFT;
     }
 
     public void goRight(){
-        if(x< Labyrinthe.WIDTH && labyrinthe.isFree( x+1, y)){
+        if(x< WIDTH-10 && labyrinthe.isFree( x+1, y)){
             this.setX(++x);
-            this.setCurrentCmd(Cmd.IDLERIGHT);
         }
-        nbMvts++;
-        if (nbMvts ==10) {
-            setCurrentCmd(randomCmd());
-            nbMvts=0;
-        }
-
+        this.currentCmd = Cmd.RIGHT;
     }
 
     public void move(){
-        movementStrategy.move(this);
-        if(x==labyrinthe.getHero().getX() && y ==labyrinthe.getHero().getY())
-            labyrinthe.getHero().setOver(true);
-    }
-
-    public EnemyMovementStrategy getMovementStrategy() {
-        return movementStrategy;
+        movementStrategy.move(this, labyrinthe);
     }
 
     public void setMovementStrategy(EnemyMovementStrategy movementStrategy) {
@@ -108,21 +76,5 @@ public abstract class Enemy {
 
     public Cmd getCurrentCmd() {
         return currentCmd;
-    }
-
-    public Cmd randomCmd(){
-        int n = (int) (Math.random() * 4) + 1;
-        Cmd cmd= null;
-        switch (n){
-            case 1: cmd= Cmd.IDLEUP;break;
-            case 2:cmd= Cmd.IDLEDOWN;break;
-            case 3:cmd= Cmd.IDLELEFT;break;
-            case 4:cmd= Cmd.IDLERIGHT;break;
-        }
-        return cmd;
-    }
-
-    public void setCurrentCmd(Cmd currentCmd) {
-        this.currentCmd = currentCmd;
     }
 }

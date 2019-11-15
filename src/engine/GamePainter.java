@@ -31,4 +31,6 @@ public interface GamePainter {
 	public abstract int getHeight();
 
 	public abstract Labyrinthe getLabyrinthe();
+
+	public void drawScore(BufferedImage im);
 }

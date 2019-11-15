@@ -3,18 +3,15 @@ package model.objects;
 import model.Hero;
 import model.Position;
 
-import java.awt.*;
+public class Heal extends  AbstractObject{
 
-public class Chest extends AbstractObject{
-
-
-    public Chest(Position position) {
+    public Heal(Position position) {
         super(position);
     }
 
     @Override
     public void action(Hero hero) {
-
+        hero.addPv();
     }
 
 }

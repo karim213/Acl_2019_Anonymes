@@ -1,39 +1,48 @@
 package model.enemies;
 
-import engine.Cmd;
+
+import model.Labyrinthe;
 
 public class RandomMovement implements EnemyMovementStrategy {
 
+    private int nbMvts = 0;
+
     @Override
-    public void move(Enemy enemy) {
-        if(enemy.getCurrentCmd()==null) {
-            int n = (int) (Math.random() * 4) + 1;
-            switch (n) {
-                case 1:
+    public void move(Enemy enemy, Labyrinthe game) {
+        if (nbMvts == 0){
+                int n = (int) (Math.random() * 4);
+                switch (n) {
+                    case 0:
+                        enemy.goUp();
+                        break;
+                    case 1:
+                        enemy.goDown();
+                        break;
+                    case 2:
+                        enemy.goLeft();
+                        break;
+                    case 3:
+                        enemy.goRight();
+                        break;
+                }
+            nbMvts = 10;
+        }
+        else {
+            switch (enemy.getCurrentCmd()) {
+                case UP:
                     enemy.goUp();
                     break;
-                case 2:
+                case DOWN:
                     enemy.goDown();
                     break;
-                case 3:
+                case LEFT:
                     enemy.goLeft();
                     break;
-                case 4:
+                case RIGHT:
                     enemy.goRight();
                     break;
             }
         }
-        else if(enemy.getCurrentCmd()== Cmd.IDLEUP) {
-            enemy.goUp();
-        }
-        else if(enemy.getCurrentCmd()== Cmd.IDLEDOWN) {
-            enemy.goDown();
-        }
-        else if(enemy.getCurrentCmd()== Cmd.IDLELEFT) {
-            enemy.goLeft();
-        }
-        else if(enemy.getCurrentCmd()== Cmd.IDLERIGHT) {
-            enemy.goRight();
-        }
+        nbMvts--;
     }
 }

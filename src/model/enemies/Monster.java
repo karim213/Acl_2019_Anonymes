@@ -6,12 +6,12 @@ public class Monster extends Enemy {
 
 
     public Monster(int x, int y , Labyrinthe labyrinthe) {
-        this.labyrinthe =labyrinthe;
-        this.x = x;
-        this.y = y;
-        this.nbMvts = 0;
+        super(x, y, labyrinthe);
     }
 
-
+    @Override
+    public String getType() {
+        return "Monster";
+    }
 
 }

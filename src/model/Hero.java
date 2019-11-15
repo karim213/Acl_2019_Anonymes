@@ -2,93 +2,65 @@ package model;
 
 import engine.Cmd;
 
-import javax.imageio.ImageIO;
-import java.awt.image.BufferedImage;
-import java.io.File;
-import java.io.IOException;
 
 public class Hero {
-    private int x;
-    private int y;
+    private Position position;
     private Cmd currentCmd;
     private  boolean isAttaque;
     private boolean over;
+    private int pv;
 
 
     public Hero(int x, int y) {
-        this.x = x;
-        this.y = y;
-        this.currentCmd = Cmd.IDLEDOWN;
-        isAttaque = false;
+        this.position = new Position(x, y);
+        this.currentCmd = Cmd.IDLE;
+        this.isAttaque = false;
+        this.pv = 3;
 
     }
 
     public int getX() {
-        return x;
+        return position.getX();
     }
 
     private void setX(int x) {
-        this.x = x;
+        this.position.setX(x);
     }
 
     public int getY() {
-        return y;
+        return position.getY();
     }
 
     private void setY(int y) {
-        this.y = y;
+        this.position.setY(y);
     }
 
     public void goUp(){
-        if(this.currentCmd == Cmd.UP || this.currentCmd == Cmd.IDLEUP) {
-            this.setY(--y);
-            this.currentCmd = Cmd.UP;
-        }else{
-            this.currentCmd = Cmd.IDLEUP;
-        }
+        this.position.setY(this.position.getY()-1);
+        this.currentCmd = Cmd.UP;
     }
 
     public void goDown(){
-        if(this.currentCmd == Cmd.DOWN || this.currentCmd == Cmd.IDLEDOWN) {
-            this.setY(++y);
-            this.currentCmd = Cmd.DOWN;
-        }else{
-            this.currentCmd = Cmd.IDLEDOWN;
-        }
-
+        this.position.setY(this.position.getY()+1);
+        this.currentCmd = Cmd.DOWN;
     }
 
     public void goLeft(){
-        if(this.currentCmd == Cmd.LEFT || this.currentCmd == Cmd.IDLELEFT) {
-            this.setX(--x);
-            this.currentCmd = Cmd.LEFT;
-        }else{
-            this.currentCmd = Cmd.IDLELEFT;
-        }
+        this.position.setX(this.position.getX()-1);
+        this.currentCmd = Cmd.LEFT;
     }
 
     public void goRight(){
-        if(this.currentCmd == Cmd.RIGHT || this.currentCmd == Cmd.IDLERIGHT) {
-            this.setX(++x);
-            this.currentCmd = Cmd.RIGHT;
-        }else{
-            this.currentCmd = Cmd.IDLERIGHT;
-        }
+        this.position.setX(this.position.getX()+1);
+        this.currentCmd = Cmd.RIGHT;
+    }
+
+    public void stop(){
+        currentCmd = Cmd.IDLE;
     }
 
     public Cmd getCurrentCmd() {
         return currentCmd;
-    }
-    public void stop(){
-        if (this.currentCmd == Cmd.LEFT || this.currentCmd == Cmd.IDLELEFT ){
-            this.currentCmd = Cmd.IDLELEFT;
-        }else if (this.currentCmd == Cmd.RIGHT || this.currentCmd == Cmd.IDLERIGHT){
-            this.currentCmd = Cmd.IDLERIGHT;
-        }else if (this.currentCmd == Cmd.UP || this.currentCmd == Cmd.IDLEUP){
-            this.currentCmd = Cmd.IDLEUP;
-        }else {
-            this.currentCmd = Cmd.IDLEDOWN;
-        }
     }
 
     public void attaque(){
@@ -106,5 +78,17 @@ public class Hero {
 
     public boolean isOver() {
         return over;
+    }
+    public void addPv(){
+        this.pv++;
+    }
+    public void subPv(){
+        this.pv--;
+        if (this.pv == 0)
+            setOver(true);
+    }
+
+    public int getPv(){
+        return this.pv;
     }
 }

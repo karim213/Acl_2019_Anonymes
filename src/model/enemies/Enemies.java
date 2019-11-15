@@ -1,6 +1,5 @@
 package model.enemies;
 
-import model.Position;
 
 import java.awt.*;
 import java.util.ArrayList;
@@ -18,11 +17,11 @@ public class Enemies {
     }
 
     public boolean isEnemy(int x , int y){
-        Rectangle rect1 = new Rectangle(x*10, y*5, 20, 40);
+        Rectangle rect1 = new Rectangle(x*5, y*5, 40, 40);
 
         boolean isEnem=false;
         for (Enemy enemy : enemies){
-            Rectangle rect2 = new Rectangle(enemy.getX() *10 , enemy.getY()*5, 20, 10);
+            Rectangle rect2 = new Rectangle(enemy.getX()*5 , enemy.getY()*5, 20, 20);
             Rectangle intersection = rect1.intersection(rect2);
 
             if(intersection.getHeight() > 0 && intersection.getWidth() > 0) {
@@ -40,10 +39,16 @@ public class Enemies {
 
     public void attack(int x , int y){
 
-        Rectangle rect1 = new Rectangle(x*10, y*5, 20, 40);
+        Rectangle rect1 = new Rectangle(x*5 - 20, y*5 - 20, 80, 80);
+        Rectangle rect2;
 
         for (Enemy enemy : enemies){
-            Rectangle rect2 = new Rectangle(enemy.getX() *10 , enemy.getY()*5, 20, 10);
+            if (enemy.getType().equals("Monster")) {
+                rect2 = new Rectangle(enemy.getX() *5 , enemy.getY()*5, 20, 20);
+            }
+            else {
+                rect2 = new Rectangle(enemy.getX() *5 , enemy.getY()*5, 40, 40);
+            }
             Rectangle intersection = rect1.intersection(rect2);
 
             if(intersection.getHeight() > 0 && intersection.getWidth() > 0) {
@@ -53,23 +58,13 @@ public class Enemies {
         }
     }
 
-    public List<Position> getEnemiesPosition(){
-        List<Position> res = new ArrayList<>();
-
-        for (int i = 0; i < enemies.size(); i++){
-            Position position = new Position(enemies.get(i).getX(),enemies.get(i).getY());
-            res.add(position);
+    public void setStrategy(EnemyMovementStrategy strategy) {
+        for (Enemy e : enemies) {
+            e.setMovementStrategy(strategy);
         }
-        return res;
     }
 
     public List<Enemy> getEnemies() {
         return enemies;
-    }
-
-    public void setStrategy(EnemyMovementStrategy strategy){
-        for(Enemy enemy : enemies){
-            enemy.setMovementStrategy(strategy);
-        }
     }
 }

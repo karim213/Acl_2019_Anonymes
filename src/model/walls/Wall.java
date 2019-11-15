@@ -9,10 +9,6 @@ public class Wall {
         this.position = new Position(x, y);
     }
 
-    public boolean isPosFree(int x, int y) {
-        return !position.on(new Position(x, y));
-    }
-
     public Position getPosition() {
         return position;
     }
