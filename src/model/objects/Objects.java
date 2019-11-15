@@ -41,8 +41,10 @@ public class Objects {
         for (AbstractObject object : objectList) {
             if (object.isOn(new Position(hero.getX(),hero.getY()))) {
                 object.action(hero);
-                if (object instanceof Heal)
+                if (object instanceof Heal) {
                     objectList.remove(object);
+                    break;
+                }
             }
         }
     }

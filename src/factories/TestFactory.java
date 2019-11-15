@@ -72,7 +72,7 @@ public class TestFactory {
             objects.addTrap(new Position(30 , 5));
             objects.addTrap(new Position(60 , 5));
             objects.addHeal(new Position(120 , 60));
-            objects.addHeal(new Position(20 , 40));
+            objects.addHeal(new Position(80 , 60));
 
             Labyrinthe labyrinthe = new Labyrinthe(new Hero(70, 50), walls,objects);
 
