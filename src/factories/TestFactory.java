@@ -74,7 +74,7 @@ public class TestFactory {
             objects.addHeal(new Position(120 , 60));
             objects.addHeal(new Position(80 , 60));
 
-            Labyrinthe labyrinthe = new Labyrinthe(new Hero(70, 50), walls,objects);
+            Labyrinthe labyrinthe = new Labyrinthe(new Hero(120, 50), walls,objects);
 
             Enemies enemies = new Enemies();
 
@@ -102,18 +102,18 @@ public class TestFactory {
             Monster m8 = new Monster(39, 38,labyrinthe);
             enemies.addEnemie(m8);
 
-            Ghost g1 = new Ghost(28, 60,labyrinthe);
-            Ghost g2 = new Ghost(3, 43,labyrinthe);
-            Ghost g3 = new Ghost(42, 41,labyrinthe);
-            Ghost g4 = new Ghost(60, 60,labyrinthe);
+            Ghost g1 = new Ghost(100, 30,labyrinthe);
+//            Ghost g2 = new Ghost(3, 43,labyrinthe);
+//            Ghost g3 = new Ghost(42, 41,labyrinthe);
+//            Ghost g4 = new Ghost(60, 60,labyrinthe);
 
             enemies.addEnemie(g1);
-            enemies.addEnemie(g2);
-            enemies.addEnemie(g3);
-            enemies.addEnemie(g4);
+//            enemies.addEnemie(g2);
+//            enemies.addEnemie(g3);
+//            enemies.addEnemie(g4);
 
             enemies.setStrategy(new RandomMovement());
-
+            g1.setMovementStrategy(new SmartMovement());
             labyrinthe.setEnemies(enemies);
 
             PacmanPainter painter = new PacmanPainter(labyrinthe);
