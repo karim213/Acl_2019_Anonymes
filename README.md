@@ -3,25 +3,12 @@
 # Pour exécuter le programme,
 
 - Télécharger le code source depuis la page Github.
-- Déplacez-vous (à l'aide de la commande cd) dans le dossier src à l’intérieur du dossier du code source.
-- Compiler tous les fichier .java
+- Déplacez-vous (à l'aide de la commande cd) dans le dossier ou vous avez placé le code source.
+- Executez la commande suivante:
 ```
-  javac *.java
+  mvn package
 ```
-- Exécuter le jeu
-```
-  java Main
-```
-
-
-ou
-
-
-
-- Télécharger le fichier .jar
-- Lancer la commande :
+- Exécuter le fichier .jar, situé dans le dossier target.
 ```
   java -jar nom_du_fichier.jar
 ```
-
-version de java utilisé : 11
