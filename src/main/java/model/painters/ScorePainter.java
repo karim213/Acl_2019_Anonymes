@@ -15,9 +15,9 @@ public class ScorePainter implements Painter {
     private int width;
     public ScorePainter(){
         try {
-            pvSprite = ImageIO.read(this.getClass().getResourceAsStream("/Ressources/heal.png"));
-            background = ImageIO.read(this.getClass().getResourceAsStream("/Ressources/background_score.jpg"));
-            heroSprite = ImageIO.read(this.getClass().getResourceAsStream("/Ressources/zelda.png"));
+            pvSprite = ImageIO.read(getClass().getClassLoader().getResourceAsStream("heal.png"));
+            background = ImageIO.read(getClass().getClassLoader().getResourceAsStream("background_score.jpg"));
+            heroSprite = ImageIO.read(getClass().getClassLoader().getResourceAsStream("zelda.png"));
 
         } catch (IOException e) {
         e.printStackTrace();

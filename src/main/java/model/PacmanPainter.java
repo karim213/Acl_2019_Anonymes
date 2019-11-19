@@ -44,7 +44,7 @@ public class PacmanPainter implements GamePainter {
 		this.labyrinthe = labyrinthe;
 
 		try {
-			this.backgroundSprite = ImageIO.read(this.getClass().getResourceAsStream(BG_SPRITE));
+			this.backgroundSprite = ImageIO.read(getClass().getClassLoader().getResourceAsStream(BG_SPRITE));
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
@@ -92,7 +92,7 @@ public class PacmanPainter implements GamePainter {
 
 	public void drawOver(BufferedImage im) {
 		try {
-			im.getGraphics().drawImage(ImageIO.read(this.getClass().getResourceAsStream(GAME_OVER_SPRITE)), 0, 0, WIDTH_INTERFACE, HEIGHT_INTERFACE, null);
+			im.getGraphics().drawImage(ImageIO.read(getClass().getClassLoader().getResourceAsStream(GAME_OVER_SPRITE)), 0, 0, WIDTH_INTERFACE, HEIGHT_INTERFACE, null);
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
@@ -100,7 +100,7 @@ public class PacmanPainter implements GamePainter {
 
 	public void drawWin(BufferedImage im) {
 		try {
-			im.getGraphics().drawImage(ImageIO.read(this.getClass().getResourceAsStream(WIN_SPRITE)), 0, 0, WIDTH_INTERFACE, HEIGHT_INTERFACE, null);
+			im.getGraphics().drawImage(ImageIO.read(getClass().getClassLoader().getResourceAsStream(WIN_SPRITE)), 0, 0, WIDTH_INTERFACE, HEIGHT_INTERFACE, null);
 		} catch (IOException e) {
 			e.printStackTrace();
 		}

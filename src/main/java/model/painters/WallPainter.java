@@ -15,7 +15,7 @@ public class WallPainter implements Painter {
 
     public WallPainter(){
         try {
-            wallSprite = ImageIO.read(this.getClass().getResourceAsStream(WALL_SPRITE));
+            wallSprite = ImageIO.read(getClass().getClassLoader().getResourceAsStream(WALL_SPRITE));
         } catch (IOException e) {
             e.printStackTrace();
         }

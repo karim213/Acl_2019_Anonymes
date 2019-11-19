@@ -26,7 +26,7 @@ public class HeroPainter implements Painter {
 
     public HeroPainter(){
         try {
-            this.heroSprite = ImageIO.read(this.getClass().getResourceAsStream(HERO_SPRITE));
+            this.heroSprite = ImageIO.read(getClass().getClassLoader().getResourceAsStream(HERO_SPRITE));
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -43,7 +43,7 @@ public class HeroPainter implements Painter {
         this.hero = game.getHero();
 
         // HitBox
-        im.getGraphics().drawRect(hero.getX()*5 - 20, hero.getY()*5 - 20, 80, 80);
+        // im.getGraphics().drawRect(hero.getX()*5 - 20, hero.getY()*5 - 20, 80, 80);
 
         if (hero.isAttaque()){
             if (yoffset + 3 < 6){
