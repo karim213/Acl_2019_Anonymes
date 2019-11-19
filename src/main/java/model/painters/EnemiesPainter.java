@@ -92,10 +92,10 @@ public class EnemiesPainter implements Painter {
                 else if(enemy.getCurrentCmd() == Cmd.DOWN){
                     im.getGraphics().drawImage(spritesDown.get(numberSprite), enemy.getX()*5, enemy.getY()*5, 20 , 20   , null);
                 }
-                else if(enemy.getCurrentCmd() == Cmd.LEFT){
+                else if(enemy.getCurrentCmd() == Cmd.RIGHT){
                     im.getGraphics().drawImage(spritesRight.get(numberSprite), enemy.getX()*5, enemy.getY()*5, 20 , 20   , null);
                 }
-                else if(enemy.getCurrentCmd() == Cmd.RIGHT){
+                else if(enemy.getCurrentCmd() == Cmd.LEFT){
                     im.getGraphics().drawImage(spritesLeft.get(numberSprite), enemy.getX()*5, enemy.getY()*5, 20 , 20   , null);
                 }
             }
