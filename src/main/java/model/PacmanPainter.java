@@ -5,6 +5,7 @@ import java.io.IOException;
 
 import static util.Constants.*;
 import engine.GamePainter;
+import model.objects.Teleporter;
 import model.painters.*;
 
 import javax.imageio.ImageIO;
@@ -33,6 +34,7 @@ public class PacmanPainter implements GamePainter {
 	private TrapPainter trapPainter;
 	private ScorePainter scorePainter;
 	private HealPainter healPainter;
+	private TeleporterPainter teleporterPainter;
 
 	/**
 	 * appelle constructeur parent
@@ -56,6 +58,7 @@ public class PacmanPainter implements GamePainter {
 		trapPainter = new TrapPainter();
 		scorePainter = new ScorePainter();
 		healPainter = new HealPainter();
+		teleporterPainter = new TeleporterPainter();
 
 
 	}
@@ -72,6 +75,7 @@ public class PacmanPainter implements GamePainter {
 		this.enemiesPainter.draw(im,labyrinthe);
 		this.heroPainter.draw(im,labyrinthe);
 		this.healPainter.draw(im,labyrinthe);
+		this.teleporterPainter.draw(im,labyrinthe);
 	}
 
 	@Override
@@ -110,4 +114,4 @@ public class PacmanPainter implements GamePainter {
 	public Labyrinthe getLabyrinthe(){
 		return this.labyrinthe;
 	}
-	}
+}
