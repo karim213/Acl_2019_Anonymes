@@ -15,7 +15,7 @@ public class TrapPainter implements Painter{
 
     public TrapPainter(){
         try {
-            trapSprite = ImageIO.read(this.getClass().getResourceAsStream(TRAP_SPRITE));
+            trapSprite = ImageIO.read(getClass().getClassLoader().getResourceAsStream(TRAP_SPRITE));
         } catch (IOException e) {
             e.printStackTrace();
         }

@@ -30,7 +30,7 @@ public class EnemiesPainter implements Painter {
 
     public EnemiesPainter(){
         try {
-            imgGhost = ImageIO.read(this.getClass().getResourceAsStream(GHOST_SPRITE));
+            imgGhost = ImageIO.read(getClass().getClassLoader().getResourceAsStream(GHOST_SPRITE));
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -39,7 +39,7 @@ public class EnemiesPainter implements Painter {
 
         numberSprite = 0;
         try {
-            imgEnemies = ImageIO.read(this.getClass().getResourceAsStream(SNAKE_SPRITE));
+            imgEnemies = ImageIO.read(getClass().getClassLoader().getResourceAsStream(SNAKE_SPRITE));
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -84,7 +84,7 @@ public class EnemiesPainter implements Painter {
 
             if (enemy.getType().equals("Monster")) {
                 // HitBox
-                im.getGraphics().drawRect(enemy.getX() *5 , enemy.getY()*5, 20, 20);
+                // im.getGraphics().drawRect(enemy.getX() *5 , enemy.getY()*5, 20, 20);
 
                 if(enemy.getCurrentCmd() == Cmd.UP){
                     im.getGraphics().drawImage(spritesUp.get(numberSprite), enemy.getX()*5, enemy.getY()*5, 20 , 20   , null);
@@ -101,7 +101,7 @@ public class EnemiesPainter implements Painter {
             }
             else {
                 // HitBox
-                im.getGraphics().drawRect(enemy.getX() *5 , enemy.getY()*5, 40, 40);
+                // im.getGraphics().drawRect(enemy.getX() *5 , enemy.getY()*5, 40, 40);
 
                 if(enemy.getCurrentCmd() == Cmd.LEFT || enemy.getCurrentCmd() == Cmd.DOWN){
                     im.getGraphics().drawImage(mirrorImgGhost, enemy.getX()*5, enemy.getY()*5, 40 , 40   , null);

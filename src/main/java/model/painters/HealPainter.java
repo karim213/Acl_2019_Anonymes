@@ -15,7 +15,7 @@ public class HealPainter implements Painter{
 
     public HealPainter(){
         try {
-            trapSprite = ImageIO.read(this.getClass().getResourceAsStream(Constants.HEAL_SPRITE));
+            trapSprite = ImageIO.read(getClass().getClassLoader().getResourceAsStream(Constants.HEAL_SPRITE));
         } catch (IOException e) {
             e.printStackTrace();
         }
