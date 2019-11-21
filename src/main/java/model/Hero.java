@@ -91,4 +91,9 @@ public class Hero {
     public int getPv(){
         return this.pv;
     }
+
+    public void teleport(Position posTo) {
+        this.setX(posTo.getX());
+        this.setY(posTo.getY());
+    }
 }

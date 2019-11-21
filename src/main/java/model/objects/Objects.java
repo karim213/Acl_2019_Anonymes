@@ -56,6 +56,8 @@ public class Objects {
 
     public void addHeal(Position position) { objectList.add(new Heal(position)); }
 
+    public void addTeleporter(Position position,Position posTo) {objectList.add(new Teleporter(position ,posTo));}
+
     public Position getPosChest() {
         return chest.getPosition();
     }
@@ -74,6 +76,16 @@ public class Objects {
         List<Position> res = new ArrayList<>();
         for (AbstractObject object:objectList) {
             if(object instanceof Heal){
+                res.add(object.getPosition());
+            }
+        }
+        return res;
+    }
+
+    public List<Position> getPosTeleporter() {
+        List<Position> res = new ArrayList<>();
+        for (AbstractObject object:objectList) {
+            if(object instanceof Teleporter){
                 res.add(object.getPosition());
             }
         }
