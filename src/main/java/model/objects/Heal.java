@@ -11,7 +11,7 @@ public class Heal extends  AbstractObject{
 
     @Override
     public void action(Hero hero) {
-        hero.addPv();
+        hero.receiveHeal();
     }
 
 }

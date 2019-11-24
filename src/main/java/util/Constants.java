@@ -14,4 +14,5 @@ public final class Constants {
     public static final String GHOST_SPRITE = "ghost.png";
     public static final String HEAL_SPRITE = "heal.png";
     public static final String TELEPORTER_SPRITE = "portal.png";
+    public static final String SAND_SPRITE = "sand.png";
 }
