@@ -113,6 +113,10 @@ public class TestFactory {
 //            enemies.addEnemie(g3);
 //            enemies.addEnemie(g4);
 
+
+            Boss b1 = new Boss(0, 0,labyrinthe);
+            enemies.addEnemie(b1);
+
             enemies.setStrategy(new RandomMovement());
             g1.setMovementStrategy(new SmartMovement());
             labyrinthe.setEnemies(enemies);

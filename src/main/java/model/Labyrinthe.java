@@ -15,7 +15,7 @@ public class Labyrinthe implements Game {
     private Enemies enemies;
     private Walls walls;
     private Objects objects;
-    private boolean isFinished;
+    private int isFinished;
 
 
 
@@ -23,7 +23,7 @@ public class Labyrinthe implements Game {
         this.hero = hero;
         this.walls = walls;
         this.objects = objects;
-        this.isFinished = false;
+        this.isFinished = -1;
     }
     public void setEnemies(Enemies enemies) {
         this.enemies = enemies;
@@ -37,7 +37,7 @@ public class Labyrinthe implements Game {
                case UP:
                    if (hero.getY()>0 &&  isFree(x, y-1)){
                        if (objects.isOnChest(new Position( x, y-1))){
-                           isFinished = true;
+                           isFinished = 1;
                        }
                        hero.goUp();
                    }
@@ -45,7 +45,7 @@ public class Labyrinthe implements Game {
                case DOWN:
                    if (hero.getY()<HEIGHT-10 && isFree(x, y+1)){
                        if (objects.isOnChest(new Position(x, y+1))){
-                           isFinished = true;
+                           isFinished = 1;
                        }
                        hero.goDown();
                    }
@@ -53,7 +53,7 @@ public class Labyrinthe implements Game {
                case LEFT:
                    if (hero.getX()>0 && isFree(x-1, y)){
                        if (objects.isOnChest(new Position(x-1, y))){
-                           isFinished = true;
+                           isFinished = 1;
                        }
                        hero.goLeft();
                    }
@@ -61,7 +61,7 @@ public class Labyrinthe implements Game {
                case RIGHT:
                    if (hero.getX()<WIDTH-10 &&  isFree(x+1, y)){
                        if (objects.isOnChest(new Position(x+1, y))){
-                           isFinished = true;
+                           isFinished = 1;
                        }
                        hero.goRight();
                    }
@@ -79,9 +79,10 @@ public class Labyrinthe implements Game {
         if(enemies.isEnemy(getHero().getX(),getHero().getY())){
 
             this.getHero().subPv();
-            if (getHero().getPv() == 0)
+            if (getHero().getPv() == 0) {
                 this.getHero().setOver(true);
-            try {
+                isFinished = 1;
+            }try {
                 Thread.sleep(200);
             } catch (InterruptedException e) {
                 e.printStackTrace();
@@ -95,8 +96,13 @@ public class Labyrinthe implements Game {
     }
 
     @Override
-    public boolean isFinished() {
-        return isFinished || hero.isOver();
+    public int isFinished() {
+        return isFinished;
+    }
+
+    @Override
+    public void setisFinished(int status) {
+        this.isFinished = status;
     }
 
     @Override
@@ -127,5 +133,10 @@ public class Labyrinthe implements Game {
     public void attack(){
         this.enemies.attack(this.hero.getX(), this.hero.getY());
     }
+
+
+
+
+
 }
 

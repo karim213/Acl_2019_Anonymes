@@ -14,6 +14,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
+import static util.Constants.Boss_SPRITE;
 import static util.Constants.GHOST_SPRITE;
 import static util.Constants.SNAKE_SPRITE;
 
@@ -22,6 +23,8 @@ public class EnemiesPainter implements Painter {
     private BufferedImage imgGhost;
     private BufferedImage mirrorImgGhost;
     private BufferedImage imgEnemies;
+    private BufferedImage imgBoss;
+    private BufferedImage mirrorImgBoss;
     private List<BufferedImage> spritesUp ;
     private List<BufferedImage> spritesDown ;
     private List<BufferedImage> spritesRight ;
@@ -36,6 +39,14 @@ public class EnemiesPainter implements Painter {
         }
 
         mirrorImgGhost = mirror(imgGhost);
+
+        try {
+            imgBoss = ImageIO.read(getClass().getClassLoader().getResourceAsStream(Boss_SPRITE));
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        mirrorImgBoss = mirror(imgBoss);
+
 
         numberSprite = 0;
         try {
@@ -104,10 +115,18 @@ public class EnemiesPainter implements Painter {
                 // im.getGraphics().drawRect(enemy.getX() *5 , enemy.getY()*5, 40, 40);
 
                 if(enemy.getCurrentCmd() == Cmd.LEFT || enemy.getCurrentCmd() == Cmd.DOWN){
-                    im.getGraphics().drawImage(mirrorImgGhost, enemy.getX()*5, enemy.getY()*5, 40 , 40   , null);
+                    if (enemy.getType() == "Ghost")
+                       im.getGraphics().drawImage(mirrorImgBoss, enemy.getX()*5, enemy.getY()*5, 40 , 40   , null);
+                    else
+                       im.getGraphics().drawImage(mirrorImgBoss, enemy.getX()*5, enemy.getY()*5, 40 , 40   , null);
+
                 }
                 else {
-                    im.getGraphics().drawImage(imgGhost, enemy.getX()*5, enemy.getY()*5, 40 , 40   , null);
+                    if (enemy.getType() == "Ghost")
+                      im.getGraphics().drawImage(imgGhost, enemy.getX()*5, enemy.getY()*5, 40 , 40   , null);
+                    else
+                        im.getGraphics().drawImage(imgBoss, enemy.getX()*5, enemy.getY()*5, 40 , 40   , null);
+
                 }
             }
         }

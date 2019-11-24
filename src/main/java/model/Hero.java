@@ -15,7 +15,8 @@ public class Hero {
         this.position = new Position(x, y);
         this.currentCmd = Cmd.IDLE;
         this.isAttaque = false;
-        this.pv = 3;
+        this.pv = 6;
+        this.over = false;
 
     }
 
