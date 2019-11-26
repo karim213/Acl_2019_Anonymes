@@ -43,12 +43,22 @@ public class PacmanController implements GameController {
 
 	@Override
 	public void mouseClicked(MouseEvent e) {
-		if (Constants.rect_play.contains(e.getPoint())){
-			labyrinthe.setisFinished(0);
-		}else if(Constants.rect_load.contains(e.getPoint())){
-			System.out.println("load");
-		}else if(Constants.rect_quit.contains(e.getPoint())){
-			System.exit(0);
+		if(labyrinthe.isFinished() == -1) {
+			if (Constants.rect_play.contains(e.getPoint())) {
+				labyrinthe.setisFinished(0);
+			} else if (Constants.rect_load.contains(e.getPoint())) {
+				System.out.println("load");
+			} else if (Constants.rect_quit.contains(e.getPoint())) {
+				System.exit(0);
+			}
+		}else if(labyrinthe.isFinished() == 0){
+			if (Constants.rect_pause.contains(e.getPoint())) {
+				System.out.println("yes");
+				if (labyrinthe.isFinished() == 0)
+			 	   labyrinthe.setisFinished(1);
+				else if(labyrinthe.isFinished() == 1)
+					labyrinthe.setisFinished(0);
+			}
 		}
 	}
 

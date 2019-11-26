@@ -52,15 +52,12 @@ public class Enemies {
             Rectangle intersection = rect1.intersection(rect2);
 
             if(intersection.getHeight() > 0 && intersection.getWidth() > 0) {
-                this.enemies.remove(enemy);
+                enemy.receiveDamage();
+                if (enemy.isDead()) {
+                    this.enemies.remove(enemy);
+                }
                 return;
             }
-        }
-    }
-
-    public void setStrategy(EnemyMovementStrategy strategy) {
-        for (Enemy e : enemies) {
-            e.setMovementStrategy(strategy);
         }
     }
 

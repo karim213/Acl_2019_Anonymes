@@ -64,11 +64,12 @@ public class GameEngineGraphical {
 
 
 		// boucle de game
-		while (game.isFinished() == 0) {
+		while (game.isFinished() >= 0) {
 			// demande controle utilisateur
 			Cmd c = this.gameController.getCommand();
 			// fait evoluer le game
-			this.game.evolve(c);
+			if (game.isFinished() == 0)
+				this.game.evolve(c);
 			// affiche le game
 			//this.gui.paintParty(false,null);
 			if (game.isFinished() == -1) {
@@ -76,7 +77,7 @@ public class GameEngineGraphical {
 			}else
 				this.gui.paintParty(false,null);
 			// met en attente
-			Thread.sleep(100);
+			Thread.sleep(80);
 		}
 		    this.gui.paintParty(true,game.isOver()?"lose":"win");
 		    Thread.sleep(4000);

@@ -56,7 +56,7 @@ public class DrawingMenuHome extends JPanel {
     public DrawingMenuHome(GamePainter painter) {
         super();
         this.width = painter.getWidth();
-        this.height = painter.getHeight();
+        this.height = painter.getHeight() + 80;
         this.painter = painter;
         this.setPreferredSize(new Dimension(this.width, this.height));
 

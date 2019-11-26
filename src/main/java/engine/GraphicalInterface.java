@@ -43,11 +43,10 @@ public class GraphicalInterface  {
 		this.panel.add(this.menuHome);
 		f.setContentPane(panel);
 
-		//panel.remove(this.menuHome);
 
 		// attacher controller au panel du game
 		panel.addKeyListener(gameController);
-		this.menuHome.addMouseListener(gameController);
+		panel.addMouseListener(gameController);
 
 
 		f.pack();

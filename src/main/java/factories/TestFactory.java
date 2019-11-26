@@ -3,7 +3,7 @@ package factories;
 import engine.GameEngineGraphical;
 import model.*;
 import model.enemies.*;
-import model.objects.Objects;
+import model.objects.*;
 import model.walls.Walls;
 
 public class TestFactory {
@@ -69,56 +69,81 @@ public class TestFactory {
 
             Objects objects= new Objects();
             objects.addChest(new Position(20,5));
-            objects.addTrap(new Position(30 , 5));
-            objects.addTrap(new Position(60 , 5));
-            objects.addHeal(new Position(120 , 60));
-            objects.addHeal(new Position(80 , 60));
-            objects.addTeleporter(new Position(100,23),new Position(90,60));
+            objects.addObject(new Trap(new Position(30 , 5)));
+            objects.addObject(new Trap(new Position(60 , 5)));
+            objects.addObject(new Heal(new Position(120 , 60)));
+            objects.addObject(new Heal(new Position(80 , 60)));
+            objects.addObject(new Teleporter(new Position(150,23),new Position(90,60)));
+
+            objects.addObject(new Sand(new Position(90, 20)));
+            objects.addObject(new Sand(new Position(90, 24)));
+            objects.addObject(new Sand(new Position(90, 28)));
+            objects.addObject(new Sand(new Position(90, 32)));
+
+            objects.addObject(new Sand(new Position(94, 20)));
+            objects.addObject(new Sand(new Position(94, 24)));
+            objects.addObject(new Sand(new Position(94, 28)));
+            objects.addObject(new Sand(new Position(94, 32)));
+
+            objects.addObject(new Sand(new Position(98, 20)));
+            objects.addObject(new Sand(new Position(98, 24)));
+            objects.addObject(new Sand(new Position(98, 28)));
+            objects.addObject(new Sand(new Position(98, 32)));
+
 
             Labyrinthe labyrinthe = new Labyrinthe(new Hero(120, 50), walls,objects);
 
             Enemies enemies = new Enemies();
 
             Monster m1 = new Monster(28, 44,labyrinthe);
+            m1.setMovementStrategy(new SnakeMovement());
             enemies.addEnemie(m1);
 
             Monster m2 = new Monster(3, 40,labyrinthe);
+            m2.setMovementStrategy(new SnakeMovement());
             enemies.addEnemie(m2);
 
             Monster m3 = new Monster(26, 29,labyrinthe);
+            m3.setMovementStrategy(new SnakeMovement());
             enemies.addEnemie(m3);
 
             Monster m4 = new Monster(30, 30,labyrinthe);
+            m4.setMovementStrategy(new SnakeMovement());
             enemies.addEnemie(m4);
 
             Monster m5 = new Monster(10, 60,labyrinthe);
+            m5.setMovementStrategy(new SnakeMovement());
             enemies.addEnemie(m5);
 
             Monster m6 = new Monster(63, 10,labyrinthe);
+            m6.setMovementStrategy(new SnakeMovement());
             enemies.addEnemie(m6);
 
             Monster m7 = new Monster(26, 12,labyrinthe);
+            m7.setMovementStrategy(new SnakeMovement());
             enemies.addEnemie(m7);
 
             Monster m8 = new Monster(39, 38,labyrinthe);
+            m8.setMovementStrategy(new SnakeMovement());
             enemies.addEnemie(m8);
 
             Ghost g1 = new Ghost(100, 30,labyrinthe);
-//            Ghost g2 = new Ghost(3, 43,labyrinthe);
-//            Ghost g3 = new Ghost(42, 41,labyrinthe);
-//            Ghost g4 = new Ghost(60, 60,labyrinthe);
+            g1.setMovementStrategy(new GhostMovement());
+            Ghost g2 = new Ghost(0, 30,labyrinthe);
+            g2.setMovementStrategy(new GhostMovement());
+            Ghost g3 = new Ghost(50, 30,labyrinthe);
+            g3.setMovementStrategy(new GhostMovement());
 
             enemies.addEnemie(g1);
-//            enemies.addEnemie(g2);
-//            enemies.addEnemie(g3);
-//            enemies.addEnemie(g4);
-
+            enemies.addEnemie(g2);
+            enemies.addEnemie(g3);
 
             Boss b1 = new Boss(0, 0,labyrinthe);
+            b1.setMovementStrategy(new GhostMovement());
+
             enemies.addEnemie(b1);
 
-            enemies.setStrategy(new RandomMovement());
-            g1.setMovementStrategy(new SmartMovement());
+
             labyrinthe.setEnemies(enemies);
 
             PacmanPainter painter = new PacmanPainter(labyrinthe);

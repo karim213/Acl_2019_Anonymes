@@ -116,15 +116,15 @@ public class EnemiesPainter implements Painter {
 
                 if(enemy.getCurrentCmd() == Cmd.LEFT || enemy.getCurrentCmd() == Cmd.DOWN){
                     if (enemy.getType() == "Ghost")
-                       im.getGraphics().drawImage(mirrorImgBoss, enemy.getX()*5, enemy.getY()*5, 40 , 40   , null);
-                    else
+                       im.getGraphics().drawImage(mirrorImgGhost, enemy.getX()*5, enemy.getY()*5, 40 , 40   , null);
+                    else if (enemy.getType() == "Boss")
                        im.getGraphics().drawImage(mirrorImgBoss, enemy.getX()*5, enemy.getY()*5, 40 , 40   , null);
 
                 }
                 else {
                     if (enemy.getType() == "Ghost")
                       im.getGraphics().drawImage(imgGhost, enemy.getX()*5, enemy.getY()*5, 40 , 40   , null);
-                    else
+                    else if (enemy.getType() == "Boss")
                         im.getGraphics().drawImage(imgBoss, enemy.getX()*5, enemy.getY()*5, 40 , 40   , null);
 
                 }
