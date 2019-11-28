@@ -17,6 +17,7 @@ public final class Constants {
     public static final String HEAL_SPRITE = "heal.png";
     public static final String TELEPORTER_SPRITE = "portal.png";
     public static final String SAND_SPRITE = "sand.png";
+    public static final String WATER_SPRITE = "water.jpg";
     public static final String Boss_SPRITE = "boss.png";
     public static final Rectangle2D.Double rect_play = new Rectangle2D.Double(100, 120  , 150, 50);
     public static final Rectangle2D.Double rect_load = new Rectangle2D.Double(150 , 200  , 150, 50);

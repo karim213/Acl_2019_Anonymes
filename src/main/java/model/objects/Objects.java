@@ -98,4 +98,16 @@ public class Objects {
         }
         return res;
     }
+
+    public List<Position> getPosWater() {
+        List<Position> res = new ArrayList<>();
+        for (AbstractObject object:objectList) {
+            if(object instanceof Water){
+                res.add(object.getPosition());
+            }
+        }
+        return res;
+    }
+
+
 }

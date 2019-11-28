@@ -37,7 +37,7 @@ public class Labyrinthe implements Game {
                case UP:
                    if (hero.getY()>0 &&  isFree(x, y-hero.getSpeed())){
                        if (objects.isOnChest(new Position( x, y-hero.getSpeed()))){
-                           isFinished = 1;
+                           isFinished = -1;
                        }
                        hero.goUp();
                    }
@@ -45,7 +45,7 @@ public class Labyrinthe implements Game {
                case DOWN:
                    if (hero.getY()<HEIGHT-10 && isFree(x, y+hero.getSpeed())){
                        if (objects.isOnChest(new Position(x, y+hero.getSpeed()))){
-                           isFinished = 1;
+                           isFinished = -1;
                        }
                        hero.goDown();
                    }
@@ -53,7 +53,7 @@ public class Labyrinthe implements Game {
                case LEFT:
                    if (hero.getX()>0 && isFree(x-hero.getSpeed(), y)){
                        if (objects.isOnChest(new Position(x-hero.getSpeed(), y))){
-                           isFinished = 1;
+                           isFinished = -1;
                        }
                        hero.goLeft();
                    }
@@ -61,7 +61,7 @@ public class Labyrinthe implements Game {
                case RIGHT:
                    if (hero.getX()<WIDTH-10 &&  isFree(x+hero.getSpeed(), y)){
                        if (objects.isOnChest(new Position(x+hero.getSpeed(), y))){
-                           isFinished = 1;
+                           isFinished = -1;
                        }
                        hero.goRight();
                    }
@@ -95,7 +95,7 @@ public class Labyrinthe implements Game {
     @Override
     public int isFinished() {
         if (hero.isDead())
-            isFinished = 1;
+            isFinished = -1;
 
         return isFinished;
     }

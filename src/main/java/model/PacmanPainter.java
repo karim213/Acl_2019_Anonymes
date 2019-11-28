@@ -37,6 +37,7 @@ public class PacmanPainter implements GamePainter {
 	private TeleporterPainter teleporterPainter;
 	private MenuHomePainter menuHomePainter;
 	private SandPainter sandPainter;
+	private WaterPainter waterPainter;
 
 	/**
 	 * appelle constructeur parent
@@ -53,8 +54,9 @@ public class PacmanPainter implements GamePainter {
 			e.printStackTrace();
 		}
 
-		heroPainter = new HeroPainter();
 		wallPainter = new WallPainter();
+		sandPainter = new SandPainter();
+		waterPainter = new WaterPainter();
 		chestPainter = new ChestPainter();
 		enemiesPainter = new EnemiesPainter();
 		trapPainter = new TrapPainter();
@@ -62,7 +64,8 @@ public class PacmanPainter implements GamePainter {
 		healPainter = new HealPainter();
 		teleporterPainter = new TeleporterPainter();
 		menuHomePainter = new MenuHomePainter();
-		sandPainter = new SandPainter();
+		heroPainter = new HeroPainter();
+
 	}
 
 	/**
@@ -72,13 +75,15 @@ public class PacmanPainter implements GamePainter {
 	public void draw(BufferedImage im) {
 		im.getGraphics().drawImage(this.backgroundSprite, 0, 0, WIDTH_INTERFACE, HEIGHT_INTERFACE, null);
 		this.sandPainter.draw(im, labyrinthe);
+		this.waterPainter.draw(im,labyrinthe);
 		this.wallPainter.draw(im,labyrinthe);
 		this.trapPainter.draw(im,labyrinthe);
 		this.chestPainter.draw(im,labyrinthe);
 		this.enemiesPainter.draw(im,labyrinthe);
-		this.heroPainter.draw(im,labyrinthe);
 		this.healPainter.draw(im,labyrinthe);
 		this.teleporterPainter.draw(im,labyrinthe);
+
+		this.heroPainter.draw(im,labyrinthe);
 	}
 
 	@Override
