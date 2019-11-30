@@ -42,4 +42,8 @@ public class Walls {
         return res;
     }
 
+    public void emptyWalls(){
+        walls.clear();
+    }
+
 }

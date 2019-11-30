@@ -30,14 +30,14 @@ public class GameEngineGraphical {
 
 	/**
 	 * construit un moteur
-	 * 
+	 *
 	 * @param game
 	 *            game a lancer
 	 * @param gamePainter
 	 *            afficheur a utiliser
 	 * @param gameController
 	 *            controlleur a utiliser
-	 *            
+	 *
 	 */
 	public GameEngineGraphical(Game game, GamePainter gamePainter, GameController gameController) {
 		// creation du game
@@ -57,8 +57,8 @@ public class GameEngineGraphical {
 
 
 		while (game.isFinished() == -1) {
-				this.gui.paintMenu();
-		     	Thread.sleep(100);
+			this.gui.paintMenu();
+			Thread.sleep(100);
 		}
 
 
@@ -79,9 +79,9 @@ public class GameEngineGraphical {
 			// met en attente
 			Thread.sleep(80);
 		}
-		    this.gui.paintParty(true,game.isOver()?"lose":"win");
-		    Thread.sleep(4000);
-		    game.setisFinished(-1);
-		    run();
-		}
+		this.gui.paintParty(true,game.isOver()?"lose":"win");
+		Thread.sleep(4000);
+		game.setisFinished(-1);
+		run();
+	}
 }

@@ -15,7 +15,7 @@ public class TestFactory {
 
 
 
-            Walls walls = new Walls();
+            /*Walls walls = new Walls();
             walls.addWall(24, 20);
             walls.addWall(28, 20);
             walls.addWall(32, 20);
@@ -96,12 +96,12 @@ public class TestFactory {
             objects.addObject(new Water(new Position(88, 24)));
 
             objects.addObject(new Sand(new Position(52, 20)));
-            objects.addObject(new Water(new Position(56, 24)));
+            objects.addObject(new Water(new Position(56, 24)));*/
 
 
-            Labyrinthe labyrinthe = new Labyrinthe(new Hero(120, 50), walls,objects);
+            Labyrinthe labyrinthe = new Labyrinthe(new Hero(120, 50));
 
-            Enemies enemies = new Enemies();
+            /*Enemies enemies = new Enemies();
 
            Monster m1 = new Monster(28, 44,labyrinthe);
             m1.setMovementStrategy(new SnakeMovement());
@@ -152,7 +152,7 @@ public class TestFactory {
             enemies.addEnemie(b1);
 
 
-            labyrinthe.setEnemies(enemies);
+            labyrinthe.setEnemies(enemies);*/
 
             PacmanPainter painter = new PacmanPainter(labyrinthe);
             PacmanController controller = new PacmanController(labyrinthe);

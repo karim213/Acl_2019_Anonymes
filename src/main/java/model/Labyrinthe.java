@@ -2,9 +2,16 @@ package model;
 
 import engine.Cmd;
 import engine.Game;
-import model.enemies.Enemies;
+import factories.TestFactory;
+import model.enemies.*;
+import model.objects.Heal;
 import model.objects.Objects;
+import model.walls.Wall;
 import model.walls.Walls;
+
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Scanner;
 
 import static util.Constants.*;
 
@@ -16,7 +23,8 @@ public class Labyrinthe implements Game {
     private Walls walls;
     private Objects objects;
     private int isFinished;
-
+    private int level;
+    private List<String>  file = new ArrayList<>();
 
 
     public Labyrinthe(Hero hero, Walls walls,Objects objects) {
@@ -24,7 +32,25 @@ public class Labyrinthe implements Game {
         this.walls = walls;
         this.objects = objects;
         this.isFinished = -1;
+
     }
+
+    public Labyrinthe(Hero hero) {
+        this.hero = hero;
+        this.level = 1;
+        this.walls = new Walls();
+        this.objects = new Objects();
+       // objects.addChest(new Position(120,70));
+        this.enemies=new Enemies();
+        this.isFinished = -1;
+
+        Scanner lineOfFile = new Scanner(TestFactory.class.getClassLoader().getResourceAsStream("maze.txt")) ;
+        for(int  i = 0 ;i<60;i++) {
+            file.add(lineOfFile.nextLine());
+        }
+        setLabyrinthe();
+    }
+
     public void setEnemies(Enemies enemies) {
         this.enemies = enemies;
     }
@@ -33,48 +59,58 @@ public class Labyrinthe implements Game {
         int x = hero.getX();
         int y = hero.getY();
 
-           switch (userCmd){
-               case UP:
-                   if (hero.getY()>0 &&  isFree(x, y-hero.getSpeed())){
-                       if (objects.isOnChest(new Position( x, y-hero.getSpeed()))){
-                           isFinished = -1;
-                       }
-                       hero.goUp();
-                   }
-                   break;
-               case DOWN:
-                   if (hero.getY()<HEIGHT-10 && isFree(x, y+hero.getSpeed())){
-                       if (objects.isOnChest(new Position(x, y+hero.getSpeed()))){
-                           isFinished = -1;
-                       }
-                       hero.goDown();
-                   }
-                   break;
-               case LEFT:
-                   if (hero.getX()>0 && isFree(x-hero.getSpeed(), y)){
-                       if (objects.isOnChest(new Position(x-hero.getSpeed(), y))){
-                           isFinished = -1;
-                       }
-                       hero.goLeft();
-                   }
-                   break;
-               case RIGHT:
-                   if (hero.getX()<WIDTH-10 &&  isFree(x+hero.getSpeed(), y)){
-                       if (objects.isOnChest(new Position(x+hero.getSpeed(), y))){
-                           isFinished = -1;
-                       }
-                       hero.goRight();
-                   }
-                   break;
-               case IDLE:
-                   hero.stop();
-                   break;
-               case ATTACK:
-                   this.hero.attaque();
-                   this.attack();
-                   break;
-           }
-           this.objects.performObjectActions(hero);
+        switch (userCmd){
+            case UP:
+                if (hero.getY()>0 &&  isFree(x, y-hero.getSpeed())){
+                    if (objects.isOnChest(new Position( x, y-hero.getSpeed()))){
+                        //isFinished = -1;
+                        level = level +1;
+                        setLabyrinthe();
+                    }
+                    hero.goUp();
+                }
+                break;
+            case DOWN:
+                if (hero.getY()<HEIGHT-10 && isFree(x, y+hero.getSpeed())){
+                    if (objects.isOnChest(new Position(x, y+hero.getSpeed()))){
+                        //isFinished = -1;
+                        level = level +1;
+                        setLabyrinthe();
+
+                    }
+                    hero.goDown();
+                }
+                break;
+            case LEFT:
+                if (hero.getX()>0 && isFree(x-hero.getSpeed(), y)){
+                    if (objects.isOnChest(new Position(x-hero.getSpeed(), y))){
+                        //isFinished = -1;
+                        level = level +1;
+                        setLabyrinthe();
+                    }
+                    hero.goLeft();
+                }
+                break;
+            case RIGHT:
+                if (hero.getX()<WIDTH-10 &&  isFree(x+hero.getSpeed(), y)){
+                    if (objects.isOnChest(new Position(x+hero.getSpeed(), y))){
+                        //isFinished = -1;
+                        level = level + 1 ;
+                        setLabyrinthe();
+
+                    }
+                    hero.goRight();
+                }
+                break;
+            case IDLE:
+                hero.stop();
+                break;
+            case ATTACK:
+                this.hero.attaque();
+                this.attack();
+                break;
+        }
+        this.objects.performObjectActions(hero);
 
         if(enemies.isEnemy(getHero().getX(),getHero().getY())){
 
@@ -85,7 +121,7 @@ public class Labyrinthe implements Game {
                 e.printStackTrace();
             }
         }
-           enemiesProcess();
+        enemiesProcess();
     }
 
     private void enemiesProcess(){
@@ -135,7 +171,69 @@ public class Labyrinthe implements Game {
     }
 
 
+    public void setLabyrinthe(){
 
+        int rows = 20;
+        int cols = 40;
+
+        if(this.level==1) {
+            //walls = new Walls();
+            for (int y = 0; y < rows; y++) {
+                String line = file.get(y);
+                for (int x = 0; x < cols; x++) {
+                    char start = line.charAt(x);
+                    if (start == '#') {
+                        walls.addWall(x * 4, y * 4);
+                    }
+                    else if(start == 'S'){
+                        Monster m = new Monster(x*4,y*4,this);
+                        m.setMovementStrategy(new SnakeMovement());
+                        enemies.addEnemie(m);
+                    }
+                    else if(start == 'H'){
+                        objects.addObject(new Heal(new Position(x*4,y*4)));
+                    }
+                    else if(start == 'C'){
+                         objects.addChest(new Position(x*4,y*4));
+                    }
+                }
+            }
+        }
+        else{
+            walls.emptyWalls();
+            enemies.emptyEnemies();
+            objects.emptyObjects();
+            int rowsnew = rows*(level-1);
+            for (int y = rowsnew; y < rowsnew+20; y++) {
+                String line = file.get(y);
+                for (int x = 0; x < cols; x++) {
+                    char start = line.charAt(x);
+                    if (start == '#') {
+                        walls.addWall(x * 4, (y-rowsnew )* 4);
+                    }
+                    else if(start == 'S'){
+                        Monster m = new Monster(x*4,(y-rowsnew )* 4,this);
+                        m.setMovementStrategy(new SnakeMovement());
+                        enemies.addEnemie(m);
+                    }
+                    else if(start == 'G'){
+                        Ghost m = new Ghost(x*4,(y-rowsnew )* 4,this);
+                        m.setMovementStrategy(new GhostMovement());
+                        enemies.addEnemie(m);
+                    }
+                    else if(start == 'H'){
+                        objects.addObject(new Heal(new Position(x*4,(y-rowsnew )* 4)));
+                    }
+                    else if(start == 'C'){
+                        objects.addChest(new Position(x*4,(y-rowsnew )* 4));
+                    }
+                }
+
+                hero.setX(4);
+                hero.setY(4);
+            }
+        }
+    }
 
 
 }

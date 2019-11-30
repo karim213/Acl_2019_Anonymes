@@ -64,4 +64,8 @@ public class Enemies {
     public List<Enemy> getEnemies() {
         return enemies;
     }
+
+    public void emptyEnemies(){
+        enemies.clear();
+    }
 }

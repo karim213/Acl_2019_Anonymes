@@ -109,5 +109,7 @@ public class Objects {
         return res;
     }
 
-
+    public void emptyObjects(){
+        objectList.clear();
+    }
 }
