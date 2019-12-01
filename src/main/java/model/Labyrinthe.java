@@ -31,7 +31,7 @@ public class Labyrinthe implements Game {
         this.hero = hero;
         this.walls = walls;
         this.objects = objects;
-        this.isFinished = -1;
+        this.isFinished = -3;
     }
 
     public Labyrinthe() {
@@ -39,7 +39,7 @@ public class Labyrinthe implements Game {
         this.walls = new Walls();
         this.objects = new Objects();
         this.enemies=new Enemies();
-        this.isFinished = -1;
+        this.isFinished = -3;
 
         Scanner lineOfFile = new Scanner(TestFactory.class.getClassLoader().getResourceAsStream("maze.txt")) ;
         for(int  i = 0 ;i<100;i++) {
