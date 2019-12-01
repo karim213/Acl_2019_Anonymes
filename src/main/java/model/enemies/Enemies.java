@@ -1,6 +1,8 @@
 package model.enemies;
 
 
+import engine.Cmd;
+
 import java.awt.*;
 import java.util.ArrayList;
 import java.util.List;
@@ -53,6 +55,17 @@ public class Enemies {
 
             if(intersection.getHeight() > 0 && intersection.getWidth() > 0) {
                 enemy.receiveDamage();
+                if(enemy.getLabyrinthe().getHero().getCurrentCmd() == Cmd.RIGHT) {
+                    enemy.goRight();
+                    enemy.goRight();
+                    enemy.goRight();
+                    enemy.goRight();
+                }else{
+                    enemy.goLeft();
+                    enemy.goLeft();
+                    enemy.goLeft();
+                    enemy.goLeft();
+                }
                 if (enemy.isDead()) {
                     this.enemies.remove(enemy);
                 }

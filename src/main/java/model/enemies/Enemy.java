@@ -22,4 +22,8 @@ public abstract class Enemy extends MovableEntity {
     public void setMovementStrategy(EnemyMovementStrategy movementStrategy) {
         this.movementStrategy = movementStrategy;
     }
+
+    public Labyrinthe getLabyrinthe() {
+        return labyrinthe;
+    }
 }
