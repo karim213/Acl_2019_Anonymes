@@ -3,9 +3,14 @@ package model;
 
 import engine.Cmd;
 
-public class Hero extends MovableEntity {
+import java.io.Serializable;
+
+public class Hero extends MovableEntity implements java.io.Serializable {
     private  boolean isAttaque;
 
+    public Hero(){
+        super(0 , 0 , 3 , 2);
+    }
 
     public Hero(int x, int y) {
         super(x, y, 6, 2);

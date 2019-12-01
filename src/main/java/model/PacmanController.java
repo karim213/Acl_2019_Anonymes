@@ -51,7 +51,7 @@ public class PacmanController implements GameController {
 			} else if (Constants.rect_quit.contains(e.getPoint())) {
 				System.exit(0);
 			}
-		}else if(labyrinthe.isFinished() == 0){
+		}else if(labyrinthe.isFinished() >= 0){
 			if (Constants.rect_pause.contains(e.getPoint())) {
 				System.out.println("yes");
 				if (labyrinthe.isFinished() == 0) {

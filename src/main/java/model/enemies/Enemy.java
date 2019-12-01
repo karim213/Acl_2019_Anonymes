@@ -9,7 +9,7 @@ public abstract class Enemy extends MovableEntity {
     private Labyrinthe labyrinthe;
 
     protected Enemy(int x, int y, int pv , Labyrinthe labyrinthe) {
-        super(x, y, 1, 1);
+        super(x, y, pv, 1);
         this.labyrinthe = labyrinthe;
     }
 

@@ -1,5 +1,7 @@
 package engine;
 
+import model.Hero;
+
 /**
  * @author Horatiu Cirstea, Vincent Thomas
  *
@@ -28,6 +30,8 @@ public interface Game {
 	 * @return true si et seulement si le joueur gagne
 	 */
 	public boolean isOver();
+
+	public Hero getHero();
 
 
 }

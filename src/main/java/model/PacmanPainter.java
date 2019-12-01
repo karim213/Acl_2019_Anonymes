@@ -2,6 +2,7 @@ package model;
 
 import java.awt.image.BufferedImage;
 import java.io.IOException;
+import java.io.Serializable;
 
 import static util.Constants.*;
 import engine.GamePainter;
@@ -16,7 +17,7 @@ import javax.imageio.ImageIO;
  * afficheur graphique pour le game
  *
  */
-public class PacmanPainter implements GamePainter {
+public class PacmanPainter implements GamePainter, Serializable {
 
 	/**
 	 * la taille des cases
@@ -36,6 +37,7 @@ public class PacmanPainter implements GamePainter {
 	private HealPainter healPainter;
 	private TeleporterPainter teleporterPainter;
 	private MenuHomePainter menuHomePainter;
+	private SplashScreenPainter splashScreenPainter;
 	private SandPainter sandPainter;
 	private WaterPainter waterPainter;
 
@@ -65,6 +67,7 @@ public class PacmanPainter implements GamePainter {
 		teleporterPainter = new TeleporterPainter();
 		menuHomePainter = new MenuHomePainter();
 		heroPainter = new HeroPainter();
+		splashScreenPainter = new SplashScreenPainter();
 
 	}
 
@@ -106,6 +109,13 @@ public class PacmanPainter implements GamePainter {
 	public void drawMenu(BufferedImage im) {
 		this.menuHomePainter.draw(im,labyrinthe);
 	}
+
+	@Override
+	public void drawSplash(BufferedImage im) {
+		this.splashScreenPainter.draw(im,labyrinthe);
+	}
+
+
 
 	public void drawOver(BufferedImage im) {
 		try {

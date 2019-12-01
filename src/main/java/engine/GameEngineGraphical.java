@@ -55,8 +55,15 @@ public class GameEngineGraphical {
 
 		// creation de l'interface graphique
 
+		if (game.isFinished() == -3) {
+			this.gui.paintSplash();
+			Thread.sleep(4000);
+			game.setisFinished(-1);
+		}
+
 
 		while (game.isFinished() == -1) {
+			System.out.println("menu");
 			this.gui.paintMenu();
 			Thread.sleep(100);
 		}
@@ -65,19 +72,15 @@ public class GameEngineGraphical {
 
 		// boucle de game
 		while (game.isFinished() >= 0) {
-			// demande controle utilisateur
+
 			Cmd c = this.gameController.getCommand();
-			// fait evoluer le game
-			if (game.isFinished() == 0)
-				this.game.evolve(c);
-			// affiche le game
-			//this.gui.paintParty(false,null);
-			if (game.isFinished() == -1) {
-				this.gui.paintMenu();
-			}else
-				this.gui.paintParty(false,null);
-			// met en attente
-			Thread.sleep(80);
+			this.game.evolve(c);
+			this.gui.paintParty(false,null);
+			while (game.isFinished() == 1){
+				Thread.sleep(100);
+			}
+
+			Thread.sleep(game.getHero().isAttaque() ? 20 :80);
 		}
 		this.gui.paintParty(true,game.isOver()?"lose":"win");
 		Thread.sleep(4000);

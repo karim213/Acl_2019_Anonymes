@@ -9,7 +9,7 @@ import static util.Constants.WIDTH;
 public class Boss extends Enemy {
 
     public Boss(int x, int y, Labyrinthe labyrinthe) {
-        super(x, y, 3 , labyrinthe);
+        super(x, y, 4 , labyrinthe);
     }
 
     @Override

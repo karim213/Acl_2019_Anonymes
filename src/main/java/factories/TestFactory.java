@@ -6,8 +6,15 @@ import model.enemies.*;
 import model.objects.*;
 import model.walls.Walls;
 
+import java.beans.XMLEncoder;
+import java.io.File;
+import java.io.StringWriter;
+
+import java.io.*;
+
 public class TestFactory {
     private static GameEngineGraphical engine = null;
+    private Labyrinthe labyrinthe;
 
     public static GameEngineGraphical getInstance() {
 
@@ -99,8 +106,7 @@ public class TestFactory {
             objects.addObject(new Water(new Position(56, 24)));*/
 
 
-            Labyrinthe labyrinthe = new Labyrinthe(new Hero(120, 50));
-
+            Labyrinthe labyrinthe = new Labyrinthe();
             /*Enemies enemies = new Enemies();
 
            Monster m1 = new Monster(28, 44,labyrinthe);
@@ -156,10 +162,10 @@ public class TestFactory {
 
             PacmanPainter painter = new PacmanPainter(labyrinthe);
             PacmanController controller = new PacmanController(labyrinthe);
-
             engine = new GameEngineGraphical(labyrinthe, painter, controller);
         }
 
         return engine;
     }
+
 }

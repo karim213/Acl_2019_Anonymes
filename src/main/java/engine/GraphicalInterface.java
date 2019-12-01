@@ -18,6 +18,7 @@ public class GraphicalInterface  {
 	private DrawingPanel partypanel;
 	private DrawingScorePanel scorePanel;
 	private DrawingMenuHome menuHome;
+	private DrawingSplashScreen splashScreen;
     private JPanel panel;
 
 	/**
@@ -34,7 +35,8 @@ public class GraphicalInterface  {
 		// attacher le panel contenant l'afficheur du game
 		this.partypanel=new DrawingPanel(gamePainter);
 		this.scorePanel = new DrawingScorePanel(gamePainter);
-		menuHome = new DrawingMenuHome(gamePainter);
+		this.menuHome = new DrawingMenuHome(gamePainter);
+		this.splashScreen = new DrawingSplashScreen(gamePainter);
 
 		panel = new JPanel();
 		panel.setLayout(new GridBagLayout());
@@ -73,6 +75,14 @@ public class GraphicalInterface  {
 		this.panel.removeAll();
 		this.panel.add(this.menuHome);
 		this.menuHome.drawGame();
+		this.panel.updateUI();
+
+	}
+
+	public void paintSplash() {
+		this.panel.removeAll();
+		this.panel.add(this.splashScreen);
+		this.splashScreen.drawGame();
 		this.panel.updateUI();
 
 	}

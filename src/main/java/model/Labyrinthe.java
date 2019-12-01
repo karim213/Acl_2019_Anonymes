@@ -9,6 +9,7 @@ import model.objects.Objects;
 import model.walls.Wall;
 import model.walls.Walls;
 
+import java.io.*;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
@@ -16,7 +17,7 @@ import java.util.Scanner;
 import static util.Constants.*;
 
 
-public class Labyrinthe implements Game {
+public class Labyrinthe implements Game, Serializable {
 
     private Hero hero;
     private Enemies enemies;
@@ -28,21 +29,24 @@ public class Labyrinthe implements Game {
 
 
     public Labyrinthe(Hero hero, Walls walls,Objects objects) {
-        this.hero = hero;
+        this.hero = new Hero(4, 4);
         this.walls = walls;
         this.objects = objects;
-        this.isFinished = -1;
+        this.isFinished = -3;
+
+
+
 
     }
 
-    public Labyrinthe(Hero hero) {
-        this.hero = hero;
+    public Labyrinthe() {
+        this.hero = new Hero(4, 4);
         this.level = 1;
         this.walls = new Walls();
         this.objects = new Objects();
        // objects.addChest(new Position(120,70));
         this.enemies=new Enemies();
-        this.isFinished = -1;
+        this.isFinished = -3;
 
         Scanner lineOfFile = new Scanner(TestFactory.class.getClassLoader().getResourceAsStream("maze.txt")) ;
         for(int  i = 0 ;i<60;i++) {
@@ -218,6 +222,10 @@ public class Labyrinthe implements Game {
                     }
                     else if(start == 'G'){
                         Ghost m = new Ghost(x*4,(y-rowsnew )* 4,this);
+                        m.setMovementStrategy(new GhostMovement());
+                        enemies.addEnemie(m);
+                    }else if(start == 'B'){
+                        Boss m = new Boss(x*4,(y-rowsnew )* 4,this);
                         m.setMovementStrategy(new GhostMovement());
                         enemies.addEnemie(m);
                     }
