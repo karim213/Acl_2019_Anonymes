@@ -13,7 +13,7 @@ public class TestFactory {
 
         if (engine == null) {
 
-            Labyrinthe labyrinthe = new Labyrinthe(new Hero(4, 4));
+            Labyrinthe labyrinthe = new Labyrinthe();
             PacmanPainter painter = new PacmanPainter(labyrinthe);
             PacmanController controller = new PacmanController(labyrinthe);
 
