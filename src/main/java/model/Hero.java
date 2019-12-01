@@ -1,12 +1,14 @@
 package model;
 
 
+import engine.Cmd;
+
 public class Hero extends MovableEntity {
     private  boolean isAttaque;
 
 
     public Hero(int x, int y) {
-        super(x, y, 3, 2);
+        super(x, y, 6, 2);
         this.isAttaque = false;
     }
 
@@ -28,5 +30,14 @@ public class Hero extends MovableEntity {
 
     public void setAttaque(Boolean isAttaque){
         this.isAttaque = isAttaque;
+    }
+
+    public int getPv(){
+        return this.pv;
+    }
+
+    public void teleport(Position posTo) {
+        this.setX(posTo.getX());
+        this.setY(posTo.getY());
     }
 }

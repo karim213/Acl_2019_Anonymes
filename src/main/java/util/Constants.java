@@ -1,5 +1,7 @@
 package util;
 
+import java.awt.geom.Rectangle2D;
+
 public final class Constants {
     public static final int HEIGHT = 80;
     public static final int WIDTH = 160;
@@ -15,4 +17,25 @@ public final class Constants {
     public static final String HEAL_SPRITE = "heal.png";
     public static final String TELEPORTER_SPRITE = "portal.png";
     public static final String SAND_SPRITE = "sand.png";
+    public static final String WATER_SPRITE = "water.jpg";
+    public static final String Boss_SPRITE = "boss.png";
+
+    public static final Rectangle2D.Double rect_play = new Rectangle2D.Double(100, 120  , 150, 50);
+    public static final Rectangle2D.Double rect_load = new Rectangle2D.Double(150 , 200  , 150, 50);
+    public static final Rectangle2D.Double rect_quit = new Rectangle2D.Double(200 , 280  , 150, 50);
+    public static final Rectangle2D.Double rect_pause = new Rectangle2D.Double(720 , 20  , 40, 40);
+
+    public static final char ID_WALL = '1';
+    public static final char ID_BOSS = 'B';
+    public static final char ID_CHEST = 'C';
+    public static final char ID_HERO = '2';
+    public static final char ID_TRAP = 'T';
+    public static final char ID_PORTAL = 'P';
+    public static final char ID_PHANTOM = 'F';
+    public static final char ID_SNAKE = 'S';
+    public static final char ID_SAND = 'A';
+    public static final char ID_WATER = 'W';
+    public static final char ID_HEAL = 'H';
+
+
 }

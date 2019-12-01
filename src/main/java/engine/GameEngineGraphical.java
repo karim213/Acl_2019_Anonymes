@@ -44,6 +44,8 @@ public class GameEngineGraphical {
 		this.game = game;
 		this.gamePainter = gamePainter;
 		this.gameController = gameController;
+		this.gui = new GraphicalInterface(this.gamePainter,this.gameController);
+
 	}
 
 	/**
@@ -53,18 +55,31 @@ public class GameEngineGraphical {
 
 		// creation de l'interface graphique
 
-		this.gui = new GraphicalInterface(this.gamePainter,this.gameController);
+
+		while (game.isFinished() == -1) {
+				this.gui.paintMenu();
+		     	Thread.sleep(100);
+		}
 
 		// boucle de game
-		while (!this.game.isFinished()) {
+		while (game.isFinished() >= 0) {
 			// demande controle utilisateur
 			Cmd c = this.gameController.getCommand();
 			// fait evoluer le game
-			this.game.evolve(c);
+			if (game.isFinished() == 0)
+				this.game.evolve(c);
 			// affiche le game
-			this.gui.paint(false,null);
+			//this.gui.paintParty(false,null);
+			if (game.isFinished() == -1) {
+				this.gui.paintMenu();
+			}else
+				this.gui.paintParty(false,null);
 			// met en attente
 			Thread.sleep(80);
 		}
-		this.gui.paint(true,game.isOver()?"lose":"win");	}
+		    this.gui.paintParty(true,game.isOver()?"lose":"win");
+		    Thread.sleep(4000);
+		    game.setisFinished(-1);
+		    run();
+		}
 }

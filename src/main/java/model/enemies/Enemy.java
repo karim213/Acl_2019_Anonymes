@@ -8,7 +8,7 @@ public abstract class Enemy extends MovableEntity {
     private EnemyMovementStrategy movementStrategy;
     private Labyrinthe labyrinthe;
 
-    protected Enemy(int x, int y, Labyrinthe labyrinthe) {
+    protected Enemy(int x, int y, int pv , Labyrinthe labyrinthe) {
         super(x, y, 1, 1);
         this.labyrinthe = labyrinthe;
     }

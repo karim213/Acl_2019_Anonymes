@@ -22,6 +22,8 @@ public interface GamePainter {
 	 */
 	public abstract void draw(BufferedImage image);
 
+	void drawMenu(BufferedImage im);
+
 	public abstract void drawOver(BufferedImage image);
 
 	public abstract void drawWin(BufferedImage image);

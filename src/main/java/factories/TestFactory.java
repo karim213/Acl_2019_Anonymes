@@ -9,14 +9,13 @@ import model.walls.Walls;
 public class TestFactory {
     private static GameEngineGraphical engine = null;
 
-    public static GameEngineGraphical getInstance() {
+    public static GameEngineGraphical createSimpleGame() {
 
         if (engine == null) {
 
 
 
             Walls walls = new Walls();
-            walls.addWall(20, 20);
             walls.addWall(24, 20);
             walls.addWall(28, 20);
             walls.addWall(32, 20);
@@ -75,27 +74,36 @@ public class TestFactory {
             objects.addObject(new Heal(new Position(80 , 60)));
             objects.addObject(new Teleporter(new Position(150,23),new Position(90,60)));
 
-            objects.addObject(new Sand(new Position(90, 20)));
-            objects.addObject(new Sand(new Position(90, 24)));
-            objects.addObject(new Sand(new Position(90, 28)));
-            objects.addObject(new Sand(new Position(90, 32)));
+            objects.addObject(new Sand(new Position(52, 20)));
+            objects.addObject(new Sand(new Position(52, 24)));
+            objects.addObject(new Sand(new Position(56, 20)));
+            objects.addObject(new Water(new Position(56, 24)));
+            objects.addObject(new Sand(new Position(60, 20)));
+            objects.addObject(new Water(new Position(60, 24)));
+            objects.addObject(new Sand(new Position(64, 20)));
+            objects.addObject(new Water(new Position(64, 24)));
+            objects.addObject(new Sand(new Position(68, 20)));
+            objects.addObject(new Water(new Position(68, 24)));
+            objects.addObject(new Sand(new Position(72, 20)));
+            objects.addObject(new Water(new Position(72, 24)));
+            objects.addObject(new Sand(new Position(76, 20)));
+            objects.addObject(new Water(new Position(76, 24)));
+            objects.addObject(new Sand(new Position(80, 20)));
+            objects.addObject(new Water(new Position(80, 24)));
+            objects.addObject(new Sand(new Position(84, 20)));
+            objects.addObject(new Water(new Position(84, 24)));
+            objects.addObject(new Sand(new Position(88, 20)));
+            objects.addObject(new Water(new Position(88, 24)));
 
-            objects.addObject(new Sand(new Position(94, 20)));
-            objects.addObject(new Sand(new Position(94, 24)));
-            objects.addObject(new Sand(new Position(94, 28)));
-            objects.addObject(new Sand(new Position(94, 32)));
-
-            objects.addObject(new Sand(new Position(98, 20)));
-            objects.addObject(new Sand(new Position(98, 24)));
-            objects.addObject(new Sand(new Position(98, 28)));
-            objects.addObject(new Sand(new Position(98, 32)));
+            objects.addObject(new Sand(new Position(52, 20)));
+            objects.addObject(new Water(new Position(56, 24)));
 
 
             Labyrinthe labyrinthe = new Labyrinthe(new Hero(120, 50), walls,objects);
 
             Enemies enemies = new Enemies();
 
-            Monster m1 = new Monster(28, 44,labyrinthe);
+           Monster m1 = new Monster(28, 44,labyrinthe);
             m1.setMovementStrategy(new SnakeMovement());
             enemies.addEnemie(m1);
 
@@ -138,6 +146,12 @@ public class TestFactory {
             enemies.addEnemie(g2);
             enemies.addEnemie(g3);
 
+            Boss b1 = new Boss(0, 0,labyrinthe);
+            b1.setMovementStrategy(new GhostMovement());
+
+            enemies.addEnemie(b1);
+
+
             labyrinthe.setEnemies(enemies);
 
             PacmanPainter painter = new PacmanPainter(labyrinthe);
@@ -146,6 +160,14 @@ public class TestFactory {
             engine = new GameEngineGraphical(labyrinthe, painter, controller);
         }
 
+        return engine;
+    }
+
+    public static GameEngineGraphical createLeveledGame() {
+        Labyrinthe labyrinthe = new Labyrinthe();
+        PacmanPainter painter = new PacmanPainter(labyrinthe);
+        PacmanController controller = new PacmanController(labyrinthe);
+        engine = new GameEngineGraphical(labyrinthe, painter, controller);
         return engine;
     }
 }

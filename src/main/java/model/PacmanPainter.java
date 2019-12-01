@@ -35,7 +35,9 @@ public class PacmanPainter implements GamePainter {
 	private ScorePainter scorePainter;
 	private HealPainter healPainter;
 	private TeleporterPainter teleporterPainter;
+	private MenuHomePainter menuHomePainter;
 	private SandPainter sandPainter;
+	private WaterPainter waterPainter;
 
 	/**
 	 * appelle constructeur parent
@@ -52,15 +54,18 @@ public class PacmanPainter implements GamePainter {
 			e.printStackTrace();
 		}
 
-		heroPainter = new HeroPainter();
 		wallPainter = new WallPainter();
+		sandPainter = new SandPainter();
+		waterPainter = new WaterPainter();
 		chestPainter = new ChestPainter();
 		enemiesPainter = new EnemiesPainter();
 		trapPainter = new TrapPainter();
 		scorePainter = new ScorePainter();
 		healPainter = new HealPainter();
 		teleporterPainter = new TeleporterPainter();
-		sandPainter = new SandPainter();
+		menuHomePainter = new MenuHomePainter();
+		heroPainter = new HeroPainter();
+
 	}
 
 	/**
@@ -69,14 +74,16 @@ public class PacmanPainter implements GamePainter {
 	@Override
 	public void draw(BufferedImage im) {
 		im.getGraphics().drawImage(this.backgroundSprite, 0, 0, WIDTH_INTERFACE, HEIGHT_INTERFACE, null);
+		this.sandPainter.draw(im, labyrinthe);
+		this.waterPainter.draw(im,labyrinthe);
 		this.wallPainter.draw(im,labyrinthe);
 		this.trapPainter.draw(im,labyrinthe);
 		this.chestPainter.draw(im,labyrinthe);
+		this.enemiesPainter.draw(im,labyrinthe);
 		this.healPainter.draw(im,labyrinthe);
 		this.teleporterPainter.draw(im,labyrinthe);
-		this.sandPainter.draw(im, labyrinthe);
-        this.enemiesPainter.draw(im,labyrinthe);
-        this.heroPainter.draw(im,labyrinthe);
+
+		this.heroPainter.draw(im,labyrinthe);
 	}
 
 	@Override
@@ -93,6 +100,11 @@ public class PacmanPainter implements GamePainter {
 	@Override
 	public void drawScore(BufferedImage im) {
 		this.scorePainter.draw(im,labyrinthe);
+	}
+
+	@Override
+	public void drawMenu(BufferedImage im) {
+		this.menuHomePainter.draw(im,labyrinthe);
 	}
 
 	public void drawOver(BufferedImage im) {

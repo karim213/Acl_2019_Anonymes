@@ -1,10 +1,12 @@
 package model;
 
 import java.awt.event.KeyEvent;
+import java.awt.event.MouseEvent;
 
 import engine.Cmd;
 import engine.Game;
 import engine.GameController;
+import util.Constants;
 
 
 /**
@@ -37,6 +39,50 @@ public class PacmanController implements GameController {
 	 */
 	public Cmd getCommand() {
 		return this.commandeEnCours;
+	}
+
+	@Override
+	public void mouseClicked(MouseEvent e) {
+		if(labyrinthe.isFinished() == -1) {
+			if (Constants.rect_play.contains(e.getPoint())) {
+				labyrinthe.setisFinished(0);
+			} else if (Constants.rect_load.contains(e.getPoint())) {
+				System.out.println("load");
+			} else if (Constants.rect_quit.contains(e.getPoint())) {
+				System.exit(0);
+			}
+		}else if(labyrinthe.isFinished() == 0){
+			if (Constants.rect_pause.contains(e.getPoint())) {
+				System.out.println("yes");
+				if (labyrinthe.isFinished() == 0) {
+					labyrinthe.setisFinished(1);
+					System.out.println("pause");
+				}else if(labyrinthe.isFinished() == 1) {
+					labyrinthe.setisFinished(0);
+					System.out.println("resume");
+				}
+			}
+		}
+	}
+
+	@Override
+	public void mousePressed(MouseEvent e) {
+
+	}
+
+	@Override
+	public void mouseReleased(MouseEvent e) {
+
+	}
+
+	@Override
+	public void mouseEntered(MouseEvent e) {
+
+	}
+
+	@Override
+	public void mouseExited(MouseEvent e) {
+
 	}
 
 	@Override
@@ -93,5 +139,10 @@ public class PacmanController implements GameController {
 	public void keyTyped(KeyEvent e) {
 
 	}
+
+    public Labyrinthe getLabyrinthe(){
+		return this.labyrinthe;
+	}
+
 
 }

@@ -6,9 +6,9 @@ public abstract class MovableEntity {
     protected int x;
     protected int y;
     protected Cmd currentCmd;
-    private int pv;
-    private boolean isDead;
-    private int speed;
+    protected int pv;
+    protected boolean isDead;
+    protected int speed;
 
     public MovableEntity(int x, int y, int pv, int speed) {
         this.x = x;
@@ -43,6 +43,11 @@ public abstract class MovableEntity {
 
     public int getPv(){
         return this.pv;
+    }
+
+    public void setPosition(Position position){
+        this.x = position.getX();
+        this.y = position.getY();
     }
 
     public int getX() {

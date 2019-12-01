@@ -3,6 +3,7 @@ package model;
 import engine.Cmd;
 import engine.Game;
 import model.enemies.Enemies;
+import model.levels.LevelManager;
 import model.objects.Objects;
 import model.walls.Walls;
 
@@ -15,15 +16,23 @@ public class Labyrinthe implements Game {
     private Enemies enemies;
     private Walls walls;
     private Objects objects;
-    private boolean isFinished;
+    private int isFinished;
+    private LevelManager levelManager;
+
 
 
     public Labyrinthe(Hero hero, Walls walls,Objects objects) {
         this.hero = hero;
         this.walls = walls;
         this.objects = objects;
-        this.isFinished = false;
+        this.isFinished = -1;
     }
+
+    public Labyrinthe(){
+        this.hero = new Hero(0,0);
+        levelManager = new LevelManager(this);
+    }
+
     public void setEnemies(Enemies enemies) {
         this.enemies = enemies;
     }
@@ -36,7 +45,7 @@ public class Labyrinthe implements Game {
                case UP:
                    if (hero.getY()>0 &&  isFree(x, y-hero.getSpeed())){
                        if (objects.isOnChest(new Position( x, y-hero.getSpeed()))){
-                           isFinished = true;
+                           isFinished = -1;
                        }
                        hero.goUp();
                    }
@@ -44,7 +53,7 @@ public class Labyrinthe implements Game {
                case DOWN:
                    if (hero.getY()<HEIGHT-10 && isFree(x, y+hero.getSpeed())){
                        if (objects.isOnChest(new Position(x, y+hero.getSpeed()))){
-                           isFinished = true;
+                           isFinished = -1;
                        }
                        hero.goDown();
                    }
@@ -52,7 +61,7 @@ public class Labyrinthe implements Game {
                case LEFT:
                    if (hero.getX()>0 && isFree(x-hero.getSpeed(), y)){
                        if (objects.isOnChest(new Position(x-hero.getSpeed(), y))){
-                           isFinished = true;
+                           isFinished = -1;
                        }
                        hero.goLeft();
                    }
@@ -60,7 +69,7 @@ public class Labyrinthe implements Game {
                case RIGHT:
                    if (hero.getX()<WIDTH-10 &&  isFree(x+hero.getSpeed(), y)){
                        if (objects.isOnChest(new Position(x+hero.getSpeed(), y))){
-                           isFinished = true;
+                           isFinished = -1;
                        }
                        hero.goRight();
                    }
@@ -92,8 +101,16 @@ public class Labyrinthe implements Game {
     }
 
     @Override
-    public boolean isFinished() {
-        return isFinished || hero.isDead();
+    public int isFinished() {
+        if (hero.isDead())
+            isFinished = -1;
+
+        return isFinished;
+    }
+
+    @Override
+    public void setisFinished(int status) {
+        this.isFinished = status;
     }
 
     @Override
@@ -124,5 +141,18 @@ public class Labyrinthe implements Game {
     public void attack(){
         this.enemies.attack(this.hero.getX(), this.hero.getY());
     }
+
+    public void setHero(Hero hero) {
+        this.hero = hero;
+    }
+
+    public void setWalls(Walls walls) {
+        this.walls = walls;
+    }
+
+    public void setObjects(Objects objects) {
+        this.objects = objects;
+    }
+
 }
 
