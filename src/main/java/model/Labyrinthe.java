@@ -9,7 +9,6 @@ import model.objects.Objects;
 import model.walls.Wall;
 import model.walls.Walls;
 
-import java.io.*;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
@@ -17,7 +16,7 @@ import java.util.Scanner;
 import static util.Constants.*;
 
 
-public class Labyrinthe implements Game, Serializable {
+public class Labyrinthe implements Game {
 
     private Hero hero;
     private Enemies enemies;
@@ -29,27 +28,21 @@ public class Labyrinthe implements Game, Serializable {
 
 
     public Labyrinthe(Hero hero, Walls walls,Objects objects) {
-        this.hero = new Hero(4, 4);
+        this.hero = hero;
         this.walls = walls;
         this.objects = objects;
-        this.isFinished = -3;
-
-
-
-
+        this.isFinished = -1;
     }
 
     public Labyrinthe() {
-        this.hero = new Hero(4, 4);
         this.level = 1;
         this.walls = new Walls();
         this.objects = new Objects();
-       // objects.addChest(new Position(120,70));
         this.enemies=new Enemies();
-        this.isFinished = -3;
+        this.isFinished = -1;
 
         Scanner lineOfFile = new Scanner(TestFactory.class.getClassLoader().getResourceAsStream("maze.txt")) ;
-        for(int  i = 0 ;i<60;i++) {
+        for(int  i = 0 ;i<100;i++) {
             file.add(lineOfFile.nextLine());
         }
         setLabyrinthe();
@@ -67,9 +60,15 @@ public class Labyrinthe implements Game, Serializable {
             case UP:
                 if (hero.getY()>0 &&  isFree(x, y-hero.getSpeed())){
                     if (objects.isOnChest(new Position( x, y-hero.getSpeed()))){
-                        //isFinished = -1;
-                        level = level +1;
-                        setLabyrinthe();
+                        if(level == NB_LEVELS) {
+                            isFinished = -1;
+                            level = 1;
+                            setLabyrinthe();
+                        }
+                        else {
+                            level = level + 1;
+                            setLabyrinthe();
+                        }
                     }
                     hero.goUp();
                 }
@@ -77,9 +76,15 @@ public class Labyrinthe implements Game, Serializable {
             case DOWN:
                 if (hero.getY()<HEIGHT-10 && isFree(x, y+hero.getSpeed())){
                     if (objects.isOnChest(new Position(x, y+hero.getSpeed()))){
-                        //isFinished = -1;
-                        level = level +1;
-                        setLabyrinthe();
+                        if(level == NB_LEVELS) {
+                            isFinished = -1;
+                            level = 1;
+                            setLabyrinthe();
+                        }
+                        else {
+                            level = level + 1;
+                            setLabyrinthe();
+                        }
 
                     }
                     hero.goDown();
@@ -88,9 +93,15 @@ public class Labyrinthe implements Game, Serializable {
             case LEFT:
                 if (hero.getX()>0 && isFree(x-hero.getSpeed(), y)){
                     if (objects.isOnChest(new Position(x-hero.getSpeed(), y))){
-                        //isFinished = -1;
-                        level = level +1;
-                        setLabyrinthe();
+                        if(level == NB_LEVELS) {
+                            isFinished = -1;
+                            level = 1;
+                            setLabyrinthe();
+                        }
+                        else {
+                            level = level + 1;
+                            setLabyrinthe();
+                        }
                     }
                     hero.goLeft();
                 }
@@ -98,10 +109,15 @@ public class Labyrinthe implements Game, Serializable {
             case RIGHT:
                 if (hero.getX()<WIDTH-10 &&  isFree(x+hero.getSpeed(), y)){
                     if (objects.isOnChest(new Position(x+hero.getSpeed(), y))){
-                        //isFinished = -1;
-                        level = level + 1 ;
-                        setLabyrinthe();
-
+                        if(level == NB_LEVELS) {
+                            isFinished = -1;
+                            level = 1;
+                            setLabyrinthe();
+                        }
+                        else {
+                            level = level + 1;
+                            setLabyrinthe();
+                        }
                     }
                     hero.goRight();
                 }
@@ -181,7 +197,7 @@ public class Labyrinthe implements Game, Serializable {
         int cols = 40;
 
         if(this.level==1) {
-            //walls = new Walls();
+            hero = new Hero(4,4);
             for (int y = 0; y < rows; y++) {
                 String line = file.get(y);
                 for (int x = 0; x < cols; x++) {
@@ -192,6 +208,11 @@ public class Labyrinthe implements Game, Serializable {
                     else if(start == 'S'){
                         Monster m = new Monster(x*4,y*4,this);
                         m.setMovementStrategy(new SnakeMovement());
+                        enemies.addEnemie(m);
+                    }
+                    else if(start == 'G'){
+                        Ghost m = new Ghost(x*4,y* 4,this);
+                        m.setMovementStrategy(new GhostMovement());
                         enemies.addEnemie(m);
                     }
                     else if(start == 'H'){
@@ -222,10 +243,6 @@ public class Labyrinthe implements Game, Serializable {
                     }
                     else if(start == 'G'){
                         Ghost m = new Ghost(x*4,(y-rowsnew )* 4,this);
-                        m.setMovementStrategy(new GhostMovement());
-                        enemies.addEnemie(m);
-                    }else if(start == 'B'){
-                        Boss m = new Boss(x*4,(y-rowsnew )* 4,this);
                         m.setMovementStrategy(new GhostMovement());
                         enemies.addEnemie(m);
                     }
