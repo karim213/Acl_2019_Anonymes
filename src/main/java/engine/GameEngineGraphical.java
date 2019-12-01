@@ -58,10 +58,7 @@ public class GameEngineGraphical {
 
 		while (game.isFinished() == -1) {
 			this.gui.paintMenu();
-			Thread.sleep(100);
 		}
-
-
 
 		// boucle de game
 		while (game.isFinished() >= 0) {
@@ -71,14 +68,11 @@ public class GameEngineGraphical {
 			if (game.isFinished() == 0)
 				this.game.evolve(c);
 			// affiche le game
-			//this.gui.paintParty(false,null);
-			if (game.isFinished() == -1) {
-				this.gui.paintMenu();
-			}else
-				this.gui.paintParty(false,null);
+			this.gui.paintParty(false,null);
 			// met en attente
 			Thread.sleep(80);
 		}
+
 		this.gui.paintParty(true,game.isOver()?"lose":"win");
 		Thread.sleep(4000);
 		game.setisFinished(-1);

@@ -32,15 +32,12 @@ public class Labyrinthe implements Game {
         this.walls = walls;
         this.objects = objects;
         this.isFinished = -1;
-
     }
 
-    public Labyrinthe(Hero hero) {
-        this.hero = hero;
+    public Labyrinthe() {
         this.level = 1;
         this.walls = new Walls();
         this.objects = new Objects();
-       // objects.addChest(new Position(120,70));
         this.enemies=new Enemies();
         this.isFinished = -1;
 
@@ -63,9 +60,15 @@ public class Labyrinthe implements Game {
             case UP:
                 if (hero.getY()>0 &&  isFree(x, y-hero.getSpeed())){
                     if (objects.isOnChest(new Position( x, y-hero.getSpeed()))){
-                        //isFinished = -1;
-                        level = level +1;
-                        setLabyrinthe();
+                        if(level == NB_LEVELS) {
+                            isFinished = -1;
+                            level = 1;
+                            setLabyrinthe();
+                        }
+                        else {
+                            level = level + 1;
+                            setLabyrinthe();
+                        }
                     }
                     hero.goUp();
                 }
@@ -73,9 +76,15 @@ public class Labyrinthe implements Game {
             case DOWN:
                 if (hero.getY()<HEIGHT-10 && isFree(x, y+hero.getSpeed())){
                     if (objects.isOnChest(new Position(x, y+hero.getSpeed()))){
-                        //isFinished = -1;
-                        level = level +1;
-                        setLabyrinthe();
+                        if(level == NB_LEVELS) {
+                            isFinished = -1;
+                            level = 1;
+                            setLabyrinthe();
+                        }
+                        else {
+                            level = level + 1;
+                            setLabyrinthe();
+                        }
 
                     }
                     hero.goDown();
@@ -84,9 +93,15 @@ public class Labyrinthe implements Game {
             case LEFT:
                 if (hero.getX()>0 && isFree(x-hero.getSpeed(), y)){
                     if (objects.isOnChest(new Position(x-hero.getSpeed(), y))){
-                        //isFinished = -1;
-                        level = level +1;
-                        setLabyrinthe();
+                        if(level == NB_LEVELS) {
+                            isFinished = -1;
+                            level = 1;
+                            setLabyrinthe();
+                        }
+                        else {
+                            level = level + 1;
+                            setLabyrinthe();
+                        }
                     }
                     hero.goLeft();
                 }
@@ -94,10 +109,15 @@ public class Labyrinthe implements Game {
             case RIGHT:
                 if (hero.getX()<WIDTH-10 &&  isFree(x+hero.getSpeed(), y)){
                     if (objects.isOnChest(new Position(x+hero.getSpeed(), y))){
-                        //isFinished = -1;
-                        level = level + 1 ;
-                        setLabyrinthe();
-
+                        if(level == NB_LEVELS) {
+                            isFinished = -1;
+                            level = 1;
+                            setLabyrinthe();
+                        }
+                        else {
+                            level = level + 1;
+                            setLabyrinthe();
+                        }
                     }
                     hero.goRight();
                 }
@@ -177,7 +197,7 @@ public class Labyrinthe implements Game {
         int cols = 40;
 
         if(this.level==1) {
-            //walls = new Walls();
+            hero = new Hero(4,4);
             for (int y = 0; y < rows; y++) {
                 String line = file.get(y);
                 for (int x = 0; x < cols; x++) {
@@ -188,6 +208,11 @@ public class Labyrinthe implements Game {
                     else if(start == 'S'){
                         Monster m = new Monster(x*4,y*4,this);
                         m.setMovementStrategy(new SnakeMovement());
+                        enemies.addEnemie(m);
+                    }
+                    else if(start == 'G'){
+                        Ghost m = new Ghost(x*4,y* 4,this);
+                        m.setMovementStrategy(new GhostMovement());
                         enemies.addEnemie(m);
                     }
                     else if(start == 'H'){
