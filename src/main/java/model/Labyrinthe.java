@@ -42,7 +42,7 @@ public class Labyrinthe implements Game {
         this.isFinished = -1;
 
         Scanner lineOfFile = new Scanner(TestFactory.class.getClassLoader().getResourceAsStream("maze.txt")) ;
-        for(int  i = 0 ;i<60;i++) {
+        for(int  i = 0 ;i<100;i++) {
             file.add(lineOfFile.nextLine());
         }
         setLabyrinthe();
