@@ -8,7 +8,7 @@ public class GhostMovement implements EnemyMovementStrategy {
 
         int distance = (game.getHero().getY() - enemy.getY()) * (game.getHero().getY() - enemy.getY()) + (game.getHero().getX() - (enemy.getX())) * (game.getHero().getX() - (enemy.getX()));
 
-        if (distance < 4000){
+        if (distance < 6000){
 
             if(game.getHero().getX()<enemy.getX()&&game.getHero().getY()==enemy.getY())
                 enemy.goLeft();

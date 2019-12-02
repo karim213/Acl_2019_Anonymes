@@ -8,6 +8,9 @@ import engine.Game;
 import engine.GameController;
 import util.Constants;
 
+import javax.swing.*;
+import javax.swing.filechooser.FileSystemView;
+
 
 /**
  * @author Horatiu Cirstea, Vincent Thomas
@@ -43,10 +46,15 @@ public class PacmanController implements GameController {
 
 	@Override
 	public void mouseClicked(MouseEvent e) {
+	}
+
+	@Override
+	public void mousePressed(MouseEvent e) {
 		if(labyrinthe.isFinished() == -1) {
 			if (Constants.rect_play.contains(e.getPoint())) {
 				labyrinthe.setisFinished(0);
 			} else if (Constants.rect_load.contains(e.getPoint())) {
+				labyrinthe.load();
 				System.out.println("load");
 			} else if (Constants.rect_quit.contains(e.getPoint())) {
 				System.exit(0);
@@ -63,11 +71,6 @@ public class PacmanController implements GameController {
 				}
 			}
 		}
-	}
-
-	@Override
-	public void mousePressed(MouseEvent e) {
-
 	}
 
 	@Override
@@ -93,6 +96,11 @@ public class PacmanController implements GameController {
 
 		switch (e.getKeyChar()) {
 		// si on appuie sur 'q',commande joueur est gauche
+			case 'y':
+			case 'Y':
+				this.labyrinthe.save();
+				break;
+
 			case 'q':
 			case 'Q':
 				this.commandeEnCours = Cmd.LEFT;

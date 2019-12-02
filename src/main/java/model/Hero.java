@@ -1,11 +1,6 @@
 package model;
 
 
-import engine.Cmd;
-
-import java.io.Serializable;
-import java.sql.SQLOutput;
-
 public class Hero extends MovableEntity implements java.io.Serializable {
     private  boolean isAttaque;
 

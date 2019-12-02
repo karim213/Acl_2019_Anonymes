@@ -39,9 +39,12 @@ public class ScorePainter implements Painter {
                 decal = 50;
             im.getGraphics().drawImage(this.pvSprite,decal + i*40 ,  20, 40,40, null);
         }
-        if(game.isFinished() == 0)
-            pauseButton.paint(im.getGraphics() , "pause");
-        else if(game.isFinished() == 1)
-            pauseButton.paint(im.getGraphics() , "resume");
+        if(game.isFinished() == 0){
+            pauseButton.drawPlay();
+        }
+        else if (game.isFinished() == 1) {
+            pauseButton.drawResume();
+        }
+        pauseButton.paint(im.getGraphics());
     }
 }

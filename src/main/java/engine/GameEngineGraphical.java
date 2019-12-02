@@ -63,8 +63,8 @@ public class GameEngineGraphical {
 
 		while (game.isFinished() == -1) {
 			this.gui.paintMenu();
+			Thread.sleep(80);
 		}
-
 
 
 		// boucle de game

@@ -60,7 +60,7 @@ public class AStar {
         int cmpt = 0;
         openList.add(new Node(start.getX(), start.getY(), 0, 0, null));
 
-        while (!openList.isEmpty() && cmpt < 200){
+        while (!openList.isEmpty() && cmpt < 800){
             cmpt++;
             Node u = openList.pop();
             closeList.add(u);

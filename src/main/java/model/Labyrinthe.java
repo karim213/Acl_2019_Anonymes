@@ -6,9 +6,15 @@ import factories.TestFactory;
 import model.enemies.*;
 import model.objects.Heal;
 import model.objects.Objects;
-import model.walls.Wall;
 import model.walls.Walls;
 
+import javax.swing.*;
+import javax.swing.filechooser.FileSystemView;
+import java.io.IOException;
+import java.nio.charset.StandardCharsets;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
@@ -40,7 +46,7 @@ public class Labyrinthe implements Game {
         this.walls = new Walls();
         this.objects = new Objects();
         this.enemies=new Enemies();
-        this.isFinished = -1;
+        this.isFinished = -3;
 
         Scanner lineOfFile = new Scanner(TestFactory.class.getClassLoader().getResourceAsStream("maze.txt")) ;
         for(int  i = 0 ;i<100;i++) {
@@ -59,58 +65,21 @@ public class Labyrinthe implements Game {
         switch (userCmd){
             case UP:
                 if (hero.getY()>0 &&  isFree(x, y-hero.getSpeed())){
-                    if (objects.isOnChest(new Position( x, y-hero.getSpeed()))){
-                        if(level == NB_LEVELS) {
-                            isFinished = -1;
-                            level = 1;
-                        }
-                        else {
-                            level = level + 1;
-                        }
-                    }
                     hero.goUp();
                 }
                 break;
             case DOWN:
                 if (hero.getY()<HEIGHT-10 && isFree(x, y+hero.getSpeed())){
-                    if (objects.isOnChest(new Position(x, y+hero.getSpeed()))){
-                        if(level == NB_LEVELS) {
-                            isFinished = -1;
-                            level = 1;
-                        }
-                        else {
-                            level = level + 1;
-                        }
-
-                    }
                     hero.goDown();
                 }
                 break;
             case LEFT:
                 if (hero.getX()>0 && isFree(x-hero.getSpeed(), y)){
-                    if (objects.isOnChest(new Position(x-hero.getSpeed(), y))){
-                        if(level == NB_LEVELS) {
-                            isFinished = -1;
-                            level = 1;
-                        }
-                        else {
-                            level = level + 1;
-                        }
-                    }
                     hero.goLeft();
                 }
                 break;
             case RIGHT:
                 if (hero.getX()<WIDTH-10 &&  isFree(x+hero.getSpeed(), y)){
-                    if (objects.isOnChest(new Position(x+hero.getSpeed(), y))){
-                        if(level == NB_LEVELS) {
-                            isFinished = -1;
-                            level = 1;
-                        }
-                        else {
-                            level = level + 1;
-                        }
-                    }
                     hero.goRight();
                 }
                 break;
@@ -122,6 +91,19 @@ public class Labyrinthe implements Game {
                 this.attack();
                 break;
         }
+
+        if (objects.isOnChest(new Position(hero.getX(), hero.getY()))) {
+            if(level == NB_LEVELS) {
+                isFinished = -1;
+                level = 1;
+                setLabyrinthe();
+            }
+            else {
+                level = level + 1;
+                setLabyrinthe();
+            }
+        }
+
         this.objects.performObjectActions(hero);
 
         if(enemies.isEnemy(getHero().getX(),getHero().getY())){
@@ -135,6 +117,7 @@ public class Labyrinthe implements Game {
             if(hero.isDead()){
                 isFinished = -1;
                 level = 1;
+                setLabyrinthe();
             }
         }
         enemiesProcess();
@@ -183,6 +166,52 @@ public class Labyrinthe implements Game {
         this.enemies.attack(this.hero.getX(), this.hero.getY());
     }
 
+    public void save() {
+        JFileChooser j = new JFileChooser(FileSystemView.getFileSystemView().getHomeDirectory());
+
+        int r = j.showSaveDialog(null);
+
+        if (r == JFileChooser.APPROVE_OPTION) {
+            List<String> lines = new ArrayList<>();
+            int rowsnew = 20*(level-1);
+            String line;
+
+            for (int i = rowsnew; i < file.size(); i++) {
+                line = file.get(i);
+                lines.add(line);
+            }
+
+            Path file = Paths.get(j.getSelectedFile().getAbsolutePath());
+            try {
+                Files.write(file, lines, StandardCharsets.UTF_8);
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
+    }
+
+    public void load() {
+        JFileChooser j = new JFileChooser(FileSystemView.getFileSystemView().getHomeDirectory());
+
+        int r = j.showOpenDialog(null);
+
+        if (r == JFileChooser.APPROVE_OPTION) {
+
+            Path file = Paths.get(j.getSelectedFile().getAbsolutePath());
+            try {
+                this.file = Files.readAllLines(file);
+                this.level = 1;
+                this.walls = new Walls();
+                this.objects = new Objects();
+                this.enemies=new Enemies();
+                setLabyrinthe();
+                setisFinished(0);
+
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
+    }
 
     public void setLabyrinthe(){
 

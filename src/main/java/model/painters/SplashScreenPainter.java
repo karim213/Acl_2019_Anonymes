@@ -1,10 +1,6 @@
 package model.painters;
 
 import model.Labyrinthe;
-import model.painters.buttons.PlayButton;
-import model.painters.buttons.RectangleButton;
-import model.painters.buttons.loadButton;
-import model.painters.buttons.quitButton;
 
 import javax.imageio.ImageIO;
 import java.awt.image.BufferedImage;

@@ -4,26 +4,24 @@ import util.Constants;
 
 import javax.imageio.ImageIO;
 import java.awt.*;
-import java.awt.event.MouseAdapter;
-import java.awt.event.MouseEvent;
-import java.awt.event.MouseListener;
-import java.awt.geom.Rectangle2D;
 import java.awt.image.BufferedImage;
 import java.io.IOException;
 
-public class PlayButton{
+public class PlayButton implements Button{
 
-    public void paint(Graphics g) {
-        BufferedImage play = null;
+    BufferedImage play;
+
+    public PlayButton() {
         try {
             play = ImageIO.read(getClass().getClassLoader().getResourceAsStream("play.png"));
-            g.drawImage(play, (int) Constants.rect_play.getX(), (int)Constants.rect_play.getY(), (int)Constants.rect_play.getWidth(), (int)Constants.rect_play.getHeight(), null);
 
         } catch (IOException e) {
             e.printStackTrace();
         }
+    }
 
-
+    public void paint(Graphics g) {
+        g.drawImage(play, (int) Constants.rect_play.getX(), (int)Constants.rect_play.getY(), (int)Constants.rect_play.getWidth(), (int)Constants.rect_play.getHeight(), null);
     }
 
 }

@@ -22,7 +22,7 @@ public class SnakeMovement implements EnemyMovementStrategy {
 
         int distance = (game.getHero().getY() - enemy.getY()) * (game.getHero().getY() - enemy.getY()) + (game.getHero().getX() - (enemy.getX())) * (game.getHero().getX() - (enemy.getX()));
 
-        if (distance < 4000){
+        if (distance < 6000){
             if (cmpt == 0) {
                 next = AStar.getPath(game, new Position(game.getHero().getX(), game.getHero().getY()), new Position(enemy.getX(), enemy.getY()));
                 if (next != null){

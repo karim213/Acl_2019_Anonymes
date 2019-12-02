@@ -5,8 +5,6 @@ package engine;
  *
  */
 
-import model.painters.buttons.RectangleButton;
-
 import javax.swing.*;
 import java.awt.*;
 import java.awt.image.BufferedImage;
@@ -32,8 +30,6 @@ public class DrawingSplashScreen extends JPanel {
      * image en cours est l'image entrain d'etre affichee
      */
     private BufferedImage currentImage;
-
-    private RectangleButton jouer;
 
     /**
      * la taille des images

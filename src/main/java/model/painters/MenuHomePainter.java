@@ -2,7 +2,6 @@ package model.painters;
 
 import model.Labyrinthe;
 import model.painters.buttons.*;
-import util.Constants;
 
 import javax.imageio.ImageIO;
 import java.awt.image.BufferedImage;
@@ -12,8 +11,7 @@ public class MenuHomePainter implements Painter {
 
     private PlayButton playButton;
     private loadButton loadButton;
-    private quitButton quitButton;
-    private RectangleButton rectangleButton;
+    private QuitButton quitButton;
     private BufferedImage background;
     private  BufferedImage personnage;
     private  BufferedImage logo;
@@ -22,7 +20,7 @@ public class MenuHomePainter implements Painter {
     public MenuHomePainter(){
       playButton = new PlayButton();
       loadButton = new loadButton();
-      quitButton = new quitButton();
+      quitButton = new QuitButton();
 
         try {
             background = ImageIO.read(getClass().getClassLoader().getResourceAsStream("background_menu.jpg"));
