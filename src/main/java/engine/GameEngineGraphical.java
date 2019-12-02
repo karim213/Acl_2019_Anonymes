@@ -54,7 +54,6 @@ public class GameEngineGraphical {
 	public void run() throws InterruptedException {
 
 		// creation de l'interface graphique
-
 		if (game.isFinished() == -3) {
 			this.gui.paintSplash();
 			Thread.sleep(4000);
@@ -63,9 +62,7 @@ public class GameEngineGraphical {
 
 
 		while (game.isFinished() == -1) {
-			System.out.println("menu");
 			this.gui.paintMenu();
-			Thread.sleep(100);
 		}
 
 
@@ -74,17 +71,18 @@ public class GameEngineGraphical {
 		while (game.isFinished() >= 0) {
 
 			Cmd c = this.gameController.getCommand();
-			this.game.evolve(c);
+			if (game.isFinished() == 0)
+				this.game.evolve(c);
 			this.gui.paintParty(false,null);
 			while (game.isFinished() == 1){
 				Thread.sleep(100);
 			}
-
-			Thread.sleep(game.getHero().isAttaque() ? 20 :80);
+			Thread.sleep(80);
 		}
+
 		this.gui.paintParty(true,game.isOver()?"lose":"win");
+		game.setLabyrinthe();
 		Thread.sleep(4000);
-		game.setisFinished(-1);
 		run();
 	}
 }

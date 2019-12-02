@@ -33,5 +33,6 @@ public interface Game {
 
 	public Hero getHero();
 
+	public void setLabyrinthe();
 
 }

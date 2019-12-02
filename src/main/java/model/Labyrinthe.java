@@ -31,15 +31,16 @@ public class Labyrinthe implements Game {
         this.hero = hero;
         this.walls = walls;
         this.objects = objects;
-        this.isFinished = -3;
+        this.isFinished = -1;
     }
 
     public Labyrinthe() {
+        this.hero = new Hero(4,4);
         this.level = 1;
         this.walls = new Walls();
         this.objects = new Objects();
         this.enemies=new Enemies();
-        this.isFinished = -3;
+        this.isFinished = -1;
 
         Scanner lineOfFile = new Scanner(TestFactory.class.getClassLoader().getResourceAsStream("maze.txt")) ;
         for(int  i = 0 ;i<100;i++) {
@@ -55,7 +56,6 @@ public class Labyrinthe implements Game {
     public void evolve(Cmd userCmd) {
         int x = hero.getX();
         int y = hero.getY();
-
         switch (userCmd){
             case UP:
                 if (hero.getY()>0 &&  isFree(x, y-hero.getSpeed())){
@@ -63,11 +63,9 @@ public class Labyrinthe implements Game {
                         if(level == NB_LEVELS) {
                             isFinished = -1;
                             level = 1;
-                            setLabyrinthe();
                         }
                         else {
                             level = level + 1;
-                            setLabyrinthe();
                         }
                     }
                     hero.goUp();
@@ -79,11 +77,9 @@ public class Labyrinthe implements Game {
                         if(level == NB_LEVELS) {
                             isFinished = -1;
                             level = 1;
-                            setLabyrinthe();
                         }
                         else {
                             level = level + 1;
-                            setLabyrinthe();
                         }
 
                     }
@@ -96,11 +92,9 @@ public class Labyrinthe implements Game {
                         if(level == NB_LEVELS) {
                             isFinished = -1;
                             level = 1;
-                            setLabyrinthe();
                         }
                         else {
                             level = level + 1;
-                            setLabyrinthe();
                         }
                     }
                     hero.goLeft();
@@ -112,11 +106,9 @@ public class Labyrinthe implements Game {
                         if(level == NB_LEVELS) {
                             isFinished = -1;
                             level = 1;
-                            setLabyrinthe();
                         }
                         else {
                             level = level + 1;
-                            setLabyrinthe();
                         }
                     }
                     hero.goRight();
@@ -140,6 +132,10 @@ public class Labyrinthe implements Game {
             } catch (InterruptedException e) {
                 e.printStackTrace();
             }
+            if(hero.isDead()){
+                isFinished = -1;
+                level = 1;
+            }
         }
         enemiesProcess();
     }
@@ -150,9 +146,6 @@ public class Labyrinthe implements Game {
 
     @Override
     public int isFinished() {
-        if (hero.isDead())
-            isFinished = -1;
-
         return isFinished;
     }
 
@@ -195,15 +188,22 @@ public class Labyrinthe implements Game {
 
         int rows = 20;
         int cols = 40;
-
         if(this.level==1) {
-            hero = new Hero(4,4);
+            walls.emptyWalls();
+            enemies.emptyEnemies();
+            objects.emptyObjects();
+           hero = new Hero(4,4);
             for (int y = 0; y < rows; y++) {
                 String line = file.get(y);
                 for (int x = 0; x < cols; x++) {
                     char start = line.charAt(x);
                     if (start == '#') {
                         walls.addWall(x * 4, y * 4);
+                    }
+                    else if(start == 'B'){
+                        Boss b = new Boss(x*4,y*4,this);
+                        b.setMovementStrategy(new RandomMovement());
+                        enemies.addEnemie(b);
                     }
                     else if(start == 'S'){
                         Monster m = new Monster(x*4,y*4,this);

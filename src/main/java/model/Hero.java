@@ -4,6 +4,7 @@ package model;
 import engine.Cmd;
 
 import java.io.Serializable;
+import java.sql.SQLOutput;
 
 public class Hero extends MovableEntity implements java.io.Serializable {
     private  boolean isAttaque;
@@ -14,6 +15,8 @@ public class Hero extends MovableEntity implements java.io.Serializable {
 
     public Hero(int x, int y) {
         super(x, y, 6, 2);
+
+
         this.isAttaque = false;
     }
 
