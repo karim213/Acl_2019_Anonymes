@@ -4,8 +4,7 @@ import engine.Cmd;
 import engine.Game;
 import factories.TestFactory;
 import model.enemies.*;
-import model.objects.Heal;
-import model.objects.Objects;
+import model.objects.*;
 import model.walls.Walls;
 
 import javax.swing.*;
@@ -31,6 +30,7 @@ public class Labyrinthe implements Game {
     private int isFinished;
     private int level;
     private List<String>  file = new ArrayList<>();
+    private Position teleportPosition;
 
 
     public Labyrinthe(Hero hero, Walls walls,Objects objects) {
@@ -38,6 +38,7 @@ public class Labyrinthe implements Game {
         this.walls = walls;
         this.objects = objects;
         this.isFinished = -1;
+        teleportPosition = null;
     }
 
     public Labyrinthe() {
@@ -47,6 +48,7 @@ public class Labyrinthe implements Game {
         this.objects = new Objects();
         this.enemies=new Enemies();
         this.isFinished = -3;
+        teleportPosition = null;
 
         Scanner lineOfFile = new Scanner(TestFactory.class.getClassLoader().getResourceAsStream("maze.txt")) ;
         for(int  i = 0 ;i<100;i++) {
@@ -109,16 +111,10 @@ public class Labyrinthe implements Game {
         if(enemies.isEnemy(getHero().getX(),getHero().getY())){
 
             this.getHero().receiveDamage();
-            try {
-                Thread.sleep(200);
-            } catch (InterruptedException e) {
-                e.printStackTrace();
-            }
-            if(hero.isDead()){
-                isFinished = -1;
-                level = 1;
-                setLabyrinthe();
-            }
+        }
+
+        if(hero.isDead()){
+            isFinished = -1;
         }
         enemiesProcess();
     }
@@ -139,7 +135,16 @@ public class Labyrinthe implements Game {
 
     @Override
     public boolean isOver() {
-        return hero.isDead();
+        System.out.println(hero.isDead());
+        if (hero.isDead()) {
+            level = 1;
+            hero = new Hero(4, 4);
+            setLabyrinthe();
+            return true;
+        }
+        else {
+            return false;
+        }
     }
 
     public boolean isFree(int x , int y){
@@ -200,7 +205,7 @@ public class Labyrinthe implements Game {
             Path file = Paths.get(j.getSelectedFile().getAbsolutePath());
             try {
                 this.file = Files.readAllLines(file);
-                this.level = 1;
+                this.level = (NB_LEVELS +2 - this.file.size()/20);
                 this.walls = new Walls();
                 this.objects = new Objects();
                 this.enemies=new Enemies();
@@ -217,75 +222,56 @@ public class Labyrinthe implements Game {
 
         int rows = 20;
         int cols = 40;
-        if(this.level==1) {
-            walls.emptyWalls();
-            enemies.emptyEnemies();
-            objects.emptyObjects();
-           hero = new Hero(4,4);
-            for (int y = 0; y < rows; y++) {
-                String line = file.get(y);
-                for (int x = 0; x < cols; x++) {
-                    char start = line.charAt(x);
-                    if (start == '#') {
-                        walls.addWall(x * 4, y * 4);
-                    }
-                    else if(start == 'B'){
-                        Boss b = new Boss(x*4,y*4,this);
-                        b.setMovementStrategy(new RandomMovement());
-                        enemies.addEnemie(b);
-                    }
-                    else if(start == 'S'){
-                        Monster m = new Monster(x*4,y*4,this);
-                        m.setMovementStrategy(new SnakeMovement());
-                        enemies.addEnemie(m);
-                    }
-                    else if(start == 'G'){
-                        Ghost m = new Ghost(x*4,y* 4,this);
-                        m.setMovementStrategy(new GhostMovement());
-                        enemies.addEnemie(m);
-                    }
-                    else if(start == 'H'){
-                        objects.addObject(new Heal(new Position(x*4,y*4)));
-                    }
-                    else if(start == 'C'){
-                         objects.addChest(new Position(x*4,y*4));
-                    }
-                }
-            }
-        }
-        else{
-            walls.emptyWalls();
-            enemies.emptyEnemies();
-            objects.emptyObjects();
-            int rowsnew = rows*(level-1);
-            for (int y = rowsnew; y < rowsnew+20; y++) {
-                String line = file.get(y);
-                for (int x = 0; x < cols; x++) {
-                    char start = line.charAt(x);
-                    if (start == '#') {
-                        walls.addWall(x * 4, (y-rowsnew )* 4);
-                    }
-                    else if(start == 'S'){
-                        Monster m = new Monster(x*4,(y-rowsnew )* 4,this);
-                        m.setMovementStrategy(new SnakeMovement());
-                        enemies.addEnemie(m);
-                    }
-                    else if(start == 'G'){
-                        Ghost m = new Ghost(x*4,(y-rowsnew )* 4,this);
-                        m.setMovementStrategy(new GhostMovement());
-                        enemies.addEnemie(m);
-                    }
-                    else if(start == 'H'){
-                        objects.addObject(new Heal(new Position(x*4,(y-rowsnew )* 4)));
-                    }
-                    else if(start == 'C'){
-                        objects.addChest(new Position(x*4,(y-rowsnew )* 4));
-                    }
-                }
 
-                hero.setX(4);
-                hero.setY(4);
+        walls.emptyWalls();
+        enemies.emptyEnemies();
+        objects.emptyObjects();
+
+        int rowsnew = rows*(level-1);
+
+        for (int y = rowsnew; y < rowsnew+20; y++) {
+            String line = file.get(y);
+            for (int x = 0; x < cols; x++) {
+                char start = line.charAt(x);
+                if (start == '#') {
+                    walls.addWall(x * 4, (y-rowsnew )* 4);
+                }
+                else if(start == 'S'){
+                    Monster m = new Monster(x*4,(y-rowsnew )* 4,this);
+                    m.setMovementStrategy(new SnakeMovement());
+                    enemies.addEnemie(m);
+                }
+                else if(start == 'G'){
+                    Ghost m = new Ghost(x*4,(y-rowsnew )* 4,this);
+                    m.setMovementStrategy(new GhostMovement());
+                    enemies.addEnemie(m);
+                }
+                else if(start == 'H'){
+                    objects.addObject(new Heal(new Position(x*4,(y-rowsnew )* 4)));
+                }
+                else if(start == 'C'){
+                    objects.addChest(new Position(x*4,(y-rowsnew )* 4));
+                }
+                else if(start == 'R'){
+                    objects.addObject(new Sand(new Position(x*4,(y-rowsnew )* 4)));
+                }
+                else if(start == 'T'){
+                    objects.addObject(new Trap(new Position(x*4,(y-rowsnew )* 4)));
+                }
+                else if(start == 'P'){
+                    if (teleportPosition == null) {
+                        teleportPosition = new Position(x*4,(y-rowsnew )* 4);
+                    }
+                    else {
+                        objects.addObject(new Teleporter(teleportPosition, new Position(x*4,(y-rowsnew )* 4)));
+                        teleportPosition = null;
+                    }
+
+                }
             }
+
+            hero.setX(4);
+            hero.setY(4);
         }
     }
 

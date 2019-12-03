@@ -11,6 +11,6 @@ public class Trap extends AbstractObject{
 
     @Override
     public void action(Hero hero) {
-        hero.receiveDamage();
+        hero.kill();
     }
 }

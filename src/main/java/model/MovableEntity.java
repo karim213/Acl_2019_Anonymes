@@ -8,7 +8,7 @@ public abstract class MovableEntity {
     protected Cmd currentCmd;
     protected int pv;
     protected boolean isDead;
-    protected int speed;
+    private int speed;
 
     public MovableEntity(int x, int y, int pv, int speed) {
         this.x = x;
@@ -37,8 +37,9 @@ public abstract class MovableEntity {
 
     public void receiveDamage(){
         this.pv--;
-        if (this.pv == 0)
+        if (this.pv <= 0) {
             isDead = true;
+        }
     }
 
     public int getPv(){
