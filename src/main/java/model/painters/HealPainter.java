@@ -23,7 +23,7 @@ public class HealPainter implements Painter{
 
     @Override
     public void draw(BufferedImage im, Labyrinthe game) {
-        for (Position position:game.getObjects().getPosHeals()) {
+        for (Position position:game.getPosHeals()) {
             im.getGraphics().drawImage(this.healSprite, position.getX()*5, position.getY()*5, 20, 20, null);
         }
     }

@@ -22,6 +22,6 @@ public class ChestPainter implements Painter {
 
     @Override
     public void draw(BufferedImage im, Labyrinthe game) {
-        im.getGraphics().drawImage(this.chestSprite, game.getObjects().getPosChest().getX()*5, game.getObjects().getPosChest().getY()*5, 20, 20, null);
+        im.getGraphics().drawImage(this.chestSprite, game.getPosChest().getX()*5, game.getPosChest().getY()*5, 20, 20, null);
     }
 }

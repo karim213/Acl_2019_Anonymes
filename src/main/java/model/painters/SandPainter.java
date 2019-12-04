@@ -21,7 +21,7 @@ public class SandPainter implements Painter {
 
     @Override
     public void draw(BufferedImage im, Labyrinthe game) {
-        for (Position position:game.getObjects().getPosSand()) {
+        for (Position position:game.getPosSands()) {
             im.getGraphics().drawImage(this.sandSprite, position.getX()*5, position.getY()*5, 20, 20, null);
         }
     }

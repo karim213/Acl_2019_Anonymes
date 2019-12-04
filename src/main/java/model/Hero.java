@@ -49,18 +49,19 @@ public class Hero extends MovableEntity implements java.io.Serializable {
     @Override
     public boolean isDead() {
         cmpt++;
-        System.out.println(isDead);
         return isDead;
     }
 
     @Override
     public void receiveDamage(){
-        if (cmpt == 5) {
+        //if (cmpt == 5) {
             cmpt = 0;
             this.pv--;
             if (this.pv <= 0) {
                 isDead = true;
             }
-        }
+        //}
     }
+
+
 }
