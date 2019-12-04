@@ -22,7 +22,7 @@ public class TeleporterPainter implements Painter {
 
     @Override
     public void draw(BufferedImage im, Labyrinthe game) {
-        for (Position position:game.getObjects().getPosTeleporter()) {
+        for (Position position:game.getPosTeleporters()) {
             im.getGraphics().drawImage(this.teleporterSprite, position.getX()*5, position.getY()*5, 20, 20, null);
         }
     }

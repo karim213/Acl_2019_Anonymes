@@ -5,10 +5,11 @@ import engine.Game;
 import factories.TestFactory;
 import model.enemies.*;
 import model.objects.*;
-import model.walls.Walls;
+import model.walls.Wall;
 
 import javax.swing.*;
 import javax.swing.filechooser.FileSystemView;
+import java.awt.*;
 import java.io.IOException;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
@@ -24,29 +25,26 @@ import static util.Constants.*;
 public class Labyrinthe implements Game {
 
     private Hero hero;
-    private Enemies enemies;
-    private Walls walls;
-    private Objects objects;
+    private List<Wall> walls;
+    private List<Enemy> enemies;
+    private List<Heal> heals = new ArrayList<>();
+    private List<Sand> sands = new ArrayList<>();
+    private List<Teleporter> teleporters = new ArrayList<>();
+    private List<Trap> traps = new ArrayList<>();
+    private List<Water> waters = new ArrayList<>();
+    private Chest chest;
     private int isFinished;
     private int level;
     private List<String>  file = new ArrayList<>();
     private Position teleportPosition;
 
 
-    public Labyrinthe(Hero hero, Walls walls,Objects objects) {
-        this.hero = hero;
-        this.walls = walls;
-        this.objects = objects;
-        this.isFinished = -1;
-        teleportPosition = null;
-    }
 
     public Labyrinthe() {
         this.hero = new Hero(4,4);
         this.level = 1;
-        this.walls = new Walls();
-        this.objects = new Objects();
-        this.enemies=new Enemies();
+        this.walls = new ArrayList<>();
+        this.enemies=new ArrayList<>();
         this.isFinished = -3;
         teleportPosition = null;
 
@@ -57,9 +55,6 @@ public class Labyrinthe implements Game {
         setLabyrinthe();
     }
 
-    public void setEnemies(Enemies enemies) {
-        this.enemies = enemies;
-    }
     @Override
     public void evolve(Cmd userCmd) {
         int x = hero.getX();
@@ -94,7 +89,7 @@ public class Labyrinthe implements Game {
                 break;
         }
 
-        if (objects.isOnChest(new Position(hero.getX(), hero.getY()))) {
+        if (chest.isOn(new Position(x+hero.getSpeed(), y))){
             if(level == NB_LEVELS) {
                 isFinished = -1;
                 level = 1;
@@ -106,10 +101,9 @@ public class Labyrinthe implements Game {
             }
         }
 
-        this.objects.performObjectActions(hero);
+        this.performObjectActions(hero);
 
-        if(enemies.isEnemy(getHero().getX(),getHero().getY())){
-
+        if(isEnemy(getHero().getX(),getHero().getY())){
             this.getHero().receiveDamage();
         }
 
@@ -119,8 +113,56 @@ public class Labyrinthe implements Game {
         enemiesProcess();
     }
 
+    public void performObjectActions(Hero hero) {
+        for(Trap trap : traps){
+            if(trap.isOn(new Position(hero.getX(), hero.getY()))){
+                trap.action(hero);
+            }
+        }
+        for(Teleporter teleporter : teleporters){
+            if(teleporter.isOn(new Position(hero.getX(), hero.getY()))){
+                teleporter.action(hero);
+            }
+        }
+        for (Heal heal : heals) {
+            if (heal.isOn(new Position(hero.getX(), hero.getY()))) {
+                heal.action(hero);
+                heals.remove(heal);
+            }
+            break;
+        }
+
+        for(Sand sand : sands){
+            if (sand.isOn(new Position(hero.getX(), hero.getY())))
+                sand.action(hero);
+            else sand.removeAction(hero);
+        }
+        for(Water water : waters){
+            if (water.isOn(new Position(hero.getX(), hero.getY())))
+                water.action(hero);
+            else water.removeAction(hero);
+        }
+    }
+
+    public boolean isEnemy(int x , int y){
+        Rectangle rect1 = new Rectangle(x*5, y*5, 40, 40);
+
+        boolean isEnem=false;
+        for (Enemy enemy : enemies){
+            Rectangle rect2 = new Rectangle(enemy.getX()*5 , enemy.getY()*5, 20, 20);
+            Rectangle intersection = rect1.intersection(rect2);
+
+            if(intersection.getHeight() > 0 && intersection.getWidth() > 0) {
+                isEnem= true;
+            }
+        }
+        return isEnem;
+    }
+
     private void enemiesProcess(){
-        enemies.processMonsters();
+        for (Enemy e : enemies){
+            e.move();
+        }
     }
 
     @Override
@@ -135,7 +177,6 @@ public class Labyrinthe implements Game {
 
     @Override
     public boolean isOver() {
-        System.out.println(hero.isDead());
         if (hero.isDead()) {
             level = 1;
             hero = new Hero(4, 4);
@@ -148,27 +189,59 @@ public class Labyrinthe implements Game {
     }
 
     public boolean isFree(int x , int y){
-        return walls.isPosFree(x, y);
+        Rectangle rect1 = new Rectangle(x*5, y*5, 20, 40);
+
+        for (Wall w : walls) {
+            Rectangle rect2 = new Rectangle(w.getPosition().getX() *5 , (w.getPosition().getY())*5, 20, 20);
+            Rectangle intersection = rect1.intersection(rect2);
+
+            if (intersection.getWidth() > 0 && intersection.getHeight() > 0){
+                return false;
+            }
+        }
+        return true;
     }
 
     public Hero getHero() {
         return hero;
     }
 
-    public Objects getObjects(){
-        return objects;
-    }
-
-    public Enemies getEnemies() {
+    public List<Enemy> getEnemies() {
         return enemies;
     }
 
-    public Walls getWalls() {
-        return walls;
-    }
-
     public void attack(){
-        this.enemies.attack(this.hero.getX(), this.hero.getY());
+        Rectangle rect1 = new Rectangle(hero.getX()*5 - 20, hero.getY()*5 - 20, 80, 80);
+        Rectangle rect2;
+
+        for (Enemy enemy : enemies){
+            if (enemy.getType().equals("Monster")) {
+                rect2 = new Rectangle(enemy.getX() *5 , enemy.getY()*5, 20, 20);
+            }
+            else {
+                rect2 = new Rectangle(enemy.getX() *5 , enemy.getY()*5, 40, 40);
+            }
+            Rectangle intersection = rect1.intersection(rect2);
+
+            if(intersection.getHeight() > 0 && intersection.getWidth() > 0) {
+                enemy.receiveDamage();
+                if(enemy.getLabyrinthe().getHero().getCurrentCmd() == Cmd.RIGHT) {
+                    enemy.goRight();
+                    enemy.goRight();
+                    enemy.goRight();
+                    enemy.goRight();
+                }else{
+                    enemy.goLeft();
+                    enemy.goLeft();
+                    enemy.goLeft();
+                    enemy.goLeft();
+                }
+                if (enemy.isDead()) {
+                    this.enemies.remove(enemy);
+                }
+                return;
+            }
+        }
     }
 
     public void save() {
@@ -178,10 +251,9 @@ public class Labyrinthe implements Game {
 
         if (r == JFileChooser.APPROVE_OPTION) {
             List<String> lines = new ArrayList<>();
-            int rowsnew = 20*(level-1);
             String line;
 
-            for (int i = rowsnew; i < file.size(); i++) {
+            for (int i = 0; i < file.size(); i++) {
                 line = file.get(i);
                 lines.add(line);
             }
@@ -206,9 +278,13 @@ public class Labyrinthe implements Game {
             try {
                 this.file = Files.readAllLines(file);
                 this.level = (NB_LEVELS +2 - this.file.size()/20);
-                this.walls = new Walls();
-                this.objects = new Objects();
-                this.enemies=new Enemies();
+                this.walls = new ArrayList<>();
+                heals = new ArrayList<>();
+                sands = new ArrayList<>();
+                teleporters = new ArrayList<>();
+                traps = new ArrayList<>();
+                waters = new ArrayList<>();
+                this.enemies=new ArrayList<>();
                 setLabyrinthe();
                 setisFinished(0);
 
@@ -223,47 +299,55 @@ public class Labyrinthe implements Game {
         int rows = 20;
         int cols = 40;
 
-        walls.emptyWalls();
-        enemies.emptyEnemies();
-        objects.emptyObjects();
+        walls.clear();
+        enemies.clear();
+        heals.clear();
+        sands.clear();
+        teleporters.clear();
+        traps.clear();
+        waters.clear();
 
         int rowsnew = rows*(level-1);
-
         for (int y = rowsnew; y < rowsnew+20; y++) {
             String line = file.get(y);
             for (int x = 0; x < cols; x++) {
                 char start = line.charAt(x);
                 if (start == '#') {
-                    walls.addWall(x * 4, (y-rowsnew )* 4);
+                    walls.add(new Wall(x * 4, (y-rowsnew ) * 4));
+                }
+                else if(start == 'B'){
+                    Boss b = new Boss(x*4,y*4,this);
+                    b.setMovementStrategy(new RandomMovement());
+                    enemies.add(b);
                 }
                 else if(start == 'S'){
-                    Monster m = new Monster(x*4,(y-rowsnew )* 4,this);
+                    Monster m = new Monster(x*4,(y-rowsnew )*4,this);
                     m.setMovementStrategy(new SnakeMovement());
-                    enemies.addEnemie(m);
+                    enemies.add(m);
                 }
                 else if(start == 'G'){
                     Ghost m = new Ghost(x*4,(y-rowsnew )* 4,this);
                     m.setMovementStrategy(new GhostMovement());
-                    enemies.addEnemie(m);
+                    enemies.add(m);
                 }
                 else if(start == 'H'){
-                    objects.addObject(new Heal(new Position(x*4,(y-rowsnew )* 4)));
+                    heals.add(new Heal(new Position(x*4,(y-rowsnew )*4)));
                 }
                 else if(start == 'C'){
-                    objects.addChest(new Position(x*4,(y-rowsnew )* 4));
+                    chest = new Chest(new Position(x*4,(y-rowsnew )*4));
                 }
                 else if(start == 'R'){
-                    objects.addObject(new Sand(new Position(x*4,(y-rowsnew )* 4)));
+                    sands.add(new Sand(new Position(x*4,(y-rowsnew )* 4)));
                 }
                 else if(start == 'T'){
-                    objects.addObject(new Trap(new Position(x*4,(y-rowsnew )* 4)));
+                    traps.add(new Trap(new Position(x*4,(y-rowsnew )* 4)));
                 }
                 else if(start == 'P'){
                     if (teleportPosition == null) {
                         teleportPosition = new Position(x*4,(y-rowsnew )* 4);
                     }
                     else {
-                        objects.addObject(new Teleporter(teleportPosition, new Position(x*4,(y-rowsnew )* 4)));
+                        teleporters.add(new Teleporter(teleportPosition, new Position(50,42)));
                         teleportPosition = null;
                     }
 
@@ -274,7 +358,55 @@ public class Labyrinthe implements Game {
             hero.setY(4);
         }
     }
+    public List<Position> getWallsPosition(){
+        List<Position> res = new ArrayList<>();
 
+        for (Wall w : walls){
+            res.add(w.getPosition());
+        }
+
+        return res;
+    }
+
+    public List<Position> getPosTeleporters() {
+        List<Position> res = new ArrayList<>();
+        for (Teleporter teleporter : teleporters) {
+            res.add(teleporter.getPosition());
+        }
+        return res;
+    }
+    public List<Position> getPosTraps() {
+        List<Position> res = new ArrayList<>();
+        for (Trap trap : traps) {
+            res.add(trap.getPosition());
+        }
+        return res;
+    }
+    public List<Position> getPosSands() {
+        List<Position> res = new ArrayList<>();
+        for (Sand sand : sands) {
+            res.add(sand.getPosition());
+        }
+        return res;
+    }
+    public List<Position> getPosHeals() {
+        List<Position> res = new ArrayList<>();
+        for (Heal heal : heals) {
+            res.add(heal.getPosition());
+        }
+        return res;
+    }
+    public List<Position> getPosWaters() {
+        List<Position> res = new ArrayList<>();
+        for (Water water : waters) {
+            res.add(water.getPosition());
+        }
+        return res;
+    }
+
+    public Position getPosChest(){
+        return chest.getPosition();
+    }
 
 }
 

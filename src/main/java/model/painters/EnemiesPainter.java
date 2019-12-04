@@ -91,7 +91,7 @@ public class EnemiesPainter implements Painter {
 
     @Override
     public void draw(BufferedImage im, Labyrinthe game) {
-        for(Enemy enemy : game.getEnemies().getEnemies()){
+        for(Enemy enemy : game.getEnemies()){
 
             if (enemy.getType().equals("Monster")) {
                 // HitBox

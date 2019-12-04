@@ -21,7 +21,7 @@ public class WaterPainter implements Painter {
 
     @Override
     public void draw(BufferedImage im, Labyrinthe game) {
-        for (Position position:game.getObjects().getPosWater()) {
+        for (Position position:game.getPosWaters()) {
             im.getGraphics().drawImage(this.waterSprite, position.getX()*5, position.getY()*5, 20, 20, null);
         }
     }

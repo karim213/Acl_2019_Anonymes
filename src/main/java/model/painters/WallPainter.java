@@ -23,7 +23,7 @@ public class WallPainter implements Painter {
 
     @Override
     public void draw(BufferedImage im, Labyrinthe game) {
-        for (Position p : game.getWalls().getWallsPosition()){
+        for (Position p : game.getWallsPosition()){
             im.getGraphics().drawImage(this.wallSprite,p.getX()*5 ,  p.getY()*5, 20,20, null);
         }
     }

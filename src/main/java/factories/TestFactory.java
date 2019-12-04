@@ -2,9 +2,6 @@ package factories;
 
 import engine.GameEngineGraphical;
 import model.*;
-import model.enemies.*;
-import model.objects.*;
-import model.walls.Walls;
 
 public class TestFactory {
     private static GameEngineGraphical engine = null;
