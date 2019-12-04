@@ -89,7 +89,7 @@ public class Labyrinthe implements Game {
                 break;
         }
 
-        if (chest.isOn(new Position(x+hero.getSpeed(), y))){
+        if (chest.isOn(new Position(x, y))){
             if(level == NB_LEVELS) {
                 isFinished = -1;
                 level = 1;
@@ -128,8 +128,8 @@ public class Labyrinthe implements Game {
             if (heal.isOn(new Position(hero.getX(), hero.getY()))) {
                 heal.action(hero);
                 heals.remove(heal);
+                break;
             }
-            break;
         }
 
         for(Sand sand : sands){
@@ -359,6 +359,11 @@ public class Labyrinthe implements Game {
                 }
                 else if(start == 'G'){
                     Ghost m = new Ghost(x*4,(y-rowsnew )* 4,this);
+                    m.setMovementStrategy(new GhostMovement());
+                    enemies.add(m);
+                }
+                else if(start == 'B'){
+                    Boss m = new Boss(x*4,(y-rowsnew )* 4,this);
                     m.setMovementStrategy(new GhostMovement());
                     enemies.add(m);
                 }
