@@ -55,19 +55,15 @@ public class PacmanController implements GameController {
 				labyrinthe.setisFinished(0);
 			} else if (Constants.rect_load.contains(e.getPoint())) {
 				labyrinthe.load();
-				System.out.println("load");
 			} else if (Constants.rect_quit.contains(e.getPoint())) {
 				System.exit(0);
 			}
 		}else if(labyrinthe.isFinished() >= 0){
 			if (Constants.rect_pause.contains(e.getPoint())) {
-				System.out.println("yes");
 				if (labyrinthe.isFinished() == 0) {
 					labyrinthe.setisFinished(1);
-					System.out.println("pause");
 				}else if(labyrinthe.isFinished() == 1) {
 					labyrinthe.setisFinished(0);
-					System.out.println("resume");
 				}
 			}
 		}

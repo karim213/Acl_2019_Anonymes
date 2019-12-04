@@ -177,7 +177,6 @@ public class Labyrinthe implements Game {
 
     @Override
     public boolean isOver() {
-        System.out.println(hero.isDead());
         if (hero.isDead()) {
             level = 1;
             hero = new Hero(4, 4);
@@ -279,7 +278,6 @@ public class Labyrinthe implements Game {
             try {
                 this.file = Files.readAllLines(file);
                 this.level = (NB_LEVELS +2 - this.file.size()/20);
-                System.out.println(level);
                 this.walls = new ArrayList<>();
                 heals = new ArrayList<>();
                 sands = new ArrayList<>();
@@ -310,7 +308,6 @@ public class Labyrinthe implements Game {
         waters.clear();
 
         int rowsnew = rows*(level-1);
-        System.out.println(rowsnew);
         for (int y = rowsnew; y < rowsnew+20; y++) {
             String line = file.get(y);
             for (int x = 0; x < cols; x++) {
