@@ -11,11 +11,11 @@ import java.io.IOException;
 
 public class HealPainter implements Painter{
 
-    private BufferedImage trapSprite;
+    private BufferedImage healSprite;
 
     public HealPainter(){
         try {
-            trapSprite = ImageIO.read(getClass().getClassLoader().getResourceAsStream(Constants.HEAL_SPRITE));
+            healSprite = ImageIO.read(getClass().getClassLoader().getResourceAsStream(Constants.HEAL_SPRITE));
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -24,7 +24,7 @@ public class HealPainter implements Painter{
     @Override
     public void draw(BufferedImage im, Labyrinthe game) {
         for (Position position:game.getObjects().getPosHeals()) {
-            im.getGraphics().drawImage(this.trapSprite, position.getX()*5, position.getY()*5, 20, 20, null);
+            im.getGraphics().drawImage(this.healSprite, position.getX()*5, position.getY()*5, 20, 20, null);
         }
     }
 }

@@ -15,9 +15,11 @@ public class GraphicalInterface  {
 	/**
 	 * le Panel pour l'afficheur
 	 */
-	private DrawingPanel panel;
+	private DrawingPanel partypanel;
 	private DrawingScorePanel scorePanel;
-
+	private DrawingMenuHome menuHome;
+	private DrawingSplashScreen splashScreen;
+    private JPanel panel;
 
 	/**
 	 * la construction de l'interface graphique: JFrame avec panel pour le game
@@ -31,18 +33,23 @@ public class GraphicalInterface  {
 		f.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
 		// attacher le panel contenant l'afficheur du game
-		this.panel=new DrawingPanel(gamePainter);
+		this.partypanel=new DrawingPanel(gamePainter);
 		this.scorePanel = new DrawingScorePanel(gamePainter);
+		this.menuHome = new DrawingMenuHome(gamePainter);
+		this.splashScreen = new DrawingSplashScreen(gamePainter);
 
-		JPanel panel = new JPanel();
+		panel = new JPanel();
 		panel.setLayout(new GridBagLayout());
 		panel.setLayout(new BoxLayout(panel, BoxLayout.Y_AXIS));
-		panel.add(this.scorePanel );
-		panel.add(this.panel );
+		//panel.add(this.scorePanel );
+		this.panel.add(this.menuHome);
 		f.setContentPane(panel);
+
 
 		// attacher controller au panel du game
 		panel.addKeyListener(gameController);
+		panel.addMouseListener(gameController);
+
 
 		f.pack();
 		f.setVisible(true);
@@ -53,9 +60,30 @@ public class GraphicalInterface  {
 	/**
 	 * mise a jour du dessin
 	 */
-	public void paint(boolean over,String s) {
+	public void paintParty(boolean over,String s) {
+		this.panel.removeAll();
+		this.panel.repaint();
+		this.panel.add(this.scorePanel);
+		this.panel.add(this.partypanel);
 		this.scorePanel.drawGame(over, s);
-		this.panel.drawGame(over,s);
+		this.partypanel.drawGame(over,s);
+		this.panel.updateUI();
+
 	}
-	
+
+	public void paintMenu() {
+		this.panel.removeAll();
+		this.panel.add(this.menuHome);
+		this.menuHome.drawGame();
+		this.panel.updateUI();
+
+	}
+
+	public void paintSplash() {
+		this.panel.removeAll();
+		this.panel.add(this.splashScreen);
+		this.splashScreen.drawGame();
+		this.panel.updateUI();
+
+	}
 }

@@ -1,10 +1,15 @@
 package model;
 
 import java.awt.event.KeyEvent;
+import java.awt.event.MouseEvent;
 
 import engine.Cmd;
 import engine.Game;
 import engine.GameController;
+import util.Constants;
+
+import javax.swing.*;
+import javax.swing.filechooser.FileSystemView;
 
 
 /**
@@ -40,6 +45,50 @@ public class PacmanController implements GameController {
 	}
 
 	@Override
+	public void mouseClicked(MouseEvent e) {
+	}
+
+	@Override
+	public void mousePressed(MouseEvent e) {
+		if(labyrinthe.isFinished() == -1) {
+			if (Constants.rect_play.contains(e.getPoint())) {
+				labyrinthe.setisFinished(0);
+			} else if (Constants.rect_load.contains(e.getPoint())) {
+				labyrinthe.load();
+				System.out.println("load");
+			} else if (Constants.rect_quit.contains(e.getPoint())) {
+				System.exit(0);
+			}
+		}else if(labyrinthe.isFinished() >= 0){
+			if (Constants.rect_pause.contains(e.getPoint())) {
+				System.out.println("yes");
+				if (labyrinthe.isFinished() == 0) {
+					labyrinthe.setisFinished(1);
+					System.out.println("pause");
+				}else if(labyrinthe.isFinished() == 1) {
+					labyrinthe.setisFinished(0);
+					System.out.println("resume");
+				}
+			}
+		}
+	}
+
+	@Override
+	public void mouseReleased(MouseEvent e) {
+
+	}
+
+	@Override
+	public void mouseEntered(MouseEvent e) {
+
+	}
+
+	@Override
+	public void mouseExited(MouseEvent e) {
+
+	}
+
+	@Override
 	/**
 	 * met a jour les commandes en fonctions des touches appuyees
 	 */
@@ -47,6 +96,11 @@ public class PacmanController implements GameController {
 
 		switch (e.getKeyChar()) {
 		// si on appuie sur 'q',commande joueur est gauche
+			case 'y':
+			case 'Y':
+				this.labyrinthe.save();
+				break;
+
 			case 'q':
 			case 'Q':
 				this.commandeEnCours = Cmd.LEFT;
@@ -93,5 +147,10 @@ public class PacmanController implements GameController {
 	public void keyTyped(KeyEvent e) {
 
 	}
+
+    public Labyrinthe getLabyrinthe(){
+		return this.labyrinthe;
+	}
+
 
 }

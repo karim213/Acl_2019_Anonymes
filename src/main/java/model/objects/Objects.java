@@ -43,20 +43,17 @@ public class Objects {
                 object.action(hero);
                 if (object instanceof Heal) {
                     objectList.remove(object);
-                    break;
+                }
+                break;
+            }
+            else {
+                if (object instanceof Sand) {
+                    Sand s = (Sand) object;
+                    s.removeAction(hero);
                 }
             }
         }
     }
-
-
-    public void addTrap(Position position) {
-        objectList.add(new Trap(position));
-    }
-
-    public void addHeal(Position position) { objectList.add(new Heal(position)); }
-
-    public void addTeleporter(Position position,Position posTo) {objectList.add(new Teleporter(position ,posTo));}
 
     public Position getPosChest() {
         return chest.getPosition();
@@ -90,5 +87,29 @@ public class Objects {
             }
         }
         return res;
+    }
+
+    public List<Position> getPosSand() {
+        List<Position> res = new ArrayList<>();
+        for (AbstractObject object:objectList) {
+            if(object instanceof Sand){
+                res.add(object.getPosition());
+            }
+        }
+        return res;
+    }
+
+    public List<Position> getPosWater() {
+        List<Position> res = new ArrayList<>();
+        for (AbstractObject object:objectList) {
+            if(object instanceof Water){
+                res.add(object.getPosition());
+            }
+        }
+        return res;
+    }
+
+    public void emptyObjects(){
+        objectList.clear();
     }
 }

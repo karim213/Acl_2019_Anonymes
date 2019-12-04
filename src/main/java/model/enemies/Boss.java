@@ -6,15 +6,15 @@ import model.Labyrinthe;
 import static util.Constants.HEIGHT;
 import static util.Constants.WIDTH;
 
-public class Ghost extends Enemy {
+public class Boss extends Enemy {
 
-    public Ghost(int x, int y, Labyrinthe labyrinthe) {
-        super(x, y, 1 , labyrinthe);
+    public Boss(int x, int y, Labyrinthe labyrinthe) {
+        super(x, y, 6 , labyrinthe);
     }
 
     @Override
     public String getType() {
-        return "Ghost";
+        return "Boss";
     }
 
     @Override

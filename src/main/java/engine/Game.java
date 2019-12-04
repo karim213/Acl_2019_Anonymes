@@ -1,5 +1,7 @@
 package engine;
 
+import model.Hero;
+
 /**
  * @author Horatiu Cirstea, Vincent Thomas
  *
@@ -19,11 +21,18 @@ public interface Game {
 	/**
 	 * @return true si et seulement si le jeu est fini
 	 */
-	public boolean isFinished();
+	public int isFinished();
+
+	public void setisFinished(int status);
+
 
 	/**
 	 * @return true si et seulement si le joueur gagne
 	 */
 	public boolean isOver();
+
+	public Hero getHero();
+
+	public void setLabyrinthe();
 
 }

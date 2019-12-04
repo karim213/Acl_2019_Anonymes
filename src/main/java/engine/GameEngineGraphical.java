@@ -30,20 +30,22 @@ public class GameEngineGraphical {
 
 	/**
 	 * construit un moteur
-	 * 
+	 *
 	 * @param game
 	 *            game a lancer
 	 * @param gamePainter
 	 *            afficheur a utiliser
 	 * @param gameController
 	 *            controlleur a utiliser
-	 *            
+	 *
 	 */
 	public GameEngineGraphical(Game game, GamePainter gamePainter, GameController gameController) {
 		// creation du game
 		this.game = game;
 		this.gamePainter = gamePainter;
 		this.gameController = gameController;
+		this.gui = new GraphicalInterface(this.gamePainter,this.gameController);
+
 	}
 
 	/**
@@ -52,19 +54,35 @@ public class GameEngineGraphical {
 	public void run() throws InterruptedException {
 
 		// creation de l'interface graphique
+		if (game.isFinished() == -3) {
+			this.gui.paintSplash();
+			Thread.sleep(4000);
+			game.setisFinished(-1);
+		}
 
-		this.gui = new GraphicalInterface(this.gamePainter,this.gameController);
+
+		while (game.isFinished() == -1) {
+			this.gui.paintMenu();
+			Thread.sleep(80);
+		}
+
 
 		// boucle de game
-		while (!this.game.isFinished()) {
-			// demande controle utilisateur
+		while (game.isFinished() >= 0) {
+
 			Cmd c = this.gameController.getCommand();
-			// fait evoluer le game
-			this.game.evolve(c);
-			// affiche le game
-			this.gui.paint(false,null);
-			// met en attente
-			Thread.sleep(100);
+			if (game.isFinished() == 0)
+				this.game.evolve(c);
+			this.gui.paintParty(false,null);
+			while (game.isFinished() == 1){
+				Thread.sleep(100);
+			}
+			Thread.sleep(80);
 		}
-		this.gui.paint(true,game.isOver()?"lose":"win");	}
+
+		this.gui.paintParty(true,game.isOver()?"lose":"win");
+		game.setLabyrinthe();
+		Thread.sleep(4000);
+		run();
+	}
 }

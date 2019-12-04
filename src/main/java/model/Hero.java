@@ -1,95 +1,67 @@
 package model;
 
-import engine.Cmd;
 
-
-public class Hero {
-    private Position position;
-    private Cmd currentCmd;
+public class Hero extends MovableEntity implements java.io.Serializable {
     private  boolean isAttaque;
-    private boolean over;
-    private int pv;
+    private int cmpt;
 
+    public Hero(){
+        super(0 , 0 , 3 , 2);
+        cmpt = 0;
+    }
 
     public Hero(int x, int y) {
-        this.position = new Position(x, y);
-        this.currentCmd = Cmd.IDLE;
+        super(x, y, 6, 2);
+        cmpt = 0;
         this.isAttaque = false;
-        this.pv = 3;
-
-    }
-
-    public int getX() {
-        return position.getX();
-    }
-
-    private void setX(int x) {
-        this.position.setX(x);
-    }
-
-    public int getY() {
-        return position.getY();
-    }
-
-    private void setY(int y) {
-        this.position.setY(y);
-    }
-
-    public void goUp(){
-        this.position.setY(this.position.getY()-1);
-        this.currentCmd = Cmd.UP;
-    }
-
-    public void goDown(){
-        this.position.setY(this.position.getY()+1);
-        this.currentCmd = Cmd.DOWN;
-    }
-
-    public void goLeft(){
-        this.position.setX(this.position.getX()-1);
-        this.currentCmd = Cmd.LEFT;
-    }
-
-    public void goRight(){
-        this.position.setX(this.position.getX()+1);
-        this.currentCmd = Cmd.RIGHT;
-    }
-
-    public void stop(){
-        currentCmd = Cmd.IDLE;
-    }
-
-    public Cmd getCurrentCmd() {
-        return currentCmd;
     }
 
     public void attaque(){
         isAttaque = true;
     }
+
     public  Boolean isAttaque(){
         return isAttaque;
     }
+
+    public void slow() {
+        this.setSpeed(1);
+    }
+
+    public void normalSpeed() {
+        setSpeed(2);
+    }
+
     public void setAttaque(Boolean isAttaque){
         this.isAttaque = isAttaque;
     }
-    public void setOver(boolean over) {
-        this.over = over;
+
+    public void teleport(Position posTo) {
+        this.setX(posTo.getX());
+        this.setY(posTo.getY());
     }
 
-    public boolean isOver() {
-        return over;
-    }
-    public void addPv(){
-        this.pv++;
-    }
-    public void subPv(){
-        this.pv--;
-        if (this.pv == 0)
-            setOver(true);
+    public void kill(){
+        this.pv = 0;
+        isDead = true;
     }
 
-    public int getPv(){
-        return this.pv;
+    @Override
+    public boolean isDead() {
+        cmpt++;
+        System.out.println(isDead);
+        return isDead;
+    }
+
+    @Override
+    public void receiveDamage(){
+        if (cmpt == 5) {
+            cmpt = 0;
+            this.pv--;
+            if (this.pv <= 0) {
+                isDead = true;
+            }
+        }
     }
 
     public void teleport(Position posTo) {
