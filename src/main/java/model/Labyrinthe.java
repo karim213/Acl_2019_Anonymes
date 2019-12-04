@@ -39,13 +39,6 @@ public class Labyrinthe implements Game {
     private Position teleportPosition;
 
 
-    /*public Labyrinthe(Hero hero, Walls walls,Objects objects) {
-        this.hero = hero;
-        this.walls = walls;
-        this.objects = objects;
-        this.isFinished = -1;
-        teleportPosition = null;
-    }*/
 
     public Labyrinthe() {
         this.hero = new Hero(4,4);
@@ -259,10 +252,9 @@ public class Labyrinthe implements Game {
 
         if (r == JFileChooser.APPROVE_OPTION) {
             List<String> lines = new ArrayList<>();
-            int rowsnew = 20*(level-1);
             String line;
 
-            for (int i = rowsnew; i < file.size(); i++) {
+            for (int i = 0; i < file.size(); i++) {
                 line = file.get(i);
                 lines.add(line);
             }
@@ -287,6 +279,7 @@ public class Labyrinthe implements Game {
             try {
                 this.file = Files.readAllLines(file);
                 this.level = (NB_LEVELS +2 - this.file.size()/20);
+                System.out.println(level);
                 this.walls = new ArrayList<>();
                 heals = new ArrayList<>();
                 sands = new ArrayList<>();
@@ -317,7 +310,7 @@ public class Labyrinthe implements Game {
         waters.clear();
 
         int rowsnew = rows*(level-1);
-
+        System.out.println(rowsnew);
         for (int y = rowsnew; y < rowsnew+20; y++) {
             String line = file.get(y);
             for (int x = 0; x < cols; x++) {
