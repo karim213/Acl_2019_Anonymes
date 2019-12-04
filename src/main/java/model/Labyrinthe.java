@@ -175,6 +175,38 @@ public class Labyrinthe implements Game {
         this.isFinished = status;
     }
 
+    public void setWalls(List<Wall> walls) {
+        this.walls = walls;
+    }
+
+    public void setEnemies(List<Enemy> enemies) {
+        this.enemies = enemies;
+    }
+
+    public void setHeals(List<Heal> heals) {
+        this.heals = heals;
+    }
+
+    public void setSands(List<Sand> sands) {
+        this.sands = sands;
+    }
+
+    public void setTeleporters(List<Teleporter> teleporters) {
+        this.teleporters = teleporters;
+    }
+
+    public void setTraps(List<Trap> traps) {
+        this.traps = traps;
+    }
+
+    public void setWaters(List<Water> waters) {
+        this.waters = waters;
+    }
+
+    public void setChest(Chest chest) {
+        this.chest = chest;
+    }
+
     @Override
     public boolean isOver() {
         if (hero.isDead()) {
@@ -317,7 +349,7 @@ public class Labyrinthe implements Game {
                 }
                 else if(start == 'B'){
                     Boss b = new Boss(x*4,y*4,this);
-                    b.setMovementStrategy(new RandomMovement());
+                    b.setMovementStrategy(new GhostMovement());
                     enemies.add(b);
                 }
                 else if(start == 'S'){
