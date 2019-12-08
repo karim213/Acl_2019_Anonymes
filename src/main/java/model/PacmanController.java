@@ -94,7 +94,9 @@ public class PacmanController implements GameController {
 		// si on appuie sur 'q',commande joueur est gauche
 			case 'y':
 			case 'Y':
-				this.labyrinthe.save();
+				if(labyrinthe.isFinished()==1) {
+					this.labyrinthe.save();
+				}
 				break;
 
 			case 'q':

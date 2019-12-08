@@ -2,6 +2,8 @@ package engine;
 
 import model.Hero;
 
+import java.util.List;
+
 /**
  * @author Horatiu Cirstea, Vincent Thomas
  *
@@ -33,6 +35,6 @@ public interface Game {
 
 	public Hero getHero();
 
-	public void setLabyrinthe();
+	public void setLabyrinthe(String mode, List<String> save);
 
 }

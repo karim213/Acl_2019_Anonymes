@@ -81,7 +81,7 @@ public class GameEngineGraphical {
 		}
 
 		this.gui.paintParty(true,game.isOver()?"lose":"win");
-		game.setLabyrinthe();
+		game.setLabyrinthe(null,null);
 		Thread.sleep(4000);
 		run();
 	}

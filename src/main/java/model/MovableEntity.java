@@ -94,4 +94,8 @@ public abstract class MovableEntity {
     public Cmd getCurrentCmd() {
         return currentCmd;
     }
+
+    public void setPv(int pv){
+        this.pv = pv;
+    };
 }
