@@ -244,9 +244,19 @@ public class Labyrinthe implements Game {
     }
 
     public void attack(){
-        Rectangle rect1 = new Rectangle(hero.getX()*5 - 20, hero.getY()*5 - 20, 80, 80);
+        Rectangle rect1 = new Rectangle(hero.getX()*5-10 , hero.getY()*5-10 , 60, 60);
         Rectangle rect2;
+        for(Wall wall : walls){
+            rect2 = new Rectangle(wall.getPosition().getX()*5,wall.getPosition().getY()*5,20,20);
+            Rectangle intersection = rect1.intersection(rect2);
+            System.out.println(hero.getCurrentCmd());
+            if(intersection.getHeight() > 0 && intersection.getWidth() > 0) {
+                walls.remove(wall);
+                break;
+            }
+        }
 
+        rect1 = new Rectangle(hero.getX()*5 - 20, hero.getY()*5 - 20, 80, 80);
         for (Enemy enemy : enemies){
             if (enemy.getType().equals("Monster")) {
                 rect2 = new Rectangle(enemy.getX() *5 , enemy.getY()*5, 20, 20);

@@ -43,7 +43,7 @@ public class HeroPainter implements Painter {
         this.hero = game.getHero();
 
         // HitBox
-        // im.getGraphics().drawRect(hero.getX()*5 - 20, hero.getY()*5 - 20, 80, 80);
+        // im.getGraphics().drawRect(hero.getX()*5-10 , hero.getY()*5-10 , 60, 60);
 
         if (hero.isAttaque()){
             if (yoffset + 3 < 6){
