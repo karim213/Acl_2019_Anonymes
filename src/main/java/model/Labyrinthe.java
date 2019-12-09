@@ -397,23 +397,50 @@ public class Labyrinthe implements Game {
         if (r == JFileChooser.APPROVE_OPTION) {
 
             Path file = Paths.get(j.getSelectedFile().getAbsolutePath());
-            try {
-                File f = file.toFile();
-                List<String> save = new ArrayList<>();
-                Scanner lineOfFile = new Scanner(f) ;
-                for(int  i = 0 ;i<24;i++) {
-                    save.add(lineOfFile.nextLine());
-                }
-                this.level = Integer.parseInt(save.get(23));
-                this.hero = new Hero(Integer.parseInt(save.get(20)),Integer.parseInt(save.get(21)));
-                this.hero.setPv(Integer.parseInt(save.get(22)));
-                setLabyrinthe("load",save);
-                setisFinished(0);
+            if (verifyFile(file)){
+                try {
+                    File f = file.toFile();
+                    List<String> save = new ArrayList<>();
+                    Scanner lineOfFile = new Scanner(f) ;
+                    for(int  i = 0 ;i<24;i++) {
+                        save.add(lineOfFile.nextLine());
+                    }
+                    this.level = Integer.parseInt(save.get(23));
+                    this.hero = new Hero(Integer.parseInt(save.get(20)),Integer.parseInt(save.get(21)));
+                    this.hero.setPv(Integer.parseInt(save.get(22)));
+                    setLabyrinthe("load",save);
+                    setisFinished(0);
 
-            } catch (IOException e) {
-                e.printStackTrace();
+                } catch (Exception e) {
+                    JOptionPane.showMessageDialog(new Frame(), "Error while opening the file");
+                }
             }
         }
+    }
+
+    private boolean verifyFile(Path file) {
+        List<String> save = new ArrayList<>();
+
+        try {
+            save = Files.readAllLines(file);
+        } catch (IOException e) {
+
+        }
+
+        if (save.size() > 24) {
+            System.out.println(save.size());
+            JOptionPane.showMessageDialog(new Frame(), "Invalid file");
+            return false;
+        }
+
+        for (String s : save) {
+            if (s.length() > 40) {
+                System.out.println(s.length() + "sdlmjfmlsdfj");
+                JOptionPane.showMessageDialog(new Frame(), "Invalid file");
+                return false;
+            }
+        }
+        return true;
     }
 
     public void setLabyrinthe(String mode,List<String> save){
