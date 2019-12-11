@@ -249,7 +249,6 @@ public class Labyrinthe implements Game {
         for(Wall wall : walls){
             rect2 = new Rectangle(wall.getPosition().getX()*5,wall.getPosition().getY()*5,20,20);
             Rectangle intersection = rect1.intersection(rect2);
-            System.out.println(hero.getCurrentCmd());
             if(intersection.getHeight() > 0 && intersection.getWidth() > 0) {
                 walls.remove(wall);
                 break;
@@ -273,7 +272,13 @@ public class Labyrinthe implements Game {
                     enemy.goRight();
                     enemy.goRight();
                     enemy.goRight();
+                    enemy.goRight();
+                    enemy.goRight();
+                    enemy.goRight();
                 }else{
+                    enemy.goLeft();
+                    enemy.goLeft();
+                    enemy.goLeft();
                     enemy.goLeft();
                     enemy.goLeft();
                     enemy.goLeft();
@@ -438,14 +443,12 @@ public class Labyrinthe implements Game {
         }
 
         if (save.size() > 24) {
-            System.out.println(save.size());
             JOptionPane.showMessageDialog(new Frame(), "Invalid file");
             return false;
         }
 
         for (String s : save) {
             if (s.length() > 40) {
-                System.out.println(s.length() + "sdlmjfmlsdfj");
                 JOptionPane.showMessageDialog(new Frame(), "Invalid file");
                 return false;
             }
@@ -493,10 +496,7 @@ public class Labyrinthe implements Game {
                         sands.add(new Sand(new Position(x * 4, y * 4)));
                     } else if (start == 'T') {
                         traps.add(new Trap(new Position(x * 4, y * 4)));
-                    } else if (start == 'B') {
-                        enemies.add(new Boss(x * 4, y * 4, this));
                     } else if (start == 'P') {
-                        System.out.println(teleporters);
                         if (teleportPosition == null) {
                             teleportPosition = new Position(x * 4, y * 4);
                             teleporters.add(new Teleporter(teleportPosition, new Position(50, 42)));
@@ -536,8 +536,6 @@ public class Labyrinthe implements Game {
                         sands.add(new Sand(new Position(x * 4, (y - rowsnew) * 4)));
                     } else if (start == 'T') {
                         traps.add(new Trap(new Position(x * 4, (y - rowsnew) * 4)));
-                    } else if (start == 'B') {
-                        enemies.add(new Boss(x * 4, (y - rowsnew) * 4, this));
                     } else if (start == 'P') {
 
                         if (teleportPosition == null) {
